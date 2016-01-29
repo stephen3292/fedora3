@@ -75,19 +75,19 @@
 	  }
 	});
 	
-	var router = // defines the entire structure of our app
+	var routes = // defines the entire structure of our app
 	React.createElement(
-	  Router,
-	  null,
-	  React.createElement(
-	    Route,
-	    { path: '/', component: App },
-	    React.createElement(Route, { path: 'question/:questionId', component: QuestionDetail })
-	  )
+	  Route,
+	  { path: '/', component: App },
+	  React.createElement(Route, { path: 'question/:questionId', component: QuestionDetail })
 	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
-	  ReactDOM.render(router, document.getElementById('root'));
+	  ReactDOM.render(React.createElement(
+	    Router,
+	    null,
+	    routes
+	  ), document.getElementById('root'));
 	});
 
 /***/ },

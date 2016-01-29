@@ -9,7 +9,9 @@ class Api::QuestionsController < ApplicationController
   end
 
   def create
+    debugger
     question = Question.new(question_params)
+
     question.user_id = current_user.id
     question.username = current_user.username
 

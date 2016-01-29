@@ -30,14 +30,13 @@ var App = React.createClass({
   }
 });
 
-var router = ( // defines the entire structure of our app
-    <Router>
+var routes = ( // defines the entire structure of our app
       <Route path="/" component={App}>
         <Route path="question/:questionId" component={QuestionDetail}/>
       </Route>
-    </Router>
+
 );
 
 document.addEventListener("DOMContentLoaded", function () {
-  ReactDOM.render(router, document.getElementById('root'));
+  ReactDOM.render(<Router>{routes}</Router>, document.getElementById('root'));
 });
