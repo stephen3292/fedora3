@@ -1,42 +1,62 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Dispatcher = require('./dispatcher/dispatch');
 var Router = require('react-router').Router;
 var QuestionForm = require('./components/questionForm.jsx');
 var Route = require('react-router').Route;
+var IndexRoute = require('react-router').IndexRoute;
+var App = require('./components/app');
+var UsersIndex = require('./components/users/users_index');
+var CurrentUserStore = require('./stores/current_user_store');
+var SessionsApiUtil = require('./util/sessions_api_util');
+
+var SessionForm = require('./components/sessions/new');
+var UserForm = require('./components/users/user_form');
  ApiUtil = require('./util/apiUtil.js');
  QuestionsIndex = require('./components/questionsIndex.jsx');
- questionStore = require('./stores/questionStore.js');
+ QuestionStore = require('./stores/questions_store.js');
  QuestionDetail = require('./components/questionDetail');
 
 
 
+
+
+
+
+
 console.log(ApiUtil.fetchAllQuestions());
-console.log(questionStore.all());
-var App = React.createClass({
-  render: function () {
-    return(
+console.log(QuestionStore.all());
 
-      <div className="questions-super-index">
-        <h1 className="super-header"></h1>
-        <QuestionsIndex/>
-          <div className="details">
-            {this.props.children}
-          </div>
 
-        </div>
+var routes = (
 
-    );
-  }
-});
-
-var routes = ( // defines the entire structure of our app
-      <Route path="/" component={App}>
-        <Route path="question/:questionId" component={QuestionDetail}/>
-      </Route>
+  <Route path="/" component={App} onEnter={_ensureLoggedIn}>
+   <IndexRoute component={ UsersIndex } onEnter={_ensureLoggedIn} />
+   <Route path="login" component={ SessionForm }/>
+   <Route path="users/new" component={ UserForm } />
+  </Route>
 
 );
 
-document.addEventListener("DOMContentLoaded", function () {
-  ReactDOM.render(<Router>{routes}</Router>, document.getElementById('root'));
-});
+console.log('hi');
+
+  function _ensureLoggedIn(nextState, replace, callback) {
+    debugger
+    if (CurrentUserStore.userHasBeenFetched()) {
+      _redirectIfNotLoggedIn();
+    } else {
+      SessionsApiUtil.fetchCurrentUser(_redirectIfNotLoggedIn);
+    }
+
+    function _redirectIfNotLoggedIn() {
+      if (!CurrentUserStore.isLoggedIn()) {
+        replace({}, "/login");
+
+      }
+      callback();
+    }
+  }
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    ReactDOM.render(<Router>{routes}</Router>, document.getElementById('root'));
+  });

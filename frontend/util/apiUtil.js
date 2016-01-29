@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/dispatch');
-var QuestionActions = require('../actions/questionActions');
-var QuestionsStore = require('../stores/questionStore');
+var QuestionActions = require('../actions/question_actions');
+var QuestionsStore = require('../stores/questions_store');
 
 
 var questionApiUtil = {

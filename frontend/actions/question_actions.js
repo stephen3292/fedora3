@@ -1,7 +1,7 @@
 
 var AppDispatcher = require('../dispatcher/dispatch.js');
-var QuestionConstants = require('../constants/questionConstants.js');
-var QuestionStore = require('../stores/questionStore.js');
+var QuestionConstants = require('../constants/question_constants.js');
+var QuestionStore = require('../stores/questions_store.js');
 
 var questionActions = {
 
