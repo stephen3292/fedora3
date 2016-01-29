@@ -41,7 +41,8 @@ var questionDetail = React.createClass({
               {this.state.question.body}<br/>
               {this.state.question.username}<br/>
               {this.state.question.user_id}<br/>
-              <img className="post-image" src={this.state.question.image_content_type} />
+
+              <img className="post-image" src={this.state.question.image_url} />
 
             </div>
           </div>

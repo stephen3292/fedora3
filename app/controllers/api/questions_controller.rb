@@ -1,11 +1,10 @@
 class Api::QuestionsController < ApplicationController
   def index
-    render json: Question.all.to_json
+    @questions = Question.all
   end
 
   def show
     @question = Question.find(params[:id])
-    render json: @question
   end
 
   def create

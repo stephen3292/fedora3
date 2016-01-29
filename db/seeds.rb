@@ -10,7 +10,7 @@ Question.destroy_all
 
 User.destroy_all
 
-  a = User.create(username: 'Wim', password: 'password',
+  a = User.create(username: 'Bob', password: 'password',
         description: 'ok')
   b = User.create(username: 'Tim', password: 'password',
         description: 'old')

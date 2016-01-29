@@ -31459,7 +31459,7 @@
 	            React.createElement('br', null),
 	            this.state.question.user_id,
 	            React.createElement('br', null),
-	            React.createElement('img', { className: 'post-image', src: this.state.question.image_content_type })
+	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url })
 	          )
 	        )
 	      );
