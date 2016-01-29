@@ -36,7 +36,11 @@ var QuestionForm = React.createClass({
 
 
     formData.append("question[title]", this.state.title);
-    formData.append("question[image]", this.state.imageFile);
+    if (this.state.imageFile) {
+      formData.append("question[image]", this.state.imageFile);
+    } else {
+      formData.append("question[image]", "");
+    }
     formData.append("question[body]", this.state.body);
     ApiUtil.createQuestion(formData);
   },

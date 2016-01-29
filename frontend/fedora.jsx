@@ -5,7 +5,7 @@ var QuestionForm = require('./components/questions/questionForm');
 var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var App = require('./components/app');
-// var UserShow = require('./components/users/user_show');
+var UserShow = require('./components/users/user_show');
 var UsersIndex = require('./components/users/users_index');
 var CurrentUserStore = require('./stores/current_user_store');
 var SessionsApiUtil = require('./util/sessions_api_util');
@@ -31,9 +31,10 @@ console.log(QuestionStore.all());
 var routes = (
 
   <Route path="/" component={App} onEnter={_ensureLoggedIn}>
-   <IndexRoute component={ UsersIndex } onEnter={_ensureLoggedIn} />
+   <IndexRoute component={ UserShow } onEnter={_ensureLoggedIn} />
     <Route path="login" component={ SessionForm }/>
     <Route path="users/new" component={ UserForm } />
+    <Route path="question/:questionId" component={QuestionDetail}/>
   </Route>
 
 );

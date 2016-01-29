@@ -7,8 +7,7 @@ var questionApiUtil = require('./../../util/apiUtil.js');
 var questionDetail = React.createClass({
 
   getStateFromStore: function() {
-
-    return questionStore.find(parseInt(this.props.params.questionId));
+    return questionsStore.find(parseInt(this.props.params.questionId));
   },
 
   getInitialState: function() {
@@ -22,7 +21,7 @@ var questionDetail = React.createClass({
   },
 
   componentDidMount: function() {
-    questionStore.addListener(this._onChange);
+    questionsStore.addListener(this._onChange);
   },
 
   componentWillReceiveProps: function (newProps) {
@@ -33,15 +32,17 @@ var questionDetail = React.createClass({
 
   render: function() {
     if (this.state.question) {
+      debugger
       return(
         <div>
           <div className="question-detail-pane">
             <div className="question-detail-each">
-
               {this.state.question.title}<br/>
               {this.state.question.body}<br/>
               {this.state.question.username}<br/>
               {this.state.question.user_id}<br/>
+              <img className="post-image" src={this.state.question.image_content_type} />
+
             </div>
           </div>
         </div>

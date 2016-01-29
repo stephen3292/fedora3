@@ -4,13 +4,12 @@ class Api::QuestionsController < ApplicationController
   end
 
   def show
-    question = Question.find(params[:id])
-    render json: question
+    @question = Question.find(params[:id])
+    render json: @question
   end
 
   def create
     question = Question.new(question_params)
-
     question.user_id = current_user.id
     question.username = current_user.username
 

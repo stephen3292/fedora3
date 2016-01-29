@@ -14,7 +14,6 @@ var React = require('react'),
       },
 
       render: function() {
-        debugger
         if (!CurrentUserStore.userHasBeenFetched()) {
           return <p>PLEASE WAIT</p>;
         }

@@ -8,20 +8,17 @@ var QuestionForm = require('./questionForm.jsx');
 var QuestionsIndex = React.createClass({
 
   getInitialState: function(){
-    return {questions: questionStore.all()};
+    debugger
+    return {questions: questionsStore.all()};
   },
 
   _onChange: function(){
-    this.setState({questions: questionStore.all()});
+    this.setState({questions: questionsStore.all()});
   },
 
   componentDidMount: function(){
-    questionStore.addListener(this._onChange);
+    questionsStore.addListener(this._onChange);
     questionApiUtil.fetchAllQuestions();
-  },
-
-  componentWillUnmount: function(){
-    questionStore.remove(this._onChange);
   },
 
   render: function() {

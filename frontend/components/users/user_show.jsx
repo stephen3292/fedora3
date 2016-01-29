@@ -1,6 +1,7 @@
 var React = require('react');
-var UsersStore = require('../../stores/users_store');
-var UsersApiUtil = require('../../util/users_api_util');
+var SessionsApiUtil = require('../../util/sessions_api_util');
+var CurrentUserStore = require('../../stores/current_user_store');
+var QuestionsIndex = require('../questions/questionsIndex');
 
 var UserShow = React.createClass({
   getInitialState: function() {
@@ -9,13 +10,13 @@ var UserShow = React.createClass({
 
   getStateFromStore: function () {
     return {
-      user: UsersStore.findUserById(parseInt(this.props.params.id))
+      user: CurrentUserStore.currentUser()
     };
   },
 
   componentDidMount: function() {
-    this.listener = UsersStore.addListener(this._onChange);
-    UsersApiUtil.fetchUser(this.props.params.id);
+    this.listener = CurrentUserStore.addListener(this._onChange);
+    SessionsApiUtil.fetchCurrentUser(this.props.params.id);
   },
 
   componentWillUnmount: function() {
@@ -23,10 +24,11 @@ var UserShow = React.createClass({
   },
 
   render: function() {
+
     var user = this.state.user;
     if (!user) {
       return (
-        <div>ERROR</div>
+        <div>Uh Oh</div>
       );
     }
 
@@ -34,18 +36,17 @@ var UserShow = React.createClass({
     if (user) {
       user.questions && user.questions.forEach(function (question) {
         questions.push(
-          <li key={question.id}>{ question.title }</li>
+          <li key={question.id}>{question.title }</li>
         );
       });
     }
 
     return (
-      <div>
-        <h1 className="title">UserShow: { user.username }</h1>
-
-        <h3>Users posts:</h3>
-        <ul className="users-index">{ posts }</ul>
-        <a href={"#/"}>All Users</a>
+      <div className="homepage">
+        <h1 className="title">Logged in as: { user.username }</h1>
+        <div className="my-questions">My Questions:{questions}</div>
+        <a href="#/">All Questions:</a>
+        < QuestionsIndex />
       </div>
     );
   },

@@ -1,6 +1,7 @@
 var React = require('react');
 var History = require('react-router').History;
 var QuestionDetail = require('./questionDetail');
+
 var QuestionIndexItem = React.createClass({
 
   mixins: [History],
@@ -19,7 +20,9 @@ var QuestionIndexItem = React.createClass({
   },
 
   render: function() {
-
+    if (this.state.detail){
+      return (< QuestionDetail />);
+    }
     return(
       <li className="single-question" onClick={this.toggleState}>
         {this.props.question.title}
