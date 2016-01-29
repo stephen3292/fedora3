@@ -31099,7 +31099,7 @@
 	      'li',
 	      { className: 'single-question', onClick: this.toggleState },
 	      this.props.question.title,
-	      this.props.question.user_id,
+	      this.props.question.username,
 	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url })
 	    );
 	  }
@@ -31155,6 +31155,8 @@
 	            this.state.question.title,
 	            React.createElement('br', null),
 	            this.state.question.body,
+	            React.createElement('br', null),
+	            this.state.question.username,
 	            React.createElement('br', null),
 	            this.state.question.user_id,
 	            React.createElement('br', null)

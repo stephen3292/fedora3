@@ -40,6 +40,7 @@ var questionDetail = React.createClass({
 
               {this.state.question.title}<br/>
               {this.state.question.body}<br/>
+              {this.state.question.username}<br/>
               {this.state.question.user_id}<br/>
             </div>
           </div>

@@ -11,6 +11,7 @@ class Api::QuestionsController < ApplicationController
   def create
     question = Question.new(question_params)
     question.user_id = current_user.id
+    question.username = current_user.username
 
     question.body = '' unless question.body
     if question.save!
@@ -38,6 +39,6 @@ class Api::QuestionsController < ApplicationController
 
   private
   def question_params
-    params.require(:question).permit(:title, :body, :image)
+    params.require(:question).permit(:title, :body, :image, :username)
   end
 end
