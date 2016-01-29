@@ -51,16 +51,17 @@
 	var Route = __webpack_require__(159).Route;
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	var App = __webpack_require__(230);
+	// var UserShow = require('./components/users/user_show');
 	var UsersIndex = __webpack_require__(236);
 	var CurrentUserStore = __webpack_require__(232);
 	var SessionsApiUtil = __webpack_require__(234);
 	
-	var SessionForm = __webpack_require__(242);
-	var UserForm = __webpack_require__(243);
-	ApiUtil = __webpack_require__(244);
-	QuestionsIndex = __webpack_require__(246);
+	var SessionForm = __webpack_require__(241);
+	var UserForm = __webpack_require__(242);
+	ApiUtil = __webpack_require__(243);
+	QuestionsIndex = __webpack_require__(245);
 	QuestionStore = __webpack_require__(207);
-	QuestionDetail = __webpack_require__(248);
+	QuestionDetail = __webpack_require__(247);
 	
 	console.log(ApiUtil.fetchAllQuestions());
 	console.log(QuestionStore.all());
@@ -76,7 +77,6 @@
 	console.log('hi');
 	
 	function _ensureLoggedIn(nextState, replace, callback) {
-	  debugger;
 	  if (CurrentUserStore.userHasBeenFetched()) {
 	    _redirectIfNotLoggedIn();
 	  } else {
@@ -24038,7 +24038,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1),
-	    QuestionStore = __webpack_require__(207);
+	    questionsStore = __webpack_require__(207);
 	
 	var QuestionForm = React.createClass({
 	  displayName: 'QuestionForm',
@@ -30953,6 +30953,7 @@
 	  },
 	
 	  render: function () {
+	    debugger;
 	    if (!CurrentUserStore.userHasBeenFetched()) {
 	      return React.createElement(
 	        'p',
@@ -31004,12 +31005,11 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        'Logged in as',
 	        this.state.currentUser.username,
 	        React.createElement(
 	          'button',
 	          { onClick: this.logout },
-	          'LOG OUT'
+	          'Sign Out'
 	        )
 	      );
 	    } else {
@@ -31145,7 +31145,7 @@
 
 	var React = __webpack_require__(1);
 	var UsersStore = __webpack_require__(237);
-	var UsersApiUtil = __webpack_require__(238);
+	var UsersApiUtil = __webpack_require__(239);
 	
 	var UsersIndex = React.createClass({
 	  displayName: 'UsersIndex',
@@ -31178,7 +31178,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'all-users' },
 	      React.createElement(
 	        'h1',
 	        { className: 'title' },
@@ -31205,7 +31205,7 @@
 
 	var Store = __webpack_require__(212).Store;
 	var AppDispatcher = __webpack_require__(208);
-	var UserConstants = __webpack_require__(240);
+	var UserConstants = __webpack_require__(238);
 	
 	var _users = [];
 	var CHANGE_EVENT = "change";
@@ -31249,9 +31249,20 @@
 
 /***/ },
 /* 238 */
+/***/ function(module, exports) {
+
+	var UserConstants = {
+	  RECEIVE_USERS: "RECEIVE_USERS",
+	  RECEIVE_USER: "RECEIVE_USER"
+	};
+	
+	module.exports = UserConstants;
+
+/***/ },
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var UserActions = __webpack_require__(239);
+	var UserActions = __webpack_require__(240);
 	
 	var UsersApiUtil = {
 	  fetchUsers: function () {
@@ -31294,11 +31305,11 @@
 	module.exports = UsersApiUtil;
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(208);
-	var UserConstants = __webpack_require__(240);
+	var UserConstants = __webpack_require__(238);
 	
 	var UserActions = {
 	  receiveUsers: function (users) {
@@ -31319,19 +31330,7 @@
 	module.exports = UserActions;
 
 /***/ },
-/* 240 */
-/***/ function(module, exports) {
-
-	var UserConstants = {
-	  RECEIVE_USERS: "RECEIVE_USERS",
-	  RECEIVE_USER: "RECEIVE_USER"
-	};
-	
-	module.exports = UserConstants;
-
-/***/ },
-/* 241 */,
-/* 242 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31387,13 +31386,13 @@
 	module.exports = SessionForm;
 
 /***/ },
-/* 243 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
 	var UsersStore = __webpack_require__(237);
-	var UsersApiUtil = __webpack_require__(238);
+	var UsersApiUtil = __webpack_require__(239);
 	
 	var UserForm = React.createClass({
 	  displayName: 'UserForm',
@@ -31445,11 +31444,11 @@
 	module.exports = UserForm;
 
 /***/ },
-/* 244 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(208);
-	var QuestionActions = __webpack_require__(245);
+	var QuestionActions = __webpack_require__(244);
 	var QuestionsStore = __webpack_require__(207);
 	
 	var questionApiUtil = {
@@ -31496,7 +31495,7 @@
 	module.exports = questionApiUtil;
 
 /***/ },
-/* 245 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -31526,13 +31525,13 @@
 	module.exports = questionActions;
 
 /***/ },
-/* 246 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var questionStore = __webpack_require__(207);
-	var questionApiUtil = __webpack_require__(244);
-	var QuestionIndexItem = __webpack_require__(247);
+	var questionsStore = __webpack_require__(207);
+	var questionApiUtil = __webpack_require__(243);
+	var QuestionIndexItem = __webpack_require__(246);
 	var QuestionForm = __webpack_require__(206);
 	
 	var QuestionsIndex = React.createClass({
@@ -31587,14 +31586,12 @@
 	module.exports = QuestionsIndex;
 
 /***/ },
-/* 247 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
-	var QuestionDetail = __webpack_require__(248);
-	var QuestionStore = __webpack_require__(207);
-	var AnswersIndex = __webpack_require__(249);
+	var QuestionDetail = __webpack_require__(247);
 	var QuestionIndexItem = React.createClass({
 	  displayName: 'QuestionIndexItem',
 	
@@ -31626,12 +31623,12 @@
 	module.exports = QuestionIndexItem;
 
 /***/ },
-/* 248 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var questionStore = __webpack_require__(207);
-	var apiUtil = __webpack_require__(244);
+	var questionsStore = __webpack_require__(207);
+	var questionApiUtil = __webpack_require__(243);
 	
 	var questionDetail = React.createClass({
 	  displayName: 'questionDetail',
@@ -31693,12 +31690,6 @@
 	});
 	
 	module.exports = questionDetail;
-
-/***/ },
-/* 249 */
-/***/ function(module, exports) {
-
-
 
 /***/ }
 /******/ ]);

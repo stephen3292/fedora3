@@ -1,5 +1,5 @@
 var React = require('react'),
-    QuestionStore = require('../stores/questions_store');
+    questionsStore = require('./../../stores/questions_store');
 
 var QuestionForm = React.createClass({
   getInitialState: function(){

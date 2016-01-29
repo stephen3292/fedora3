@@ -25,9 +25,8 @@ var Header = React.createClass({
     if (CurrentUserStore.isLoggedIn()) {
       return (
         <div>
-          Logged in as
           { this.state.currentUser.username }
-          <button onClick={ this.logout }>LOG OUT</button>
+          <button onClick={ this.logout }>Sign Out</button>
         </div>
       );
     } else {

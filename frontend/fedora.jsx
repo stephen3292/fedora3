@@ -1,10 +1,11 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Router = require('react-router').Router;
-var QuestionForm = require('./components/questionForm.jsx');
+var QuestionForm = require('./components/questions/questionForm');
 var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var App = require('./components/app');
+// var UserShow = require('./components/users/user_show');
 var UsersIndex = require('./components/users/users_index');
 var CurrentUserStore = require('./stores/current_user_store');
 var SessionsApiUtil = require('./util/sessions_api_util');
@@ -12,9 +13,9 @@ var SessionsApiUtil = require('./util/sessions_api_util');
 var SessionForm = require('./components/sessions/new');
 var UserForm = require('./components/users/user_form');
  ApiUtil = require('./util/apiUtil.js');
- QuestionsIndex = require('./components/questionsIndex.jsx');
+ QuestionsIndex = require('./components/questions/questionsIndex');
  QuestionStore = require('./stores/questions_store.js');
- QuestionDetail = require('./components/questionDetail');
+ QuestionDetail = require('./components/questions/questionDetail');
 
 
 
@@ -31,8 +32,8 @@ var routes = (
 
   <Route path="/" component={App} onEnter={_ensureLoggedIn}>
    <IndexRoute component={ UsersIndex } onEnter={_ensureLoggedIn} />
-   <Route path="login" component={ SessionForm }/>
-   <Route path="users/new" component={ UserForm } />
+    <Route path="login" component={ SessionForm }/>
+    <Route path="users/new" component={ UserForm } />
   </Route>
 
 );
@@ -40,7 +41,6 @@ var routes = (
 console.log('hi');
 
   function _ensureLoggedIn(nextState, replace, callback) {
-    debugger
     if (CurrentUserStore.userHasBeenFetched()) {
       _redirectIfNotLoggedIn();
     } else {

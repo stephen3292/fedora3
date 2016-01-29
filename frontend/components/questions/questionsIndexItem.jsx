@@ -1,8 +1,6 @@
 var React = require('react');
 var History = require('react-router').History;
 var QuestionDetail = require('./questionDetail');
-var QuestionStore = require('../stores/questions_store');
-var AnswersIndex = require('./answersIndex');
 var QuestionIndexItem = React.createClass({
 
   mixins: [History],
