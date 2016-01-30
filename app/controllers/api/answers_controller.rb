@@ -1,11 +1,10 @@
 class Api::AnswersController < ApplicationController
   def index
-    render json: Answer.all.to_json
+    @answers json: Answer.all
   end
 
   def show
-    answer = Answer.find(params[:id])
-    render json: answer
+    @answer = Answer.find(params[:id])
   end
 
   def create
@@ -37,6 +36,6 @@ class Api::AnswersController < ApplicationController
 
   private
   def answer_params
-    params.require(:answer).permit(:title, :body, :user_id, :question_id)
+    params.require(:answer).permit(:title, :body, :user_id, :question_id, :username)
   end
 end

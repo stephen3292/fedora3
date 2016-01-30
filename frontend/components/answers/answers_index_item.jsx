@@ -9,7 +9,7 @@ var AnswersIndexItem = React.createClass({
 
     return(
       <li>
-        hopefully....
+        answers will go here
       </li>
     );
   }

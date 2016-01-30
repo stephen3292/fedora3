@@ -24049,11 +24049,11 @@
 	  },
 	
 	  updateTitle: function (e) {
-	    this.setState({ title: e.currentTarget.value, body: this.state.body });
+	    this.setState({ title: e.currentTarget.value });
 	  },
 	
 	  updateBody: function (e) {
-	    this.setState({ body: e.currentTarget.value, title: this.state.title });
+	    this.setState({ body: e.currentTarget.value });
 	  },
 	
 	  changeFile: function (e) {
@@ -24096,22 +24096,18 @@
 	      'div',
 	      { className: 'ask-a-question group' },
 	      React.createElement(
-	        'nav',
-	        { className: 'ask-nav group' },
-	        React.createElement(
-	          'h2',
-	          { className: 'ask-header' },
-	          'Fedora'
-	        ),
-	        React.createElement('input', { className: 'form-title', onInput: this.updateTitle, value: this.state.title }),
-	        React.createElement('input', { className: 'form-body', onInput: this.updateBody, value: this.state.body }),
-	        React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
-	        React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
-	        React.createElement(
-	          'button',
-	          { className: 'form-button', onClick: this.handleSubmit },
-	          'Ask Question'
-	        )
+	        'h2',
+	        { className: 'ask-header' },
+	        'Fedora'
+	      ),
+	      React.createElement('input', { className: 'form-title', onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement('input', { className: 'form-body', onInput: this.updateBody, value: this.state.body }),
+	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
+	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
+	      React.createElement(
+	        'button',
+	        { className: 'form-button', onClick: this.handleSubmit },
+	        'Ask Question'
 	      )
 	    );
 	  }
@@ -31877,6 +31873,7 @@
 	var React = __webpack_require__(1);
 	var QuestionIndexItem = __webpack_require__(240);
 	var AnswersIndexItem = __webpack_require__(250);
+	var AnswerForm = __webpack_require__(251);
 	
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',
@@ -31886,7 +31883,8 @@
 	      'div',
 	      null,
 	      'This is where the answers will go:',
-	      React.createElement(AnswersIndexItem, null)
+	      React.createElement(AnswersIndexItem, null),
+	      React.createElement(AnswerForm, null)
 	    );
 	  }
 	
@@ -31910,12 +31908,86 @@
 	    return React.createElement(
 	      'li',
 	      null,
-	      'hopefully....'
+	      'answers will go here'
 	    );
 	  }
 	});
 	
 	module.exports = AnswersIndexItem;
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var AnswerForm = React.createClass({
+	  displayName: "AnswerForm",
+	
+	  getInitialState: function () {
+	    return { title: "", imageFile: null, imageUrl: "" };
+	  },
+	
+	  updateTitle: function (e) {
+	    this.setState({ title: e.currentTarget.value });
+	  },
+	
+	  changeFile: function (e) {
+	    var reader = new FileReader();
+	    var file = e.currentTarget.files[0];
+	
+	    reader.onloadend = function () {
+	      this.setState({ imageFile: file, iamgeUrl: reader.result });
+	    }.bind(this);
+	
+	    if (file) {
+	      reader.readAsDataURL(file);
+	    } else {
+	      this.setState({ imageFile: null, imageUrl: "" });
+	    }
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    var formData = new FormData();
+	
+	    formData.append("answer[title]", this.state.title);
+	    if (this.state.imageFile) {
+	      formData.append("answer[image]", this.state.imageFile);
+	    } else {
+	      formData.append("answer[image]", "");
+	    }
+	
+	    AnswersApiUtil.createAnswer(formData);
+	  },
+	
+	  resetForm: function () {
+	    this.setState({ title: "", imageFile: null, imageUrl: "" });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      { className: "answer-form" },
+	      React.createElement(
+	        "h2",
+	        { className: "answer-header" },
+	        "Answer: "
+	      ),
+	      React.createElement("input", { className: "form-title", onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement("input", { className: "image-attachment", type: "file", onChange: this.changeFile }),
+	      React.createElement("img", { className: "preview-image", src: this.state.imageUrl }),
+	      React.createElement(
+	        "button",
+	        { className: "form-button", onClick: this.handleSubmit },
+	        "Ask Question"
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = AnswerForm;
 
 /***/ }
 /******/ ]);

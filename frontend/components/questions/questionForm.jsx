@@ -7,11 +7,11 @@ var QuestionForm = React.createClass({
   },
 
   updateTitle: function(e){
-    this.setState({title: e.currentTarget.value, body: this.state.body});
+    this.setState({title: e.currentTarget.value});
   },
 
   updateBody: function(e){
-    this.setState({body: e.currentTarget.value, title: this.state.title});
+    this.setState({body: e.currentTarget.value});
   },
 
   changeFile: function(e) {
@@ -42,7 +42,7 @@ var QuestionForm = React.createClass({
       formData.append("question[image]", "");
     }
     formData.append("question[body]", this.state.body);
-  
+
     ApiUtil.createQuestion(formData);
   },
 
@@ -53,14 +53,12 @@ var QuestionForm = React.createClass({
   render: function(){
     return(
       <div className="ask-a-question group">
-        <nav className="ask-nav group">
           <h2 className='ask-header'>Fedora</h2>
           <input className="form-title" onInput={this.updateTitle} value={this.state.title}></input>
           <input className="form-body" onInput={this.updateBody} value={this.state.body}></input>
           <input className="image-attachment" type="file" onChange={this.changeFile} />
           <img className="preview-image" src={this.state.imageUrl}/>
           <button className="form-button" onClick={this.handleSubmit}>Ask Question</button>
-        </nav>
       </div>
     );
   }
