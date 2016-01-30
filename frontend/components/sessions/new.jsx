@@ -39,7 +39,7 @@ var SessionForm = React.createClass({
     var formData = new FormData();
     formData.append("user[username]", this.state.username);
     formData.append("user[password]", this.state.password);
-    debugger
+  
     SessionsApiUtil.login(formData);
   },
 

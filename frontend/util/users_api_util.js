@@ -25,7 +25,6 @@ var UsersApiUtil = {
   },
 
   createUser: function (attrs, callback) {
-    debugger
     $.ajax({
       url: '/api/users',
       type: 'POST',

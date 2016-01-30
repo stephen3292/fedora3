@@ -5,13 +5,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    debugger
+
     user = User.find_by_credentials(params[:user][:username], params[:user][:password])
 
 
     if user
       sign_in!(user)
-      redirect_to root_url
     else
       flash.now[:errors] = ["invalid name or password"]
       render :new

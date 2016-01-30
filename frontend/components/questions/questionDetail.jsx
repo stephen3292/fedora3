@@ -1,6 +1,7 @@
 var React = require('react');
 var questionsStore = require('./../../stores/questions_store');
 var questionApiUtil = require('./../../util/apiUtil.js');
+var AnswersIndex = require('../answers/answers_index');
 
 
 
@@ -32,7 +33,7 @@ var questionDetail = React.createClass({
 
   render: function() {
     if (this.state.question) {
-      debugger
+
       return(
         <div>
           <div className="question-detail-pane">
@@ -43,7 +44,7 @@ var questionDetail = React.createClass({
               {this.state.question.user_id}<br/>
 
               <img className="post-image" src={this.state.question.image_url} />
-
+              < AnswersIndex />
             </div>
           </div>
         </div>

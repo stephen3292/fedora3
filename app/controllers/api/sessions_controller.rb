@@ -10,7 +10,7 @@ class Api::SessionsController < ApplicationController
   end
 
   def create
-    debugger
+
     @user = User.find_by_credentials(
       params[:user][:username],
       params[:user][:password]
@@ -20,7 +20,7 @@ class Api::SessionsController < ApplicationController
       render json: ["Wrong username/password combo!"], status: 401
     else
       sign_in!(@user)
-      render json: {}
+      render "api/users/show"
     end
   end
 

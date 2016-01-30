@@ -1,7 +1,7 @@
 var React = require('react');
 var History = require('react-router').History;
 var QuestionDetail = require('./questionDetail');
-
+var AnswersIndex = require('../answers/answers_index');
 var QuestionIndexItem = React.createClass({
 
   mixins: [History],
@@ -28,7 +28,7 @@ var QuestionIndexItem = React.createClass({
         {this.props.question.title}
         {this.props.question.username}
         <img className="question-image" src={this.props.question.image_url} />
-
+        < AnswersIndex />
       </li>
     );
   }

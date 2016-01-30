@@ -24083,7 +24083,7 @@
 	      formData.append("question[image]", "");
 	    }
 	    formData.append("question[body]", this.state.body);
-	    debugger;
+	
 	    ApiUtil.createQuestion(formData);
 	  },
 	
@@ -31375,7 +31375,7 @@
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
 	var QuestionDetail = __webpack_require__(241);
-	
+	var AnswersIndex = __webpack_require__(249);
 	var QuestionIndexItem = React.createClass({
 	  displayName: 'QuestionIndexItem',
 	
@@ -31401,7 +31401,8 @@
 	      { className: 'single-question', onClick: this.toggleState },
 	      this.props.question.title,
 	      this.props.question.username,
-	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url })
+	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
+	      React.createElement(AnswersIndex, null)
 	    );
 	  }
 	});
@@ -31415,6 +31416,7 @@
 	var React = __webpack_require__(1);
 	var questionsStore = __webpack_require__(207);
 	var questionApiUtil = __webpack_require__(238);
+	var AnswersIndex = __webpack_require__(249);
 	
 	var questionDetail = React.createClass({
 	  displayName: 'questionDetail',
@@ -31443,7 +31445,7 @@
 	
 	  render: function () {
 	    if (this.state.question) {
-	      debugger;
+	
 	      return React.createElement(
 	        'div',
 	        null,
@@ -31461,7 +31463,8 @@
 	            React.createElement('br', null),
 	            this.state.question.user_id,
 	            React.createElement('br', null),
-	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url })
+	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url }),
+	            React.createElement(AnswersIndex, null)
 	          )
 	        )
 	      );
@@ -31628,7 +31631,6 @@
 	  },
 	
 	  createUser: function (attrs, callback) {
-	    debugger;
 	    $.ajax({
 	      url: '/api/users',
 	      type: 'POST',
@@ -31719,7 +31721,7 @@
 	    var formData = new FormData();
 	    formData.append("user[username]", this.state.username);
 	    formData.append("user[password]", this.state.password);
-	    debugger;
+	
 	    SessionsApiUtil.login(formData);
 	  },
 	
@@ -31866,6 +31868,54 @@
 	});
 	
 	module.exports = UserForm;
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var React = __webpack_require__(1);
+	var QuestionIndexItem = __webpack_require__(240);
+	var AnswersIndexItem = __webpack_require__(250);
+	
+	var AnswersIndex = React.createClass({
+	  displayName: 'AnswersIndex',
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      'This is where the answers will go:',
+	      React.createElement(AnswersIndexItem, null)
+	    );
+	  }
+	
+	});
+	
+	module.exports = AnswersIndex;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var AnswersIndexItem = React.createClass({
+	  displayName: 'AnswersIndexItem',
+	
+	  mixins: [History],
+	
+	  render: function () {
+	
+	    return React.createElement(
+	      'li',
+	      null,
+	      'hopefully....'
+	    );
+	  }
+	});
+	
+	module.exports = AnswersIndexItem;
 
 /***/ }
 /******/ ]);
