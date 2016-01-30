@@ -19,6 +19,10 @@ User.destroy_all
   d = User.create(username: "stephen3292", password: "stephen3292",
         description: "stephen3292")
 
-  A = Question.create(user_id: a.id, title: 'Is this working?', body: 'idk', username: a.username)
-  B = Question.create(user_id: b.id, title: 'will this work', body: 'dec', username: b.username)
-  C = Question.create(user_id: c.id, title: 'hmmm', body: 'idk', username: c.username)
+  q1 = Question.create(user_id: a.id, title: 'Is this working?', body: 'idk', username: a.username)
+  q2 = Question.create(user_id: b.id, title: 'will this work', body: 'dec', username: b.username)
+  q3 = Question.create(user_id: c.id, title: 'hmmm', body: 'idk', username: c.username)
+
+  a1 = Answer.create(title: 'maybe not', body: "", user_id: a.id, question_id: q1.id, username: a.username)
+  a2 = Answer.create(title: 'not totally sure', body: "", user_id: d.id, question_id: q1.id, username: d.username)
+  a3 = Answer.create(title: 'lol idk', body: "", user_id: c.id, question_id: q1.id, username: c.username)

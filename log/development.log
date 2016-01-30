@@ -61221,3 +61221,152 @@ Processing by Api::SessionsController#show as JSON
   [1m[36mQuestion Load (0.6ms)[0m  [1mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" = $1[0m  [["user_id", 4]]
   Rendered api/users/show.json.jbuilder (6.3ms)
 Completed 200 OK in 12ms (Views: 9.0ms | ActiveRecord: 1.1ms)
+  [1m[35mAnswer Load (35.7ms)[0m  SELECT "answers".* FROM "answers"
+  [1m[36mQuestion Load (0.9ms)[0m  [1mSELECT "questions".* FROM "questions"[0m
+
+
+Started GET "/" for ::1 at 2016-01-30 13:56:54 -0500
+Processing by StaticPagesController#root as HTML
+  Rendered static_pages/root.html.erb within layouts/application (0.1ms)
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT 1  [["session_token", "QFEDh-qs0aTh7WfIsA-q8Q"]]
+Completed 200 OK in 141ms (Views: 138.9ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/api/questions" for ::1 at 2016-01-30 13:56:55 -0500
+Processing by Api::QuestionsController#index as JSON
+  [1m[36mQuestion Load (2.7ms)[0m  [1mSELECT "questions".* FROM "questions"[0m
+  Rendered api/questions/_question.json.jbuilder (10.4ms)
+  Rendered api/questions/_question.json.jbuilder (1.0ms)
+  Rendered api/questions/_question.json.jbuilder (1.0ms)
+  Rendered api/questions/_question.json.jbuilder (1.5ms)
+  Rendered api/questions/_question.json.jbuilder (1.0ms)
+  Rendered api/questions/_question.json.jbuilder (1.0ms)
+  Rendered api/questions/index.json.jbuilder (54.6ms)
+Completed 200 OK in 79ms (Views: 53.9ms | ActiveRecord: 15.2ms)
+
+
+Started GET "/api/session" for ::1 at 2016-01-30 13:56:55 -0500
+Processing by Api::SessionsController#show as JSON
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT 1  [["session_token", "QFEDh-qs0aTh7WfIsA-q8Q"]]
+  Rendered api/users/_user.json.jbuilder (5.0ms)
+  [1m[36mQuestion Load (0.7ms)[0m  [1mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" = $1[0m  [["user_id", 4]]
+  Rendered api/users/show.json.jbuilder (12.5ms)
+Completed 200 OK in 20ms (Views: 17.3ms | ActiveRecord: 1.3ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mQuestion Load (0.8ms)[0m  SELECT "questions".* FROM "questions"
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  DELETE FROM "questions" WHERE "questions"."id" = $1  [["id", 1]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "questions" WHERE "questions"."id" = $1[0m  [["id", 2]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "questions" WHERE "questions"."id" = $1  [["id", 3]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+[AWS S3 200 0.604653 0 retries] head_object(:bucket_name=>"fedora1-dev",:key=>"questions/images/000/000/004/original/joes_pizza.jpg")  
+
+  [1m[36mSQL (0.5ms)[0m  [1mDELETE FROM "questions" WHERE "questions"."id" = $1[0m  [["id", 4]]
+  [1m[35m (0.7ms)[0m  COMMIT
+[paperclip] deleting /questions/images/000/000/004/original/joes_pizza.jpg
+[AWS S3 204 0.03744 0 retries] delete_object(:bucket_name=>"fedora1-dev",:key=>"questions/images/000/000/004/original/joes_pizza.jpg")  
+
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+[AWS S3 200 0.03497 0 retries] head_object(:bucket_name=>"fedora1-dev",:key=>"questions/images/000/000/005/original/joes_pizza.jpg")  
+
+  [1m[35mSQL (0.4ms)[0m  DELETE FROM "questions" WHERE "questions"."id" = $1  [["id", 5]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+[paperclip] deleting /questions/images/000/000/005/original/joes_pizza.jpg
+[AWS S3 204 0.033255 0 retries] delete_object(:bucket_name=>"fedora1-dev",:key=>"questions/images/000/000/005/original/joes_pizza.jpg")  
+
+  [1m[35m (0.2ms)[0m  BEGIN
+[AWS S3 200 0.03617 0 retries] head_object(:bucket_name=>"fedora1-dev",:key=>"questions/images/000/000/006/original/lombardis.jpg")  
+
+  [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "questions" WHERE "questions"."id" = $1[0m  [["id", 6]]
+  [1m[35m (11.5ms)[0m  COMMIT
+[paperclip] deleting /questions/images/000/000/006/original/lombardis.jpg
+[AWS S3 204 0.032102 0 retries] delete_object(:bucket_name=>"fedora1-dev",:key=>"questions/images/000/000/006/original/lombardis.jpg")  
+
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 1]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 2]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 3]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 4]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 5]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 6]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 7]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 8]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 9]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 10]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 11]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 12]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 13]]
+  [1m[35m (16.9ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 14]]
+  [1m[36m (10.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 15]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 16]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 17]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (14.7ms)[0m  INSERT INTO "users" ("username", "password_digest", "description", "session_token", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["username", "Bob"], ["password_digest", "$2a$10$FTPhQs44yF7aZwcz6QEzPuIrJGzjhU56xd9dIiFnFPAu82VXqv1Gu"], ["description", "ok"], ["session_token", "xelthUDtZys6r4EN1gxqGg"], ["created_at", "2016-01-30 18:57:51.450479"], ["updated_at", "2016-01-30 18:57:51.450479"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("username", "password_digest", "description", "session_token", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["username", "Tim"], ["password_digest", "$2a$10$Q07HtYdVz6atbjQMut3.X.NhHtId/xnjMxHlXHR/OpYTE44PzjZ1a"], ["description", "old"], ["session_token", "V9X2BJF62-wq1jWoq-6zvQ"], ["created_at", "2016-01-30 18:57:51.545195"], ["updated_at", "2016-01-30 18:57:51.545195"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "users" ("username", "password_digest", "description", "session_token", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["username", "Jim"], ["password_digest", "$2a$10$oJ6WB7f1rdxI813vsGADD..eanCayM82bXQJAoqBiKOxNOhEGNeQK"], ["description", "md-phd"], ["session_token", "4wAcE3KwcOqQvBVDIVdWOA"], ["created_at", "2016-01-30 18:57:51.622454"], ["updated_at", "2016-01-30 18:57:51.622454"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("username", "password_digest", "description", "session_token", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["username", "stephen3292"], ["password_digest", "$2a$10$Bvaoq7gwpNulJgHFtwKG8ed6uIKbiKfskcNIIf.osk0Gbg/McL.ga"], ["description", "stephen3292"], ["session_token", "HRD0ke8olkQybTwKHpyOlw"], ["created_at", "2016-01-30 18:57:51.701788"], ["updated_at", "2016-01-30 18:57:51.701788"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "questions" ("user_id", "title", "body", "username", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_id", 18], ["title", "Is this working?"], ["body", "idk"], ["username", "Bob"], ["created_at", "2016-01-30 18:57:51.705951"], ["updated_at", "2016-01-30 18:57:51.705951"]]
+  [1m[36m (1.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "questions" ("user_id", "title", "body", "username", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_id", 19], ["title", "will this work"], ["body", "dec"], ["username", "Tim"], ["created_at", "2016-01-30 18:57:51.711079"], ["updated_at", "2016-01-30 18:57:51.711079"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "questions" ("user_id", "title", "body", "username", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_id", 20], ["title", "hmmm"], ["body", "idk"], ["username", "Jim"], ["created_at", "2016-01-30 18:57:51.713742"], ["updated_at", "2016-01-30 18:57:51.713742"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.9ms)[0m  [1mINSERT INTO "answers" ("title", "body", "user_id", "question_id", "username", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "maybe not"], ["body", ""], ["user_id", 18], ["question_id", 7], ["username", "Bob"], ["created_at", "2016-01-30 18:57:51.725651"], ["updated_at", "2016-01-30 18:57:51.725651"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "answers" ("title", "body", "user_id", "question_id", "username", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["title", "not totally sure"], ["body", ""], ["user_id", 21], ["question_id", 7], ["username", "stephen3292"], ["created_at", "2016-01-30 18:57:51.729237"], ["updated_at", "2016-01-30 18:57:51.729237"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "answers" ("title", "body", "user_id", "question_id", "username", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "lol idk"], ["body", ""], ["user_id", 20], ["question_id", 7], ["username", "Jim"], ["created_at", "2016-01-30 18:57:51.731591"], ["updated_at", "2016-01-30 18:57:51.731591"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[35mAnswer Load (0.7ms)[0m  SELECT "answers".* FROM "answers"
