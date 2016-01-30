@@ -1,16 +1,15 @@
 class Api::AnswersController < ApplicationController
   def index
-    @answers json: Answer.all
+    render json: Answer.where(question_id: params[:question_id]).to_json
   end
 
-  def show
-    @answer = Answer.find(params[:id])
-  end
 
   def create
-    answer = Answer.new(answer_params)
+    question = Question.find(params[:answer][:question_id])
+    answer = question.answers.new(answer_params)
     answer.body = '' unless answer.body
-    answer.user_id = current_user.id
+    answer.user_id = current_user.id unless answer.user_id
+    answer.username = current_user.username unless answer.username
     if answer.save!
       render json: answer
     else

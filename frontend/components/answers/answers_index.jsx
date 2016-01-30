@@ -13,7 +13,7 @@ var AnswersIndex = React.createClass({
       <div>
         This is where the answers will go:
         < AnswersIndexItem />
-      < AnswerForm />
+      < AnswerForm questionId={this.props.questionId}/>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 var React = require('react');
+var AnswersApiUtil = require('./../../util/answers_api_util.js');
 
 
 var AnswerForm = React.createClass({
@@ -29,15 +30,15 @@ var AnswerForm = React.createClass({
     e.preventDefault();
 
     var formData = new FormData();
-
     formData.append("answer[title]", this.state.title);
     if (this.state.imageFile) {
       formData.append("answer[image]", this.state.imageFile);
     } else {
       formData.append("answer[image]", "");
     }
-
-    AnswersApiUtil.createAnswer(formData);
+    formData.append("answer[question_id]", this.props.questionId);
+    debugger
+    AnswersApiUtil.createOneAnswer(formData);
   },
 
   resetForm: function() {
@@ -51,7 +52,7 @@ var AnswerForm = React.createClass({
           <input className="form-title" onInput={this.updateTitle} value={this.state.title}></input>
           <input className="image-attachment" type="file" onChange={this.changeFile} />
           <img className="preview-image" src={this.state.imageUrl}/>
-          <button className="form-button" onClick={this.handleSubmit}>Ask Question</button>
+          <button className="form-button" onClick={this.handleSubmit}>Answer Question</button>
       </div>
     );
   }

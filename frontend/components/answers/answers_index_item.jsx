@@ -8,9 +8,9 @@ var AnswersIndexItem = React.createClass({
   render: function() {
 
     return(
-      <li>
+      <div>
         answers will go here
-      </li>
+      </div>
     );
   }
 });

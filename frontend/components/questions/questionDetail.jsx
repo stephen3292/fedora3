@@ -32,6 +32,7 @@ var questionDetail = React.createClass({
   },
 
   render: function() {
+
     if (this.state.question) {
 
       return(
@@ -44,7 +45,8 @@ var questionDetail = React.createClass({
               {this.state.question.user_id}<br/>
 
               <img className="post-image" src={this.state.question.image_url} />
-              < AnswersIndex />
+
+              < AnswersIndex questionId={this.state.question.id}/>
             </div>
           </div>
         </div>

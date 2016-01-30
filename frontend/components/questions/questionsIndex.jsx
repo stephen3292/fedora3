@@ -35,7 +35,6 @@ var QuestionsIndex = React.createClass({
         <div className="all-the-questions">
           {questions}
         </div>
-
       </ul>
       </div>
     );

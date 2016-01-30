@@ -20,6 +20,7 @@ var QuestionIndexItem = React.createClass({
   },
 
   render: function() {
+
     if (this.state.detail){
       return (< QuestionDetail />);
     }

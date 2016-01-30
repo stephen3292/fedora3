@@ -31389,6 +31389,7 @@
 	  },
 	
 	  render: function () {
+	
 	    if (this.state.detail) {
 	      return React.createElement(QuestionDetail, null);
 	    }
@@ -31440,6 +31441,7 @@
 	  },
 	
 	  render: function () {
+	
 	    if (this.state.question) {
 	
 	      return React.createElement(
@@ -31460,7 +31462,7 @@
 	            this.state.question.user_id,
 	            React.createElement('br', null),
 	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url }),
-	            React.createElement(AnswersIndex, null)
+	            React.createElement(AnswersIndex, { questionId: this.state.question.id })
 	          )
 	        )
 	      );
@@ -31884,7 +31886,7 @@
 	      null,
 	      'This is where the answers will go:',
 	      React.createElement(AnswersIndexItem, null),
-	      React.createElement(AnswerForm, null)
+	      React.createElement(AnswerForm, { questionId: this.props.questionId })
 	    );
 	  }
 	
@@ -31906,7 +31908,7 @@
 	  render: function () {
 	
 	    return React.createElement(
-	      'li',
+	      'div',
 	      null,
 	      'answers will go here'
 	    );
@@ -31920,9 +31922,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var AnswersApiUtil = __webpack_require__(252);
 	
 	var AnswerForm = React.createClass({
-	  displayName: "AnswerForm",
+	  displayName: 'AnswerForm',
 	
 	  getInitialState: function () {
 	    return { title: "", imageFile: null, imageUrl: "" };
@@ -31951,15 +31954,15 @@
 	    e.preventDefault();
 	
 	    var formData = new FormData();
-	
 	    formData.append("answer[title]", this.state.title);
 	    if (this.state.imageFile) {
 	      formData.append("answer[image]", this.state.imageFile);
 	    } else {
 	      formData.append("answer[image]", "");
 	    }
-	
-	    AnswersApiUtil.createAnswer(formData);
+	    formData.append("answer[question_id]", this.props.questionId);
+	    debugger;
+	    AnswersApiUtil.createOneAnswer(formData);
 	  },
 	
 	  resetForm: function () {
@@ -31968,26 +31971,153 @@
 	
 	  render: function () {
 	    return React.createElement(
-	      "div",
-	      { className: "answer-form" },
+	      'div',
+	      { className: 'answer-form' },
 	      React.createElement(
-	        "h2",
-	        { className: "answer-header" },
-	        "Answer: "
+	        'h2',
+	        { className: 'answer-header' },
+	        'Answer: '
 	      ),
-	      React.createElement("input", { className: "form-title", onInput: this.updateTitle, value: this.state.title }),
-	      React.createElement("input", { className: "image-attachment", type: "file", onChange: this.changeFile }),
-	      React.createElement("img", { className: "preview-image", src: this.state.imageUrl }),
+	      React.createElement('input', { className: 'form-title', onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
+	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
 	      React.createElement(
-	        "button",
-	        { className: "form-button", onClick: this.handleSubmit },
-	        "Ask Question"
+	        'button',
+	        { className: 'form-button', onClick: this.handleSubmit },
+	        'Answer Question'
 	      )
 	    );
 	  }
 	});
 	
 	module.exports = AnswerForm;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(208);
+	var AnswerActions = __webpack_require__(253);
+	// var AnswerStore = require('../stores/answer_store');
+	
+	var answerApiUtil = {
+	  fetchQuestionAnswers: function (questionId) {
+	    console.log("running");
+	    $.ajax({
+	      type: "get",
+	      url: "api/questions/" + questionId + "/answers",
+	      dataType: "json",
+	      success: function (data) {
+	        AnswerActions.receiveQuestionAnswers(data);
+	      }
+	    });
+	  },
+	
+	  createOneAnswer: function (formData, questionId) {
+	    $.ajax({
+	      type: "post",
+	      url: "api/questions/" + questionId + "/answers",
+	      dataType: "json",
+	      processData: false,
+	      contentType: false,
+	      data: formData,
+	      success: function (data) {
+	        console.log('got it!');
+	      }
+	
+	    });
+	  }
+	};
+	
+	module.exports = answerApiUtil;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var AppDispatcher = __webpack_require__(208);
+	var AnswerConstants = __webpack_require__(254);
+	var AnswerStore = __webpack_require__(255);
+	
+	var answerActions = {
+	
+	  receiveAllAnswers: function (answers) {
+	    AppDispatcher.dispatch({
+	      actionType: AnswerConstants.ANSWERS_RECEIVED,
+	      answers: answers
+	    });
+	  },
+	
+	  receiveSingleAnswer: function (question) {
+	    AppDispatcher.dispatch({
+	      actionType: AnswerConstants.ANSWER_RECEIVED,
+	      answer: answer
+	    });
+	  }
+	
+	};
+	
+	module.exports = answerActions;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports) {
+
+	var AnswerConstants = {
+	  ANSWERS_RECEIVED: "ANSWERS_RECEIVED",
+	  ANSWER_RECEIVED: "ANSWER_RECEIVED"
+	};
+	
+	module.exports = AnswerConstants;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports) {
+
+	// var AppDispatcher = require('../dispatcher/dispatch');
+	// var Store = require('flux/utils').Store;
+	// var AnswerConstants = require('../constants/answerConstants');
+	// var _answers = {};
+	//
+	// var answerStore = new Store(AppDispatcher);
+	//
+	// answerStore.resetAnswers = function(answers){
+	//   for (var i = 0; i < answers.length; i++) {
+	//     _answers[answers[i].id] = answers[i];
+	//   }
+	// };
+	//
+	// answerStore.resetAnswer = function(answer){
+	//   _answers[answer.id] = answer;
+	// };
+	//
+	// answerStore.all = function(){
+	//   var result = [];
+	//   for (var i in _answers) {
+	//     result.push(_answers[i]);
+	//   }
+	//   return result;
+	// };
+	//
+	// answerStore.find = function(id) {
+	//   return _answers[id];
+	// };
+	//
+	// answerStore.__onDispatch = function (payload) {
+	//
+	//   switch(payload.actionType) {
+	//     case AnswerConstants.ANSWERS_RECIEVED:
+	//       answerStore.resetAnswers(payload.answers);
+	//       break;
+	//     case AnswerConstants.ANSWER_RECEIVED:
+	//       answerStore.resetAnswer(payload.answer);
+	//       break;
+	//   }
+	//   answerStore.__emitChange();
+	// };
+	//
+	// module.exports = answerStore;
 
 /***/ }
 /******/ ]);
