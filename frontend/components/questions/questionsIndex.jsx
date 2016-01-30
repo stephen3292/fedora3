@@ -8,7 +8,6 @@ var QuestionForm = require('./questionForm.jsx');
 var QuestionsIndex = React.createClass({
 
   getInitialState: function(){
-    debugger
     return {questions: questionsStore.all()};
   },
 

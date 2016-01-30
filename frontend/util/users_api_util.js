@@ -13,6 +13,7 @@ var UsersApiUtil = {
   },
 
   fetchUser: function (id) {
+
     $.ajax({
       url: '/api/users/' + id,
       type: 'GET',
@@ -24,17 +25,20 @@ var UsersApiUtil = {
   },
 
   createUser: function (attrs, callback) {
+    debugger
     $.ajax({
       url: '/api/users',
       type: 'POST',
+      processData: false,
+      contentType: false,
       dataType: 'json',
       data: attrs,
       success: function (user) {
-        UserActions.receiveUser(user);
-        CurrentUserActions.receive
-        callback && callback();
+        // UserActions.receiveUser(user);
+        // UserActions.receive(user)
+        // callback && callback();
       }
-    })
+    });
   }
 };
 

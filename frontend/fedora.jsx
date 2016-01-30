@@ -30,7 +30,7 @@ console.log(QuestionStore.all());
 
 var routes = (
 
-  <Route path="/" component={App} onEnter={_ensureLoggedIn}>
+  <Route path="/" component={App} >
    <IndexRoute component={ UserShow } onEnter={_ensureLoggedIn} />
     <Route path="login" component={ SessionForm }/>
     <Route path="users/new" component={ UserForm } />

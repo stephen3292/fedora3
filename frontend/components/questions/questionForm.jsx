@@ -42,6 +42,7 @@ var QuestionForm = React.createClass({
       formData.append("question[image]", "");
     }
     formData.append("question[body]", this.state.body);
+    debugger
     ApiUtil.createQuestion(formData);
   },
 

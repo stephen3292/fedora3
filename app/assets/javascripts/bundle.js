@@ -68,7 +68,7 @@
 	
 	var routes = React.createElement(
 	  Route,
-	  { path: '/', component: App, onEnter: _ensureLoggedIn },
+	  { path: '/', component: App },
 	  React.createElement(IndexRoute, { component: UserShow, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: SessionForm }),
 	  React.createElement(Route, { path: 'users/new', component: UserForm }),
@@ -24083,6 +24083,7 @@
 	      formData.append("question[image]", "");
 	    }
 	    formData.append("question[body]", this.state.body);
+	    debugger;
 	    ApiUtil.createQuestion(formData);
 	  },
 	
@@ -31088,6 +31089,8 @@
 	      url: '/api/session',
 	      type: 'POST',
 	      dataType: 'json',
+	      processData: false,
+	      contentType: false,
 	      data: credentials,
 	      success: function (currentUser) {
 	        CurrentUserActions.receiveCurrentUser(currentUser);
@@ -31241,7 +31244,6 @@
 	  displayName: 'QuestionsIndex',
 	
 	  getInitialState: function () {
-	    debugger;
 	    return { questions: questionsStore.all() };
 	  },
 	
@@ -31614,6 +31616,7 @@
 	  },
 	
 	  fetchUser: function (id) {
+	
 	    $.ajax({
 	      url: '/api/users/' + id,
 	      type: 'GET',
@@ -31625,15 +31628,18 @@
 	  },
 	
 	  createUser: function (attrs, callback) {
+	    debugger;
 	    $.ajax({
 	      url: '/api/users',
 	      type: 'POST',
+	      processData: false,
+	      contentType: false,
 	      dataType: 'json',
 	      data: attrs,
 	      success: function (user) {
-	        UserActions.receiveUser(user);
-	        CurrentUserActions.receive;
-	        callback && callback();
+	        // UserActions.receiveUser(user);
+	        // UserActions.receive(user)
+	        // callback && callback();
 	      }
 	    });
 	  }
@@ -31673,47 +31679,81 @@
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
 	var SessionsApiUtil = __webpack_require__(234);
+	var UserForm = __webpack_require__(248);
 	
 	var SessionForm = React.createClass({
 	  displayName: 'SessionForm',
 	
 	  mixins: [History],
 	
-	  submit: function (e) {
+	  getInitialState: function () {
+	    return { username: "", password: "" };
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  changeFile: function (e) {
+	    var reader = new FileReader();
+	    var file = e.currentTarget.files[0];
+	
+	    reader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: reader.result });
+	    }.bind(this);
+	
+	    if (file) {
+	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
+	    } else {
+	        this.setState({ imageFile: null, imageUrl: "" });
+	      }
+	  },
+	
+	  handleSubmit: function (e) {
 	    e.preventDefault();
 	
-	    var credentials = $(e.currentTarget).serializeJSON();
-	    SessionsApiUtil.login(credentials, function () {
-	      this.history.pushState({}, "/");
-	    }.bind(this));
+	    var formData = new FormData();
+	    formData.append("user[username]", this.state.username);
+	    formData.append("user[password]", this.state.password);
+	    debugger;
+	    SessionsApiUtil.login(formData);
 	  },
 	
 	  render: function () {
 	
 	    return React.createElement(
-	      'form',
-	      { onSubmit: this.submit },
+	      'div',
+	      { className: 'new-user-form' },
+	      React.createElement(UserForm, null),
 	      React.createElement(
-	        'h1',
-	        null,
-	        'Log In'
-	      ),
-	      React.createElement(
-	        'label',
-	        null,
-	        'Username',
-	        React.createElement('input', { type: 'text', name: 'email' })
-	      ),
-	      React.createElement(
-	        'label',
-	        null,
-	        'Password',
-	        React.createElement('input', { type: 'password', name: 'password' })
-	      ),
-	      React.createElement(
-	        'button',
-	        null,
-	        'Log In!'
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'h1',
+	          null,
+	          'Sign In!'
+	        ),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Username',
+	          React.createElement('input', { onInput: this.updateUsername, value: this.state.username })
+	        ),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Password',
+	          React.createElement('input', { type: 'password', onInput: this.updatePassword, value: this.state.password })
+	        ),
+	        React.createElement(
+	          'button',
+	          null,
+	          'Sign In!'
+	        )
 	      )
 	    );
 	  }
@@ -31728,23 +31768,64 @@
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
-	var UsersStore = __webpack_require__(243);
-	var UsersApiUtil = __webpack_require__(245);
+	var UserApiUtil = __webpack_require__(245);
 	
 	var UserForm = React.createClass({
 	  displayName: 'UserForm',
 	
 	  mixins: [History],
 	
-	  submit: function (e) {
+	  getInitialState: function () {
+	    return { username: "", password: "", imageFile: null, imageUrl: "", description: "" };
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  updateDescription: function (e) {
+	    this.setState({ description: e.currentTarget.value });
+	  },
+	
+	  changeFile: function (e) {
+	    var reader = new FileReader();
+	    var file = e.currentTarget.files[0];
+	
+	    reader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: reader.result });
+	    }.bind(this);
+	
+	    if (file) {
+	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
+	    } else {
+	        this.setState({ imageFile: null, imageUrl: "" });
+	      }
+	  },
+	
+	  handleSubmit: function (e) {
 	    e.preventDefault();
+	
+	    var formData = new FormData();
+	
+	    formData.append("user[username]", this.state.username);
+	    if (this.state.imageFile) {
+	      formData.append("user[image]", this.state.imageFile);
+	    } else {
+	      formData.append("user[image]", "");
+	    }
+	    formData.append("user[password]", this.state.password);
+	    formData.append("user[description]", this.state.description);
+	    UserApiUtil.createUser(formData);
 	  },
 	
 	  render: function () {
-	
 	    return React.createElement(
 	      'form',
-	      { onSubmit: this.submit },
+	      { onSubmit: this.handleSubmit },
 	      React.createElement(
 	        'h1',
 	        null,
@@ -31754,19 +31835,25 @@
 	        'label',
 	        null,
 	        'Username',
-	        React.createElement('input', { type: 'text', name: 'username' })
+	        React.createElement('input', { onInput: this.updateUsername, value: this.state.username })
 	      ),
 	      React.createElement(
 	        'label',
 	        null,
 	        'Password',
-	        React.createElement('input', { type: 'password', name: 'password' })
+	        React.createElement('input', { type: 'password', onInput: this.updatePassword, value: this.state.password })
+	      ),
+	      React.createElement(
+	        'label',
+	        null,
+	        'Profile Picture',
+	        React.createElement('input', { type: 'file', onChange: this.changeFile })
 	      ),
 	      React.createElement(
 	        'label',
 	        null,
 	        'About',
-	        React.createElement('input', { type: 'text', name: 'description' })
+	        React.createElement('input', { type: 'text', onInput: this.updateDescription, value: this.state.description })
 	      ),
 	      React.createElement(
 	        'button',

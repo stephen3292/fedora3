@@ -5,6 +5,8 @@ var SessionsApiUtil = {
       url: '/api/session',
       type: 'POST',
       dataType: 'json',
+      processData: false,
+      contentType: false,
       data: credentials,
       success: function (currentUser) {
         CurrentUserActions.receiveCurrentUser(currentUser);
