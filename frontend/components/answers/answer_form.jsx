@@ -37,7 +37,6 @@ var AnswerForm = React.createClass({
       formData.append("answer[image]", "");
     }
     formData.append("answer[question_id]", this.props.questionId);
-    debugger
     AnswersApiUtil.createOneAnswer(formData);
   },
 

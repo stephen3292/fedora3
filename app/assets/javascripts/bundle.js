@@ -61,6 +61,7 @@
 	ApiUtil = __webpack_require__(238);
 	QuestionsIndex = __webpack_require__(237);
 	QuestionStore = __webpack_require__(207);
+	AnswersStore = __webpack_require__(255);
 	QuestionDetail = __webpack_require__(241);
 	
 	console.log(ApiUtil.fetchAllQuestions());
@@ -31876,16 +31877,42 @@
 	var QuestionIndexItem = __webpack_require__(240);
 	var AnswersIndexItem = __webpack_require__(250);
 	var AnswerForm = __webpack_require__(251);
+	var AnswersStore = __webpack_require__(255);
+	var CurrentUserStore = __webpack_require__(232);
+	AnswerApiUtil = __webpack_require__(252);
 	
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',
 	
+	  getInitialState: function () {
+	    return { answers: AnswersStore.all() };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ answers: AnswersStore.all() });
+	  },
+	
+	  componentDidMount: function () {
+	    AnswersStore.addListener(this._onChange);
+	    AnswerApiUtil.fetchQuestionAnswers(this.props.questionId);
+	  },
+	
 	  render: function () {
+	
+	    console.log(AnswersStore.all());
+	
+	    var answers = this.state.answers.map(function (answer) {
+	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
+	    });
+	
 	    return React.createElement(
 	      'div',
 	      null,
-	      'This is where the answers will go:',
-	      React.createElement(AnswersIndexItem, null),
+	      React.createElement(
+	        'div',
+	        null,
+	        answers
+	      ),
 	      React.createElement(AnswerForm, { questionId: this.props.questionId })
 	    );
 	  }
@@ -31908,9 +31935,10 @@
 	  render: function () {
 	
 	    return React.createElement(
-	      'div',
-	      null,
-	      'answers will go here'
+	      'li',
+	      { className: 'single-answer' },
+	      this.props.answer.title,
+	      this.props.answer.username
 	    );
 	  }
 	});
@@ -31961,7 +31989,6 @@
 	      formData.append("answer[image]", "");
 	    }
 	    formData.append("answer[question_id]", this.props.questionId);
-	    debugger;
 	    AnswersApiUtil.createOneAnswer(formData);
 	  },
 	
@@ -32008,7 +32035,8 @@
 	      url: "api/questions/" + questionId + "/answers",
 	      dataType: "json",
 	      success: function (data) {
-	        AnswerActions.receiveQuestionAnswers(data);
+	        console.log(data);
+	        AnswerActions.receiveAllAnswers(data);
 	      }
 	    });
 	  },
@@ -32023,6 +32051,7 @@
 	      data: formData,
 	      success: function (data) {
 	        console.log('got it!');
+	        AnswerActions.receiveSingleAnswer(data);
 	      }
 	
 	    });
@@ -32043,13 +32072,15 @@
 	var answerActions = {
 	
 	  receiveAllAnswers: function (answers) {
+	    console.log(answers);
 	    AppDispatcher.dispatch({
 	      actionType: AnswerConstants.ANSWERS_RECEIVED,
 	      answers: answers
+	
 	    });
 	  },
 	
-	  receiveSingleAnswer: function (question) {
+	  receiveSingleAnswer: function (answer) {
 	    AppDispatcher.dispatch({
 	      actionType: AnswerConstants.ANSWER_RECEIVED,
 	      answer: answer
@@ -32073,51 +32104,52 @@
 
 /***/ },
 /* 255 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// var AppDispatcher = require('../dispatcher/dispatch');
-	// var Store = require('flux/utils').Store;
-	// var AnswerConstants = require('../constants/answerConstants');
-	// var _answers = {};
-	//
-	// var answerStore = new Store(AppDispatcher);
-	//
-	// answerStore.resetAnswers = function(answers){
-	//   for (var i = 0; i < answers.length; i++) {
-	//     _answers[answers[i].id] = answers[i];
-	//   }
-	// };
-	//
-	// answerStore.resetAnswer = function(answer){
-	//   _answers[answer.id] = answer;
-	// };
-	//
-	// answerStore.all = function(){
-	//   var result = [];
-	//   for (var i in _answers) {
-	//     result.push(_answers[i]);
-	//   }
-	//   return result;
-	// };
-	//
-	// answerStore.find = function(id) {
-	//   return _answers[id];
-	// };
-	//
-	// answerStore.__onDispatch = function (payload) {
-	//
-	//   switch(payload.actionType) {
-	//     case AnswerConstants.ANSWERS_RECIEVED:
-	//       answerStore.resetAnswers(payload.answers);
-	//       break;
-	//     case AnswerConstants.ANSWER_RECEIVED:
-	//       answerStore.resetAnswer(payload.answer);
-	//       break;
-	//   }
-	//   answerStore.__emitChange();
-	// };
-	//
-	// module.exports = answerStore;
+	var AppDispatcher = __webpack_require__(208);
+	var Store = __webpack_require__(212).Store;
+	var AnswerConstants = __webpack_require__(254);
+	var _answers = {};
+	
+	var answerStore = new Store(AppDispatcher);
+	
+	answerStore.resetAnswers = function (answers) {
+	  for (var i = 0; i < answers.length; i++) {
+	    _answers[answers[i].id] = answers[i];
+	  }
+	};
+	
+	answerStore.resetAnswer = function (answer) {
+	  _answers[answer.id] = answer;
+	};
+	
+	answerStore.all = function () {
+	  var result = [];
+	  for (var i in _answers) {
+	    result.push(_answers[i]);
+	  }
+	  return result;
+	};
+	
+	answerStore.find = function (id) {
+	  return _answers[id];
+	};
+	
+	answerStore.__onDispatch = function (payload) {
+	
+	  switch (payload.actionType) {
+	    case AnswerConstants.ANSWERS_RECIEVED:
+	      answerStore.resetAnswers(payload.answers);
+	      break;
+	    case AnswerConstants.ANSWER_RECEIVED:
+	      answerStore.resetAnswer(payload.answer);
+	      break;
+	  }
+	  console.log(payload.answer);
+	  answerStore.__emitChange();
+	};
+	
+	module.exports = answerStore;
 
 /***/ }
 /******/ ]);

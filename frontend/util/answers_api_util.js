@@ -10,7 +10,8 @@ var answerApiUtil = {
       url: "api/questions/" + questionId + "/answers",
       dataType: "json",
       success: function(data) {
-        AnswerActions.receiveQuestionAnswers(data);
+        console.log(data);
+        AnswerActions.receiveAllAnswers(data);
       }
     });
   },
@@ -25,6 +26,7 @@ var answerApiUtil = {
       data: formData,
       success: function(data) {
         console.log('got it!');
+        AnswerActions.receiveSingleAnswer(data);
       }
 
     });

@@ -15,6 +15,7 @@ var UserForm = require('./components/users/user_form');
  ApiUtil = require('./util/apiUtil.js');
  QuestionsIndex = require('./components/questions/questionsIndex');
  QuestionStore = require('./stores/questions_store.js');
+ AnswersStore = require('./stores/answers_store.js');
  QuestionDetail = require('./components/questions/questionDetail');
 
 
