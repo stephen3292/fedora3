@@ -54,8 +54,8 @@ var UserForm = React.createClass({
 
   render: function() {
     return (
-      <form onSubmit={ this.handleSubmit }>
-      <h1>Sign Up!</h1>
+      <form className="sign-up-form" onSubmit={ this.handleSubmit }>
+      <h1 className="sign-up-header">SIGNUP</h1>
         <label>
           Username
           <input onInput={this.updateUsername} value={this.state.username}></input>

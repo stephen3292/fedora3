@@ -32,7 +32,7 @@ var Header = React.createClass({
     } else {
       return (
         <div>
-          <a href="#/login">Login</a>
+          <a href="#/login">LOGIN</a>
         </div>
       );
     }

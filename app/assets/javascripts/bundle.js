@@ -52,16 +52,16 @@
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	var App = __webpack_require__(230);
 	var UserShow = __webpack_require__(236);
-	var UsersIndex = __webpack_require__(242);
+	var UsersIndex = __webpack_require__(249);
 	var CurrentUserStore = __webpack_require__(232);
 	var SessionsApiUtil = __webpack_require__(234);
 	
-	var SessionForm = __webpack_require__(247);
-	var UserForm = __webpack_require__(248);
+	var SessionForm = __webpack_require__(254);
+	var UserForm = __webpack_require__(255);
 	ApiUtil = __webpack_require__(238);
 	QuestionsIndex = __webpack_require__(237);
 	QuestionStore = __webpack_require__(207);
-	AnswersStore = __webpack_require__(255);
+	AnswersStore = __webpack_require__(248);
 	QuestionDetail = __webpack_require__(241);
 	
 	console.log(ApiUtil.fetchAllQuestions());
@@ -30966,8 +30966,8 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
-	      React.createElement(Header, null),
+	      { className: 'div-w/header' },
+	      React.createElement(Header, { className: 'site-header' }),
 	      this.props.children
 	    );
 	  }
@@ -31021,7 +31021,7 @@
 	        React.createElement(
 	          'a',
 	          { href: '#/login' },
-	          'Login'
+	          'LOGIN'
 	        )
 	      );
 	    }
@@ -31372,7 +31372,7 @@
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
 	var QuestionDetail = __webpack_require__(241);
-	var AnswersIndex = __webpack_require__(249);
+	var AnswersIndex = __webpack_require__(242);
 	var QuestionIndexItem = React.createClass({
 	  displayName: 'QuestionIndexItem',
 	
@@ -31414,7 +31414,7 @@
 	var React = __webpack_require__(1);
 	var questionsStore = __webpack_require__(207);
 	var questionApiUtil = __webpack_require__(238);
-	var AnswersIndex = __webpack_require__(249);
+	var AnswersIndex = __webpack_require__(242);
 	
 	var questionDetail = React.createClass({
 	  displayName: 'questionDetail',
@@ -31484,402 +31484,14 @@
 /* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1);
-	var UsersStore = __webpack_require__(243);
-	var UsersApiUtil = __webpack_require__(245);
-	
-	var UsersIndex = React.createClass({
-	  displayName: 'UsersIndex',
-	
-	  getInitialState: function () {
-	    return { users: UsersStore.all() };
-	  },
-	
-	  componentDidMount: function () {
-	    this.listener = UsersStore.addListener(this._onChange);
-	    UsersApiUtil.fetchUsers();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.listener.remove();
-	  },
-	
-	  render: function () {
-	    var users = this.state.users.map(function (user) {
-	      return React.createElement(
-	        'li',
-	        { key: user.id },
-	        React.createElement(
-	          'a',
-	          { href: "#/users/" + user.id },
-	          user.username
-	        )
-	      );
-	    });
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'all-users' },
-	      React.createElement(
-	        'h1',
-	        { className: 'title' },
-	        'Users'
-	      ),
-	      React.createElement(
-	        'ul',
-	        { className: 'users-index' },
-	        users
-	      )
-	    );
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ users: UsersStore.all() });
-	  }
-	});
-	
-	module.exports = UsersIndex;
-
-/***/ },
-/* 243 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(212).Store;
-	var AppDispatcher = __webpack_require__(208);
-	var UserConstants = __webpack_require__(244);
-	
-	var _users = [];
-	var CHANGE_EVENT = "change";
-	
-	var _addUser = function (newUser) {
-	  _users.unshift(newUser);
-	};
-	
-	var UsersStore = new Store(AppDispatcher);
-	
-	UsersStore.all = function () {
-	  return _users.slice();
-	};
-	
-	UsersStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	
-	    case UserConstants.RECEIVE_USERS:
-	      _users = payload.users;
-	      UsersStore.__emitChange();
-	      break;
-	
-	    case UserConstants.RECEIVE_USER:
-	      _addUser(payload.user);
-	      UsersStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	UsersStore.findUserById = function (id) {
-	  for (var i = 0; i < _users.length; i++) {
-	    if (_users[i].id === id) {
-	      return _users[i];
-	    }
-	  }
-	
-	  return;
-	};
-	
-	module.exports = UsersStore;
-
-/***/ },
-/* 244 */
-/***/ function(module, exports) {
-
-	var UserConstants = {
-	  RECEIVE_USERS: "RECEIVE_USERS",
-	  RECEIVE_USER: "RECEIVE_USER"
-	};
-	
-	module.exports = UserConstants;
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var UserActions = __webpack_require__(246);
-	
-	var UsersApiUtil = {
-	  fetchUsers: function () {
-	    $.ajax({
-	      url: '/api/users',
-	      type: 'GET',
-	      dataType: 'json',
-	      success: function (users) {
-	        UserActions.receiveUsers(users);
-	      }
-	    });
-	  },
-	
-	  fetchUser: function (id) {
-	
-	    $.ajax({
-	      url: '/api/users/' + id,
-	      type: 'GET',
-	      dataType: 'json',
-	      success: function (user) {
-	        UserActions.receiveUser(user);
-	      }
-	    });
-	  },
-	
-	  createUser: function (attrs, callback) {
-	    $.ajax({
-	      url: '/api/users',
-	      type: 'POST',
-	      processData: false,
-	      contentType: false,
-	      dataType: 'json',
-	      data: attrs,
-	      success: function (user) {
-	        // UserActions.receiveUser(user);
-	        // UserActions.receive(user)
-	        // callback && callback();
-	      }
-	    });
-	  }
-	};
-	
-	module.exports = UsersApiUtil;
-
-/***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(208);
-	var UserConstants = __webpack_require__(244);
-	
-	var UserActions = {
-	  receiveUsers: function (users) {
-	    AppDispatcher.dispatch({
-	      actionType: UserConstants.RECEIVE_USERS,
-	      users: users
-	    });
-	  },
-	
-	  receiveUser: function (user) {
-	    AppDispatcher.dispatch({
-	      actionType: UserConstants.RECEIVE_USER,
-	      user: user
-	    });
-	  }
-	};
-	
-	module.exports = UserActions;
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var History = __webpack_require__(159).History;
-	var SessionsApiUtil = __webpack_require__(234);
-	var UserForm = __webpack_require__(248);
-	
-	var SessionForm = React.createClass({
-	  displayName: 'SessionForm',
-	
-	  mixins: [History],
-	
-	  getInitialState: function () {
-	    return { username: "", password: "" };
-	  },
-	
-	  updateUsername: function (e) {
-	    this.setState({ username: e.currentTarget.value });
-	  },
-	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
-	  },
-	
-	  changeFile: function (e) {
-	    var reader = new FileReader();
-	    var file = e.currentTarget.files[0];
-	
-	    reader.onloadend = function () {
-	      this.setState({ imageFile: file, imageUrl: reader.result });
-	    }.bind(this);
-	
-	    if (file) {
-	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
-	    } else {
-	        this.setState({ imageFile: null, imageUrl: "" });
-	      }
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	
-	    var formData = new FormData();
-	    formData.append("user[username]", this.state.username);
-	    formData.append("user[password]", this.state.password);
-	
-	    SessionsApiUtil.login(formData);
-	  },
-	
-	  render: function () {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'new-user-form' },
-	      React.createElement(UserForm, null),
-	      React.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'h1',
-	          null,
-	          'Sign In!'
-	        ),
-	        React.createElement(
-	          'label',
-	          null,
-	          'Username',
-	          React.createElement('input', { onInput: this.updateUsername, value: this.state.username })
-	        ),
-	        React.createElement(
-	          'label',
-	          null,
-	          'Password',
-	          React.createElement('input', { type: 'password', onInput: this.updatePassword, value: this.state.password })
-	        ),
-	        React.createElement(
-	          'button',
-	          null,
-	          'Sign In!'
-	        )
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = SessionForm;
-
-/***/ },
-/* 248 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var History = __webpack_require__(159).History;
-	var UserApiUtil = __webpack_require__(245);
-	
-	var UserForm = React.createClass({
-	  displayName: 'UserForm',
-	
-	  mixins: [History],
-	
-	  getInitialState: function () {
-	    return { username: "", password: "", imageFile: null, imageUrl: "", description: "" };
-	  },
-	
-	  updateUsername: function (e) {
-	    this.setState({ username: e.currentTarget.value });
-	  },
-	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
-	  },
-	
-	  updateDescription: function (e) {
-	    this.setState({ description: e.currentTarget.value });
-	  },
-	
-	  changeFile: function (e) {
-	    var reader = new FileReader();
-	    var file = e.currentTarget.files[0];
-	
-	    reader.onloadend = function () {
-	      this.setState({ imageFile: file, imageUrl: reader.result });
-	    }.bind(this);
-	
-	    if (file) {
-	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
-	    } else {
-	        this.setState({ imageFile: null, imageUrl: "" });
-	      }
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	
-	    var formData = new FormData();
-	
-	    formData.append("user[username]", this.state.username);
-	    if (this.state.imageFile) {
-	      formData.append("user[image]", this.state.imageFile);
-	    } else {
-	      formData.append("user[image]", "");
-	    }
-	    formData.append("user[password]", this.state.password);
-	    formData.append("user[description]", this.state.description);
-	    UserApiUtil.createUser(formData);
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'form',
-	      { onSubmit: this.handleSubmit },
-	      React.createElement(
-	        'h1',
-	        null,
-	        'Sign Up!'
-	      ),
-	      React.createElement(
-	        'label',
-	        null,
-	        'Username',
-	        React.createElement('input', { onInput: this.updateUsername, value: this.state.username })
-	      ),
-	      React.createElement(
-	        'label',
-	        null,
-	        'Password',
-	        React.createElement('input', { type: 'password', onInput: this.updatePassword, value: this.state.password })
-	      ),
-	      React.createElement(
-	        'label',
-	        null,
-	        'Profile Picture',
-	        React.createElement('input', { type: 'file', onChange: this.changeFile })
-	      ),
-	      React.createElement(
-	        'label',
-	        null,
-	        'About',
-	        React.createElement('input', { type: 'text', onInput: this.updateDescription, value: this.state.description })
-	      ),
-	      React.createElement(
-	        'button',
-	        null,
-	        'Join!'
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = UserForm;
-
-/***/ },
-/* 249 */
-/***/ function(module, exports, __webpack_require__) {
-
 	
 	var React = __webpack_require__(1);
 	var QuestionIndexItem = __webpack_require__(240);
-	var AnswersIndexItem = __webpack_require__(250);
-	var AnswerForm = __webpack_require__(251);
-	var AnswersStore = __webpack_require__(255);
+	var AnswersIndexItem = __webpack_require__(243);
+	var AnswerForm = __webpack_require__(244);
+	var AnswersStore = __webpack_require__(248);
 	var CurrentUserStore = __webpack_require__(232);
-	AnswerApiUtil = __webpack_require__(252);
+	AnswerApiUtil = __webpack_require__(245);
 	
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',
@@ -31922,7 +31534,7 @@
 	module.exports = AnswersIndex;
 
 /***/ },
-/* 250 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31946,11 +31558,11 @@
 	module.exports = AnswersIndexItem;
 
 /***/ },
-/* 251 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var AnswersApiUtil = __webpack_require__(252);
+	var AnswersApiUtil = __webpack_require__(245);
 	
 	var AnswerForm = React.createClass({
 	  displayName: 'AnswerForm',
@@ -32020,11 +31632,11 @@
 	module.exports = AnswerForm;
 
 /***/ },
-/* 252 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(208);
-	var AnswerActions = __webpack_require__(253);
+	var AnswerActions = __webpack_require__(246);
 	// var AnswerStore = require('../stores/answer_store');
 	
 	var answerApiUtil = {
@@ -32061,13 +31673,13 @@
 	module.exports = answerApiUtil;
 
 /***/ },
-/* 253 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var AppDispatcher = __webpack_require__(208);
-	var AnswerConstants = __webpack_require__(254);
-	var AnswerStore = __webpack_require__(255);
+	var AnswerConstants = __webpack_require__(247);
+	var AnswerStore = __webpack_require__(248);
 	
 	var answerActions = {
 	
@@ -32092,7 +31704,7 @@
 	module.exports = answerActions;
 
 /***/ },
-/* 254 */
+/* 247 */
 /***/ function(module, exports) {
 
 	var AnswerConstants = {
@@ -32103,12 +31715,12 @@
 	module.exports = AnswerConstants;
 
 /***/ },
-/* 255 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(208);
 	var Store = __webpack_require__(212).Store;
-	var AnswerConstants = __webpack_require__(254);
+	var AnswerConstants = __webpack_require__(247);
 	var _answers = {};
 	
 	var answerStore = new Store(AppDispatcher);
@@ -32150,6 +31762,394 @@
 	};
 	
 	module.exports = answerStore;
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var UsersStore = __webpack_require__(250);
+	var UsersApiUtil = __webpack_require__(252);
+	
+	var UsersIndex = React.createClass({
+	  displayName: 'UsersIndex',
+	
+	  getInitialState: function () {
+	    return { users: UsersStore.all() };
+	  },
+	
+	  componentDidMount: function () {
+	    this.listener = UsersStore.addListener(this._onChange);
+	    UsersApiUtil.fetchUsers();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
+	  },
+	
+	  render: function () {
+	    var users = this.state.users.map(function (user) {
+	      return React.createElement(
+	        'li',
+	        { key: user.id },
+	        React.createElement(
+	          'a',
+	          { href: "#/users/" + user.id },
+	          user.username
+	        )
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'all-users' },
+	      React.createElement(
+	        'h1',
+	        { className: 'title' },
+	        'Users'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'users-index' },
+	        users
+	      )
+	    );
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ users: UsersStore.all() });
+	  }
+	});
+	
+	module.exports = UsersIndex;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(212).Store;
+	var AppDispatcher = __webpack_require__(208);
+	var UserConstants = __webpack_require__(251);
+	
+	var _users = [];
+	var CHANGE_EVENT = "change";
+	
+	var _addUser = function (newUser) {
+	  _users.unshift(newUser);
+	};
+	
+	var UsersStore = new Store(AppDispatcher);
+	
+	UsersStore.all = function () {
+	  return _users.slice();
+	};
+	
+	UsersStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	
+	    case UserConstants.RECEIVE_USERS:
+	      _users = payload.users;
+	      UsersStore.__emitChange();
+	      break;
+	
+	    case UserConstants.RECEIVE_USER:
+	      _addUser(payload.user);
+	      UsersStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	UsersStore.findUserById = function (id) {
+	  for (var i = 0; i < _users.length; i++) {
+	    if (_users[i].id === id) {
+	      return _users[i];
+	    }
+	  }
+	
+	  return;
+	};
+	
+	module.exports = UsersStore;
+
+/***/ },
+/* 251 */
+/***/ function(module, exports) {
+
+	var UserConstants = {
+	  RECEIVE_USERS: "RECEIVE_USERS",
+	  RECEIVE_USER: "RECEIVE_USER"
+	};
+	
+	module.exports = UserConstants;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var UserActions = __webpack_require__(253);
+	
+	var UsersApiUtil = {
+	  fetchUsers: function () {
+	    $.ajax({
+	      url: '/api/users',
+	      type: 'GET',
+	      dataType: 'json',
+	      success: function (users) {
+	        UserActions.receiveUsers(users);
+	      }
+	    });
+	  },
+	
+	  fetchUser: function (id) {
+	
+	    $.ajax({
+	      url: '/api/users/' + id,
+	      type: 'GET',
+	      dataType: 'json',
+	      success: function (user) {
+	        UserActions.receiveUser(user);
+	      }
+	    });
+	  },
+	
+	  createUser: function (attrs, callback) {
+	    $.ajax({
+	      url: '/api/users',
+	      type: 'POST',
+	      processData: false,
+	      contentType: false,
+	      dataType: 'json',
+	      data: attrs,
+	      success: function (user) {
+	        // UserActions.receiveUser(user);
+	        // UserActions.receive(user)
+	        // callback && callback();
+	      }
+	    });
+	  }
+	};
+	
+	module.exports = UsersApiUtil;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(208);
+	var UserConstants = __webpack_require__(251);
+	
+	var UserActions = {
+	  receiveUsers: function (users) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.RECEIVE_USERS,
+	      users: users
+	    });
+	  },
+	
+	  receiveUser: function (user) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.RECEIVE_USER,
+	      user: user
+	    });
+	  }
+	};
+	
+	module.exports = UserActions;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var SessionsApiUtil = __webpack_require__(234);
+	var UserForm = __webpack_require__(255);
+	
+	var SessionForm = React.createClass({
+	  displayName: 'SessionForm',
+	
+	  mixins: [History],
+	
+	  getInitialState: function () {
+	    return { username: "", password: "" };
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  changeFile: function (e) {
+	    var reader = new FileReader();
+	    var file = e.currentTarget.files[0];
+	
+	    reader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: reader.result });
+	    }.bind(this);
+	
+	    if (file) {
+	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
+	    } else {
+	        this.setState({ imageFile: null, imageUrl: "" });
+	      }
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    var formData = new FormData();
+	    formData.append("user[username]", this.state.username);
+	    formData.append("user[password]", this.state.password);
+	
+	    SessionsApiUtil.login(formData);
+	  },
+	
+	  render: function () {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'opening-page group' },
+	      React.createElement(UserForm, null),
+	      React.createElement(
+	        'form',
+	        { className: 'new-session-form', onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'h1',
+	          { className: 'login-header' },
+	          'LOGIN'
+	        ),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Username',
+	          React.createElement('input', { onInput: this.updateUsername, value: this.state.username })
+	        ),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Password',
+	          React.createElement('input', { type: 'password', onInput: this.updatePassword, value: this.state.password })
+	        ),
+	        React.createElement(
+	          'button',
+	          null,
+	          'Login'
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = SessionForm;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var UserApiUtil = __webpack_require__(252);
+	
+	var UserForm = React.createClass({
+	  displayName: 'UserForm',
+	
+	  mixins: [History],
+	
+	  getInitialState: function () {
+	    return { username: "", password: "", imageFile: null, imageUrl: "", description: "" };
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  updateDescription: function (e) {
+	    this.setState({ description: e.currentTarget.value });
+	  },
+	
+	  changeFile: function (e) {
+	    var reader = new FileReader();
+	    var file = e.currentTarget.files[0];
+	
+	    reader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: reader.result });
+	    }.bind(this);
+	
+	    if (file) {
+	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
+	    } else {
+	        this.setState({ imageFile: null, imageUrl: "" });
+	      }
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    var formData = new FormData();
+	
+	    formData.append("user[username]", this.state.username);
+	    if (this.state.imageFile) {
+	      formData.append("user[image]", this.state.imageFile);
+	    } else {
+	      formData.append("user[image]", "");
+	    }
+	    formData.append("user[password]", this.state.password);
+	    formData.append("user[description]", this.state.description);
+	    UserApiUtil.createUser(formData);
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'form',
+	      { className: 'sign-up-form', onSubmit: this.handleSubmit },
+	      React.createElement(
+	        'h1',
+	        { className: 'sign-up-header' },
+	        'SIGNUP'
+	      ),
+	      React.createElement(
+	        'label',
+	        null,
+	        'Username',
+	        React.createElement('input', { onInput: this.updateUsername, value: this.state.username })
+	      ),
+	      React.createElement(
+	        'label',
+	        null,
+	        'Password',
+	        React.createElement('input', { type: 'password', onInput: this.updatePassword, value: this.state.password })
+	      ),
+	      React.createElement(
+	        'label',
+	        null,
+	        'Profile Picture',
+	        React.createElement('input', { type: 'file', onChange: this.changeFile })
+	      ),
+	      React.createElement(
+	        'label',
+	        null,
+	        'About',
+	        React.createElement('input', { type: 'text', onInput: this.updateDescription, value: this.state.description })
+	      ),
+	      React.createElement(
+	        'button',
+	        null,
+	        'Join!'
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = UserForm;
 
 /***/ }
 /******/ ]);

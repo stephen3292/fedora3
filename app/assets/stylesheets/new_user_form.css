@@ -1,3 +1,17 @@
-.new-user-form{
+
+
+.opening-page{
+  width: 610px;
+  padding: 20px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  height: 300px;
+  border-radius: 12px
+}
+
+.sign-up-form{
+  float: left;
+  padding-right: 20px;
+  width: 260px;
   background: pink
 }

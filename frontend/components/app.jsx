@@ -20,8 +20,8 @@ var React = require('react'),
 
 
         return (
-          <div>
-            <Header />
+          <div className="div-w/header">
+            <Header className="site-header"/>
             { this.props.children }
           </div>
         );

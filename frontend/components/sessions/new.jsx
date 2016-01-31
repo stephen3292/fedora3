@@ -39,30 +39,31 @@ var SessionForm = React.createClass({
     var formData = new FormData();
     formData.append("user[username]", this.state.username);
     formData.append("user[password]", this.state.password);
-  
+
     SessionsApiUtil.login(formData);
   },
 
   render: function() {
 
     return (
-      <div className="new-user-form">
+      <div className="opening-page group">
       < UserForm />
-      <form onSubmit={ this.handleSubmit }>
-      <h1>Sign In!</h1>
-        <label>
-          Username
-          <input onInput={this.updateUsername} value={this.state.username}></input>
-        </label>
 
-        <label>
-          Password
-          <input type="password" onInput={this.updatePassword} value={this.state.password}></input>
-        </label>
+      <form className="new-session-form" onSubmit={ this.handleSubmit }>
+        <h1 className="login-header">LOGIN</h1>
+          <label>
+            Username
+            <input onInput={this.updateUsername} value={this.state.username}></input>
+          </label>
 
-        <button>Sign In!</button>
+          <label>
+            Password
+            <input type="password" onInput={this.updatePassword} value={this.state.password}></input>
+          </label>
 
-      </form>
+          <button>Login</button>
+
+        </form>
 
       </div>
     );
