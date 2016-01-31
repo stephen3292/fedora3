@@ -31241,8 +31241,8 @@
 	        questions
 	      ),
 	      React.createElement(
-	        'a',
-	        { href: '#/' },
+	        'div',
+	        { className: 'some-questions' },
 	        'Top Stories For You'
 	      ),
 	      React.createElement(
@@ -31419,20 +31419,18 @@
 	
 	  render: function () {
 	
-	    if (this.state.detail) {
-	      return React.createElement(QuestionDetail, null);
-	    }
 	    return React.createElement(
 	      'li',
 	      { className: 'single-question group', onClick: this.toggleState },
 	      this.props.question.title,
 	      React.createElement('br', null),
+	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
 	      React.createElement(
 	        'div',
 	        { className: 'q-username' },
 	        this.props.question.username
 	      ),
-	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
+	      React.createElement('br', null),
 	      React.createElement(AnswersIndex, null)
 	    );
 	  }
@@ -31583,6 +31581,7 @@
 	      'li',
 	      { className: 'single-answer' },
 	      this.props.answer.title,
+	      React.createElement('br', null),
 	      this.props.answer.username
 	    );
 	  }
@@ -31645,12 +31644,8 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'answer-form' },
-	      React.createElement(
-	        'h2',
-	        { className: 'answer-header' },
-	        'Answer: '
-	      ),
-	      React.createElement('input', { className: 'form-title', onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement('h2', { className: 'answer-header' }),
+	      React.createElement('input', { className: 'form-title', placeholder: 'no', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
 	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
 	      React.createElement(

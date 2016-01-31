@@ -3,6 +3,11 @@
   margin: 0 auto
 }
 
+.some-questions{
+  display: block;
+  padding: 10px;
+  margin-left: 20px;
+}
 .my-questions{
   float: left;
   width: 140px;

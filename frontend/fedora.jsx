@@ -35,7 +35,7 @@ var routes = (
    <IndexRoute component={ UserShow } onEnter={_ensureLoggedIn} />
     <Route path="login" component={ SessionForm }/>
     <Route path="users/new" component={ UserForm } />
-    <Route path="question/:questionId" component={QuestionDetail}/>
+  <Route path="question/:questionId" component={QuestionDetail}/>
   </Route>
 
 );
