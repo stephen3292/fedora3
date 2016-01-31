@@ -24,10 +24,21 @@ var Header = React.createClass({
   render: function() {
     if (CurrentUserStore.isLoggedIn()) {
       return (
-        <div>
-          { this.state.currentUser.username }
-          <button onClick={ this.logout }>Sign Out</button>
-        </div>
+        <header className="top-header">
+          <div className="header-nav group">
+            <h1 className="fedora-logo">Fedora</h1>
+            <input className="search" placeholder="Ask or Search Fedora"></input>
+            <button className="search-button">Ask Question</button>
+            <div className="header-username">{ this.state.currentUser.username }</div>
+            <img className="header-image" src={this.state.currentUser.image_url} />
+              <ul className="nav-links group">
+                <li className="nav-link">Read</li>
+                <li className="nav-link">Answer</li>
+                <li className="nav-link">Notifications</li>
+              </ul>
+            <button className="sign-out-button" onClick={ this.logout }>Sign Out</button>
+          </div>
+        </header>
       );
     } else {
       return (

@@ -1,4 +1,4 @@
-
+.opening-page
 
 .sign-up-header {
   font-size: 11px;
@@ -6,7 +6,10 @@
   color: #666
 }
 
-
+.home{
+  background: url(//qsf.is.quoracdn.net/-20ef206991d81a7e.png);
+  text-align: 0px auto
+}
 .new-username-input {
   display: block;
   background: #eee;
@@ -38,7 +41,7 @@
 }
 
 .new-avatar-input{
-  
+
 }
 
 .signup-button {

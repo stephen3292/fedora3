@@ -33,10 +33,8 @@ var UsersApiUtil = {
       dataType: 'json',
       data: attrs,
       success: function (user) {
-        debugger
+      
         UserActions.receiveUser(user);
-
-        // callback && callback();
       }
     });
   }

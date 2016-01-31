@@ -46,7 +46,7 @@ var SessionForm = React.createClass({
   render: function() {
 
     return (
-      <div>
+      <div className="home">
         <header className='fedora-header'>
           <h1 className="logo">
             Fedora

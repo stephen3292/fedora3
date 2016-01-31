@@ -42,14 +42,10 @@ var UserShow = React.createClass({
     }
 
     return (
-      <div className="homepage">
-        <header>
-          <h1 className="nav-logo">Fedora</h1>
-          <h1 className="title">Logged in as: { user.username }</h1>
-          <img className="post-image" src={this.state.user.image_url} />
-        </header>
+      <div className="homepage group">
+
         <div className="my-questions">My Questions:{questions}</div>
-        <a href="#/">All Questions:</a>
+        <a href="#/">Top Questions For You:</a>
         < QuestionsIndex />
       </div>
     );

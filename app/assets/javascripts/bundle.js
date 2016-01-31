@@ -31005,13 +31005,52 @@
 	  render: function () {
 	    if (CurrentUserStore.isLoggedIn()) {
 	      return React.createElement(
-	        'div',
-	        null,
-	        this.state.currentUser.username,
+	        'header',
+	        { className: 'top-header' },
 	        React.createElement(
-	          'button',
-	          { onClick: this.logout },
-	          'Sign Out'
+	          'div',
+	          { className: 'header-nav group' },
+	          React.createElement(
+	            'h1',
+	            { className: 'fedora-logo' },
+	            'Fedora'
+	          ),
+	          React.createElement('input', { className: 'search', placeholder: 'Ask or Search Fedora' }),
+	          React.createElement(
+	            'button',
+	            { className: 'search-button' },
+	            'Ask Question'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'header-username' },
+	            this.state.currentUser.username
+	          ),
+	          React.createElement('img', { className: 'header-image', src: this.state.currentUser.image_url }),
+	          React.createElement(
+	            'ul',
+	            { className: 'nav-links group' },
+	            React.createElement(
+	              'li',
+	              { className: 'nav-link' },
+	              'Read'
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'nav-link' },
+	              'Answer'
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'nav-link' },
+	              'Notifications'
+	            )
+	          ),
+	          React.createElement(
+	            'button',
+	            { className: 'sign-out-button', onClick: this.logout },
+	            'Sign Out'
+	          )
 	        )
 	      );
 	    } else {
@@ -31198,23 +31237,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'homepage' },
-	      React.createElement(
-	        'header',
-	        null,
-	        React.createElement(
-	          'h1',
-	          { className: 'nav-logo' },
-	          'Fedora'
-	        ),
-	        React.createElement(
-	          'h1',
-	          { className: 'title' },
-	          'Logged in as: ',
-	          user.username
-	        ),
-	        React.createElement('img', { className: 'post-image', src: this.state.user.image_url })
-	      ),
+	      { className: 'homepage group' },
 	      React.createElement(
 	        'div',
 	        { className: 'my-questions' },
@@ -31224,7 +31247,7 @@
 	      React.createElement(
 	        'a',
 	        { href: '#/' },
-	        'All Questions:'
+	        'Top Questions For You:'
 	      ),
 	      React.createElement(QuestionsIndex, null)
 	    );
@@ -31931,10 +31954,8 @@
 	      dataType: 'json',
 	      data: attrs,
 	      success: function (user) {
-	        debugger;
-	        UserActions.receiveUser(user);
 	
-	        // callback && callback();
+	        UserActions.receiveUser(user);
 	      }
 	    });
 	  }
@@ -32022,7 +32043,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'home' },
 	      React.createElement(
 	        'header',
 	        { className: 'fedora-header' },

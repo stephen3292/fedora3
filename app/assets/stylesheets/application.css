@@ -39,7 +39,7 @@
 
  img {
    display: block;
-   width: 100px;
+   width: 50px;
    height: auto;
  }
 
@@ -178,4 +178,8 @@ body {
 .preview-image {
   width: 50px;
   height: auto;
+}
+
+.ask-header {
+  visibility: hidden;
 }

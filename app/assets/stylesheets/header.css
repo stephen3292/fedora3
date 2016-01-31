@@ -1,0 +1,77 @@
+.top-header{
+
+  display: block;
+  border-top: 2px solid #B22222;
+  border-bottom: 1px solid #ccc
+}
+
+.header-nav {
+  width: 1000px;
+  margin: 0px auto;
+  background: white;
+  padding: 10px;
+  padding-bottom: 3px;
+  display: block;
+  color: #666
+
+}
+
+.fedora-logo{
+  float: left;
+  font-size: 26px;
+  color: 	#B22222;
+  font-family: "Georgia", serif;
+  display: block;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.header-username {
+  float: right;
+  margin-top: 5px;
+  margin-left: 5px
+}
+.header-image{
+  float: right;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+
+}
+
+.search{
+  margin-left: 20px;
+  width: 400px;
+  float: left;
+  background: #eee;
+  padding: 6px;
+  border-radius: 3px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+
+.search-button {
+  float: left;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  color: #2F4F4F
+}
+
+.nav-links{
+  float: right;
+}
+
+.nav-link{
+  display: block;
+  float: left;
+  padding-left: 20px;
+  margin-right: 20px;
+  margin-top: 5px
+}
+
+.sign-out-button {
+  visibility: hidden
+}

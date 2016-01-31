@@ -1,0 +1,13 @@
+.homepage {
+  width: 1000px;
+  margin: 0 auto
+}
+
+.my-questions{
+  float: left;
+  width: 140px;
+  padding: 20px;
+  height: 240px;
+  background: pink;
+
+}
