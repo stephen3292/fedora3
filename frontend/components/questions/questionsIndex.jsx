@@ -31,7 +31,6 @@ var QuestionsIndex = React.createClass({
       <div className="q-index">
         < QuestionForm/>
       <ul className="more-q group">
-        <div className="feeds">Feeds</div>
         <div className="all-the-questions">
           {questions}
         </div>

@@ -53,12 +53,14 @@ var QuestionForm = React.createClass({
   render: function(){
     return(
       <div className="ask-a-question group">
-          <h2 className='ask-header'>Fedora</h2>
-          <input className="form-title" onInput={this.updateTitle} value={this.state.title}></input>
-          <input className="form-body" onInput={this.updateBody} value={this.state.body}></input>
+          <h2 className='ask-header'></h2>
+          <input className="form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
+
+          <button className="form-button" onClick={this.handleSubmit}>Ask Question</button>
           <input className="image-attachment" type="file" onChange={this.changeFile} />
           <img className="preview-image" src={this.state.imageUrl}/>
-          <button className="form-button" onClick={this.handleSubmit}>Ask Question</button>
+          <input className="form-body" onInput={this.updateBody} value={this.state.body}></input>
+
       </div>
     );
   }

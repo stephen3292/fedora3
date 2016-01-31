@@ -56,23 +56,6 @@ body {
   font-weight: 400;
 }
 
-.questions-super-index {
-  background: white;
-  border-top: 3px solid #B22222;
-  border-bottom: 1px solid #ccc;
-}
-
-
-
-.questions-index-pane {
-  display: block;
-  background: white;
-  padding: 35px;
-  margin-top: 10px;
-  width: 900px;
-  margin: 0 auto;
-}
-
 .question-header {
   float: left;
   width: 100px;
@@ -80,38 +63,10 @@ body {
   font-weight: bold
 }
 
-.q-index {
-  margin: 0 auto;
-  width: 900px
-}
-
-
-
-.ask-a-question {
-  background: white;
-  border-bottom: 1px solid #ccc;
-}
-
-.ask-nav {
-  width: 900px;
-  margin: 0 auto;
-  padding: 10px
-}
-
-.ask-header {
-  float: left;
-  font-size: 26px;
-  color: 	#B22222;
-  font-family: "Georgia", serif;
-  display: block;
-  font-weight: bold;
-  letter-spacing: 1px;
-
-}
 
 .form-title {
   margin-left: 20px;
-  width: 400px;
+  width: 300px;
   float: left;
   background: #eee;
   padding: 6px;
@@ -121,39 +76,34 @@ body {
   border-left: 1px solid #ccc;
 }
 
-.more-q-group{
-  width: 900px;
-  margin: 0 auto;
-  padding: 10px
-}
 
 .single-question {
   margin: 0 auto;
   background: pink
 }
 
-.feeds {
-  display: block;
-  float: left;
-  background: pink;
-  width: 180px;
-  padding: 20px;
-  height: 200px;
-  font-weight: bold;
+.form-body{
+  visibility: hidden;
 }
 
 .all-the-questions {
   float: left;
   padding: 20px;
+  padding-top: 0px;
   width: 500px
 
 }
 
 .single-question {
   font-size: 24px;
-  font-weight: bolder;
+  font-weight: bold;
   border-top: 1px solid #ccc;
   padding: 5px
+}
+
+.q-username {
+  float: left;
+  font-weight: normal
 }
 
 .form-button {
@@ -179,6 +129,7 @@ body {
   width: 50px;
   height: auto;
 }
+
 
 .ask-header {
   visibility: hidden;

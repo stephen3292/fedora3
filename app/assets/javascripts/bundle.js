@@ -24096,20 +24096,16 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'ask-a-question group' },
-	      React.createElement(
-	        'h2',
-	        { className: 'ask-header' },
-	        'Fedora'
-	      ),
-	      React.createElement('input', { className: 'form-title', onInput: this.updateTitle, value: this.state.title }),
-	      React.createElement('input', { className: 'form-body', onInput: this.updateBody, value: this.state.body }),
-	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
-	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
+	      React.createElement('h2', { className: 'ask-header' }),
+	      React.createElement('input', { className: 'form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement(
 	        'button',
 	        { className: 'form-button', onClick: this.handleSubmit },
 	        'Ask Question'
-	      )
+	      ),
+	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
+	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
+	      React.createElement('input', { className: 'form-body', onInput: this.updateBody, value: this.state.body })
 	    );
 	  }
 	});
@@ -31247,9 +31243,13 @@
 	      React.createElement(
 	        'a',
 	        { href: '#/' },
-	        'Top Questions For You:'
+	        'Top Stories For You'
 	      ),
-	      React.createElement(QuestionsIndex, null)
+	      React.createElement(
+	        'div',
+	        { className: 'questions-index' },
+	        React.createElement(QuestionsIndex, null)
+	      )
 	    );
 	  },
 	
@@ -31299,11 +31299,6 @@
 	      React.createElement(
 	        'ul',
 	        { className: 'more-q group' },
-	        React.createElement(
-	          'div',
-	          { className: 'feeds' },
-	          'Feeds'
-	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'all-the-questions' },
@@ -31429,9 +31424,14 @@
 	    }
 	    return React.createElement(
 	      'li',
-	      { className: 'single-question', onClick: this.toggleState },
+	      { className: 'single-question group', onClick: this.toggleState },
 	      this.props.question.title,
-	      this.props.question.username,
+	      React.createElement('br', null),
+	      React.createElement(
+	        'div',
+	        { className: 'q-username' },
+	        this.props.question.username
+	      ),
 	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
 	      React.createElement(AnswersIndex, null)
 	    );

@@ -9,5 +9,16 @@
   padding: 20px;
   height: 240px;
   background: pink;
+}
 
+.ask-a-question {
+  width: 500px;
+  padding: 20px;
+  float: left;
+}
+
+.image-attachment{
+  color: #666;
+  font-size: 10px;
+  margin-left: 20px
 }

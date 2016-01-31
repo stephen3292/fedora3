@@ -45,8 +45,8 @@ var UserShow = React.createClass({
       <div className="homepage group">
 
         <div className="my-questions">My Questions:{questions}</div>
-        <a href="#/">Top Questions For You:</a>
-        < QuestionsIndex />
+        <a href="#/">Top Stories For You</a>
+        <div className="questions-index">< QuestionsIndex /></div>
       </div>
     );
   },

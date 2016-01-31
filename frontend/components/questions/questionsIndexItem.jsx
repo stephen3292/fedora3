@@ -25,9 +25,9 @@ var QuestionIndexItem = React.createClass({
       return (< QuestionDetail />);
     }
     return(
-      <li className="single-question" onClick={this.toggleState}>
-        {this.props.question.title}
-        {this.props.question.username}
+      <li className="single-question group" onClick={this.toggleState}>
+        {this.props.question.title}<br/>
+        <div className="q-username">{this.props.question.username}</div>
         <img className="question-image" src={this.props.question.image_url} />
         < AnswersIndex />
       </li>
