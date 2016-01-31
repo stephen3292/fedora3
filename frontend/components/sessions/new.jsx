@@ -46,25 +46,34 @@ var SessionForm = React.createClass({
   render: function() {
 
     return (
-      <div className="opening-page group">
-      < UserForm />
+      <div>
+        <header className='fedora-header'>
+          <h1 className="logo">
+            Fedora
+          </h1>
+          <h2 className="tagline">
+            A question site you've probably never heard of
+          </h2>
+        </header>
+        <div className="opening-page group">
+        < UserForm />
+        <form className="new-session-form" onSubmit={ this.handleSubmit }>
+          <h1 className="login-header">LOGIN</h1>
+            <div className="new-session-input">
+              <label className="username-input">
+                <input placeholder="Username" onInput={this.updateUsername} value={this.state.username}></input>
+              </label>
 
-      <form className="new-session-form" onSubmit={ this.handleSubmit }>
-        <h1 className="login-header">LOGIN</h1>
-          <label>
-            Username
-            <input onInput={this.updateUsername} value={this.state.username}></input>
-          </label>
 
-          <label>
-            Password
-            <input type="password" onInput={this.updatePassword} value={this.state.password}></input>
-          </label>
+              <label className="password-input">
+                <input placeholder="Password" type="password" onInput={this.updatePassword} value={this.state.password}></input>
+              </label>
+            </div>
 
-          <button>Login</button>
+            <button className="login-button">Login</button>
 
-        </form>
-
+          </form>
+        </div>
       </div>
     );
   },

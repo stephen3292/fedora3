@@ -1,0 +1,19 @@
+.fedora-header{
+  text-align: center;
+  display: block;
+}
+
+.logo{
+  font-size: 54px;
+  color: #B22222;
+  font-family: georgia;
+  font-weight: bold;
+  padding: 10px
+}
+
+.tagline {
+  font-family: "palitino";
+  font-size: 20px;
+  padding-bottom: 20px;
+  color: #666
+}

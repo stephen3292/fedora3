@@ -15,7 +15,7 @@ var React = require('react'),
 
       render: function() {
         if (!CurrentUserStore.userHasBeenFetched()) {
-          return <p>PLEASE WAIT</p>;
+          return <p>Fetching User</p>;
         }
 
 

@@ -33,8 +33,9 @@ var UsersApiUtil = {
       dataType: 'json',
       data: attrs,
       success: function (user) {
-        // UserActions.receiveUser(user);
-        // UserActions.receive(user)
+        debugger
+        UserActions.receiveUser(user);
+
         // callback && callback();
       }
     });

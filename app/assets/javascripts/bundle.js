@@ -30960,7 +30960,7 @@
 	      return React.createElement(
 	        'p',
 	        null,
-	        'PLEASE WAIT'
+	        'Fetching User'
 	      );
 	    }
 	
@@ -31200,10 +31200,20 @@
 	      'div',
 	      { className: 'homepage' },
 	      React.createElement(
-	        'h1',
-	        { className: 'title' },
-	        'Logged in as: ',
-	        user.username
+	        'header',
+	        null,
+	        React.createElement(
+	          'h1',
+	          { className: 'nav-logo' },
+	          'Fedora'
+	        ),
+	        React.createElement(
+	          'h1',
+	          { className: 'title' },
+	          'Logged in as: ',
+	          user.username
+	        ),
+	        React.createElement('img', { className: 'post-image', src: this.state.user.image_url })
 	      ),
 	      React.createElement(
 	        'div',
@@ -31921,8 +31931,9 @@
 	      dataType: 'json',
 	      data: attrs,
 	      success: function (user) {
-	        // UserActions.receiveUser(user);
-	        // UserActions.receive(user)
+	        debugger;
+	        UserActions.receiveUser(user);
+	
 	        // callback && callback();
 	      }
 	    });
@@ -32011,32 +32022,52 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'opening-page group' },
-	      React.createElement(UserForm, null),
+	      null,
 	      React.createElement(
-	        'form',
-	        { className: 'new-session-form', onSubmit: this.handleSubmit },
+	        'header',
+	        { className: 'fedora-header' },
 	        React.createElement(
 	          'h1',
-	          { className: 'login-header' },
-	          'LOGIN'
+	          { className: 'logo' },
+	          'Fedora'
 	        ),
 	        React.createElement(
-	          'label',
-	          null,
-	          'Username',
-	          React.createElement('input', { onInput: this.updateUsername, value: this.state.username })
-	        ),
+	          'h2',
+	          { className: 'tagline' },
+	          'A question site you\'ve probably never heard of'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'opening-page group' },
+	        React.createElement(UserForm, null),
 	        React.createElement(
-	          'label',
-	          null,
-	          'Password',
-	          React.createElement('input', { type: 'password', onInput: this.updatePassword, value: this.state.password })
-	        ),
-	        React.createElement(
-	          'button',
-	          null,
-	          'Login'
+	          'form',
+	          { className: 'new-session-form', onSubmit: this.handleSubmit },
+	          React.createElement(
+	            'h1',
+	            { className: 'login-header' },
+	            'LOGIN'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'new-session-input' },
+	            React.createElement(
+	              'label',
+	              { className: 'username-input' },
+	              React.createElement('input', { placeholder: 'Username', onInput: this.updateUsername, value: this.state.username })
+	            ),
+	            React.createElement(
+	              'label',
+	              { className: 'password-input' },
+	              React.createElement('input', { placeholder: 'Password', type: 'password', onInput: this.updatePassword, value: this.state.password })
+	            )
+	          ),
+	          React.createElement(
+	            'button',
+	            { className: 'login-button' },
+	            'Login'
+	          )
 	        )
 	      )
 	    );
@@ -32097,9 +32128,10 @@
 	
 	    formData.append("user[username]", this.state.username);
 	    if (this.state.imageFile) {
-	      formData.append("user[image]", this.state.imageFile);
+	      formData.append("user[avatar]", this.state.imageFile);
+	      debugger;
 	    } else {
-	      formData.append("user[image]", "");
+	      formData.append("user[avatar]", "");
 	    }
 	    formData.append("user[password]", this.state.password);
 	    formData.append("user[description]", this.state.description);
@@ -32117,32 +32149,29 @@
 	      ),
 	      React.createElement(
 	        'label',
-	        null,
-	        'Username',
-	        React.createElement('input', { onInput: this.updateUsername, value: this.state.username })
+	        { className: 'new-username-input' },
+	        React.createElement('input', { placeholder: 'Username', onInput: this.updateUsername, value: this.state.username })
 	      ),
 	      React.createElement(
 	        'label',
-	        null,
-	        'Password',
-	        React.createElement('input', { type: 'password', onInput: this.updatePassword, value: this.state.password })
+	        { className: 'new-password-input' },
+	        React.createElement('input', { placeholder: 'Password', type: 'password', onInput: this.updatePassword, value: this.state.password })
 	      ),
 	      React.createElement(
 	        'label',
-	        null,
+	        { className: 'new-about-input' },
+	        React.createElement('input', { placeholder: 'About', onInput: this.updateDescription, value: this.state.description })
+	      ),
+	      React.createElement(
+	        'label',
+	        { className: 'new-avatar-input' },
 	        'Profile Picture',
 	        React.createElement('input', { type: 'file', onChange: this.changeFile })
 	      ),
 	      React.createElement(
-	        'label',
-	        null,
-	        'About',
-	        React.createElement('input', { type: 'text', onInput: this.updateDescription, value: this.state.description })
-	      ),
-	      React.createElement(
 	        'button',
-	        null,
-	        'Join!'
+	        { className: 'signup-button' },
+	        'Signup'
 	      )
 	    );
 	  }

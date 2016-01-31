@@ -43,9 +43,10 @@ var UserForm = React.createClass({
 
     formData.append("user[username]", this.state.username);
     if (this.state.imageFile) {
-      formData.append("user[image]", this.state.imageFile);
+      formData.append("user[avatar]", this.state.imageFile);
+      debugger
     } else {
-      formData.append("user[image]", "");
+      formData.append("user[avatar]", "");
     }
     formData.append("user[password]", this.state.password);
     formData.append("user[description]", this.state.description);
@@ -56,27 +57,24 @@ var UserForm = React.createClass({
     return (
       <form className="sign-up-form" onSubmit={ this.handleSubmit }>
       <h1 className="sign-up-header">SIGNUP</h1>
-        <label>
-          Username
-          <input onInput={this.updateUsername} value={this.state.username}></input>
+        <label className="new-username-input">
+          <input placeholder="Username" onInput={this.updateUsername} value={this.state.username}></input>
         </label>
 
-        <label>
-          Password
-          <input type="password" onInput={this.updatePassword} value={this.state.password}></input>
+        <label className="new-password-input">
+          <input placeholder="Password" type="password" onInput={this.updatePassword} value={this.state.password}></input>
         </label>
 
-        <label>
+        <label className="new-about-input">
+          <input placeholder="About" onInput={this.updateDescription} value={this.state.description} />
+        </label>
+
+        <label className="new-avatar-input">
           Profile Picture
             <input type="file" onChange={this.changeFile} />
         </label>
 
-        <label>
-          About
-          <input type="text" onInput={this.updateDescription} value={this.state.description} />
-        </label>
-
-        <button>Join!</button>
+        <button className="signup-button">Signup</button>
 
       </form>
     );
