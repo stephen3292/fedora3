@@ -14,16 +14,37 @@
   padding: 20px;
   height: 240px;
   background: pink;
+  border-radius: 5px
 }
 
 .ask-a-question {
-  width: 500px;
-  padding: 20px;
-  float: left;
+
 }
 
 .image-attachment{
   color: #666;
   font-size: 10px;
   margin-left: 20px
+}
+
+.answer-list{
+  margin-top: 30px;
+  background: #BCED91;
+  border-radius: 5px;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.single-answer{
+  padding: 10px
+}
+
+.a-form-title{
+  background: #00EEEE;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px;
+  font-weight: normal;
+  color: #666
 }

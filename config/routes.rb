@@ -14,6 +14,7 @@ root to: 'static_pages#root'
         end
       end
       resources :answers, only: [:update, :destroy]
+      get "search", to: "utils#search"
     end
 
 

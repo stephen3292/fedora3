@@ -9,6 +9,7 @@ var UserShow = require('./components/users/user_show');
 var UsersIndex = require('./components/users/users_index');
 var CurrentUserStore = require('./stores/current_user_store');
 var SessionsApiUtil = require('./util/sessions_api_util');
+var Search = require('./components/search');
 
 var SessionForm = require('./components/sessions/new');
 var UserForm = require('./components/users/user_form');
@@ -17,13 +18,6 @@ var UserForm = require('./components/users/user_form');
  QuestionStore = require('./stores/questions_store.js');
  AnswersStore = require('./stores/answers_store.js');
  QuestionDetail = require('./components/questions/questionDetail');
-
-
-
-
-
-
-
 
 console.log(ApiUtil.fetchAllQuestions());
 console.log(QuestionStore.all());
@@ -37,6 +31,7 @@ var routes = (
     <Route path="users/new" component={ UserForm } />
     <Route path="question/:questionId" component={QuestionDetail}/>
     <Route path="questions" component={QuestionsIndex}/>
+    <Route path="search" component={ Search } />
   </Route>
 
 );

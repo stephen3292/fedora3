@@ -33,7 +33,6 @@ var AnswersIndex = React.createClass({
   render: function() {
 
     console.log(AnswersStore.all());
-    
     var answers = this.props.question.answers.map(function (answer) {
       return <AnswersIndexItem answer={answer} key={answer.id}/>;
     });
@@ -41,7 +40,7 @@ var AnswersIndex = React.createClass({
 
     return(
       <div>
-        <div>
+        <div className="answer-list">
           {answers}
         </div>
       < AnswerForm question={this.props.question}/>

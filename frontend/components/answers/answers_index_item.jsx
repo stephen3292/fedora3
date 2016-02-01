@@ -9,8 +9,12 @@ var AnswersIndexItem = React.createClass({
 
     return(
       <div className="single-answer">
-        {this.props.answer.title}<br/>
-        {this.props.answer.username}
+        <ul>
+          <li className="answer-writer"/>{this.props.answer.username}<br/>
+          <li className="answer-body"/>{this.props.answer.title}
+
+        </ul>
+
       </div>
     );
   }

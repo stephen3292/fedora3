@@ -8,13 +8,14 @@ class Api::QuestionsController < ApplicationController
   end
 
   def create
-    question = Question.new(question_params)
-    question.user_id = current_user.id
-    question.username = current_user.username
+    
+    @question = Question.new(question_params)
+    @question.user_id = current_user.id
+    @question.username = current_user.username
 
-    question.body = '' unless question.body
-    if question.save!
-      render json: question
+    @question.body = '' unless @question.body
+    if @question.save!
+      render :show
     else
       render json: { errors: question.errors.full_messages }, status: 422
     end

@@ -17,4 +17,6 @@ class Answer < ActiveRecord::Base
 
   belongs_to :question
   belongs_to :user
+  # include PgSearch
+  # multisearchable :against => [:title, :username]
 end
