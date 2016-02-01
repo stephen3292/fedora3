@@ -18,12 +18,13 @@ class Api::UsersController < ApplicationController
   end
 
   def index
-    render json: User.all.to_json
+    @users = User.all
+    render :index
   end
 
   def show
-    user = User.find(params[:id])
-    render :show
+    # @user = User.includes(:username, :description, :questions).find(params[:id])
+    user = User.find(params[:id]) 
   end
 
   private

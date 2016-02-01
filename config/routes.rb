@@ -7,7 +7,7 @@ root to: 'static_pages#root'
 
     namespace :api, defaults: {format: :json} do
       resource :session, only: [:create, :destroy, :show]
-      resources :users, only: [:show, :create, :index]
+      resources :users 
       resources :questions, only: [:index, :create, :show, :destroy, :update] do
         resources :answers, only: [:index, :create]
       end

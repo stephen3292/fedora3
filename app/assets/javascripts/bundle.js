@@ -31000,6 +31000,9 @@
 	
 	  render: function () {
 	    if (CurrentUserStore.isLoggedIn()) {
+	
+	      // var readQuestions = '#/users/' + this.props.user.id + '/all';
+	
 	      return React.createElement(
 	        'header',
 	        { className: 'top-header' },
@@ -31029,7 +31032,11 @@
 	            React.createElement(
 	              'li',
 	              { className: 'nav-link' },
-	              'Read'
+	              React.createElement(
+	                'a',
+	                { className: 'user-questions-link' },
+	                'Read'
+	              )
 	            ),
 	            React.createElement(
 	              'li',
@@ -31105,7 +31112,8 @@
 /***/ function(module, exports) {
 
 	var CurrentUserConstants = {
-	  RECEIVE_CURRENT_USER: "RECEIVE_CURRENT_USER"
+	  RECEIVE_CURRENT_USER: "RECEIVE_CURRENT_USER",
+	  USER_LOG_OUT: "USER_LOG_OUT"
 	};
 	
 	module.exports = CurrentUserConstants;
@@ -31132,13 +31140,15 @@
 	    });
 	  },
 	
-	  logout: function () {
+	  logout: function (callback) {
 	    $.ajax({
 	      url: '/api/session',
-	      type: 'XXXX',
+	      type: 'POST',
+	      method: 'DELETE',
 	      dataType: 'json',
 	      success: function () {
-	        console.log("logged out!");
+	        CurrentUserActions.userLogOut();
+	        callback && callback();
 	      }
 	    });
 	  },
@@ -31172,6 +31182,11 @@
 	    AppDispatcher.dispatch({
 	      actionType: CurrentUserConstants.RECEIVE_CURRENT_USER,
 	      currentUser: currentUser
+	    });
+	  },
+	  userLogOut: function () {
+	    Dispatcher.dispatch({
+	      actionType: CurrentUserConstants.USER_LOG_OUT
 	    });
 	  }
 	};
@@ -32034,6 +32049,16 @@
 	    SessionsApiUtil.login(formData);
 	  },
 	
+	  handleGuest: function (e) {
+	    e.preventDefault();
+	    debugger;
+	    var formData = new FormData();
+	    formData.append("user[username]", "guest user");
+	    formData.append("user[password]", "guest user");
+	
+	    SessionsApiUtil.login(formData);
+	  },
+	
 	  render: function () {
 	
 	    return React.createElement(
@@ -32083,6 +32108,15 @@
 	            'button',
 	            { className: 'login-button' },
 	            'Login'
+	          )
+	        ),
+	        React.createElement(
+	          'form',
+	          { className: 'guest-user-sign-in group', onSubmit: this.guestSubmit, method: 'post' },
+	          React.createElement(
+	            'button',
+	            { type: 'submit', className: 'guest-sign-in-button' },
+	            'Demo'
 	          )
 	        )
 	      )

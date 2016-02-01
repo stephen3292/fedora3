@@ -18,6 +18,8 @@ User.destroy_all
         description: 'md-phd')
   d = User.create(username: "stephen3292", password: "stephen3292",
         description: "stephen3292")
+  e = User.create(username: "guest user", password: "guest user",
+        description: "guest user")
 
   q1 = Question.create(user_id: a.id, title: 'Is this working?', body: 'idk', username: a.username)
   q2 = Question.create(user_id: b.id, title: 'will this work', body: 'dec', username: b.username)

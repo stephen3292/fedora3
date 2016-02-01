@@ -43,6 +43,16 @@ var SessionForm = React.createClass({
     SessionsApiUtil.login(formData);
   },
 
+  handleGuest: function(e) {
+    e.preventDefault();
+    debugger
+    var formData = new FormData();
+      formData.append("user[username]", "guest user");
+      formData.append("user[password]", "guest user");
+
+      SessionsApiUtil.login(formData);
+  },
+
   render: function() {
 
     return (
@@ -69,9 +79,11 @@ var SessionForm = React.createClass({
                 <input placeholder="Password" type="password" onInput={this.updatePassword} value={this.state.password}></input>
               </label>
             </div>
-
             <button className="login-button">Login</button>
+          </form>
 
+          <form className="guest-user-sign-in group" onSubmit={this.guestSubmit} method="post">
+            <button type="submit" className="guest-sign-in-button">Demo</button>
           </form>
         </div>
       </div>

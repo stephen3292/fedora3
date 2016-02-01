@@ -16,13 +16,15 @@ var SessionsApiUtil = {
     });
   },
 
-  logout: function () {
+  logout: function (callback) {
     $.ajax({
       url: '/api/session',
-      type: 'XXXX',
+      type: 'POST',
+      method: 'DELETE',
       dataType: 'json',
       success: function () {
-        console.log("logged out!");
+        CurrentUserActions.userLogOut();
+        callback && callback();
       }
     });
   },
