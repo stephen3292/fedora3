@@ -29,7 +29,6 @@ answerStore.find = function(id) {
 };
 
 answerStore.__onDispatch = function (payload) {
-  debugger
   switch(payload.actionType) {
     case AnswerConstants.ANSWERS_RECIEVED:
       answerStore.resetAnswers(payload.answers);

@@ -32,7 +32,7 @@ var questionDetail = React.createClass({
   },
 
   render: function() {
-    debugger
+  
     if (this.state.question) {
 
       return(

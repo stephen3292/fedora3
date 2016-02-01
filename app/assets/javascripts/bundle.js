@@ -24120,6 +24120,7 @@
 	var AppDispatcher = __webpack_require__(208);
 	var Store = __webpack_require__(212).Store;
 	var QuestionConstants = __webpack_require__(229);
+	var AnswerConstants = __webpack_require__(247);
 	var _questions = {};
 	
 	var questionStore = new Store(AppDispatcher);
@@ -24142,6 +24143,11 @@
 	  return result;
 	};
 	
+	questionStore.addAnswer = function (answer) {
+	  var question = _questions[answer.question_id];
+	  question.answers.push(answer);
+	};
+	
 	questionStore.find = function (id) {
 	  return _questions[id];
 	};
@@ -24154,6 +24160,9 @@
 	      break;
 	    case QuestionConstants.QUESTION_RECEIVED:
 	      questionStore.resetQuestion(payload.question);
+	      break;
+	    case AnswerConstants.ANSWER_RECEIVED:
+	      questionStore.addAnswer(payload.answer);
 	      break;
 	  }
 	  questionStore.__emitChange();
@@ -31308,7 +31317,7 @@
 	
 	  render: function () {
 	
-	    var r_questions = this.state.questions.reverse();
+	    var r_questions = this.state.questions;
 	    var questions = r_questions.map(function (question) {
 	      return React.createElement(QuestionIndexItem, { question: question, key: question.id });
 	    });
@@ -31432,19 +31441,15 @@
 	  },
 	
 	  toggleState: function (e) {
-	    e.stopPropagation();
-	    this.history.pushState(null, "/question/" + this.props.question.id);
-	    var newDetail = this.state.detail ? false : true;
-	    this.setState({ detail: newDetail });
-	    console.log(this.state.detail);
+	    // e.stopPropagation();
+	    //maybe dont do this....
+	
 	  },
 	
 	  render: function () {
-	
-	    debugger;
 	    return React.createElement(
 	      'li',
-	      { className: 'single-question group', onClick: this.toggleState },
+	      { className: 'single-question group' },
 	      this.props.question.title,
 	      React.createElement('br', null),
 	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
@@ -31496,7 +31501,7 @@
 	  },
 	
 	  render: function () {
-	    debugger;
+	
 	    if (this.state.question) {
 	
 	      return React.createElement(
@@ -31550,28 +31555,28 @@
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',
 	
-	  getInitialState: function () {
-	    return { answers: AnswersStore.all(this.props.question.id) };
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ answers: AnswersStore.all(this.props.question.id) });
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.setState({ answers: AnswersStore.resetAnswer() });
-	  },
-	
-	  componentDidMount: function () {
-	    AnswersStore.addListener(this._onChange);
-	    AnswerApiUtil.fetchQuestionAnswers(this.props.question.id);
-	  },
+	  // getInitialState: function(){
+	  //   return ({answers: AnswersStore.all(this.props.question.id)});
+	  // },
+	  //
+	  // _onChange: function() {
+	  //   this.setState({answers: AnswersStore.all(this.props.question.id)});
+	  // },
+	  //
+	  // componentWillUnmount: function() {
+	  //   this.setState({answers: AnswersStore.resetAnswers()});
+	  // },
+	  //
+	  // componentDidMount: function(){
+	  //   AnswersStore.addListener(this._onChange);
+	  //   AnswerApiUtil.fetchQuestionAnswers(this.props.question.id);
+	  // },
 	
 	  render: function () {
 	
 	    console.log(AnswersStore.all());
 	
-	    var answers = this.state.answers.map(function (answer) {
+	    var answers = this.props.question.answers.map(function (answer) {
 	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
 	    });
 	
@@ -31583,7 +31588,7 @@
 	        null,
 	        answers
 	      ),
-	      React.createElement(AnswerForm, { questionId: this.props.question.id })
+	      React.createElement(AnswerForm, { question: this.props.question })
 	    );
 	  }
 	
@@ -31605,7 +31610,7 @@
 	  render: function () {
 	
 	    return React.createElement(
-	      'li',
+	      'div',
 	      { className: 'single-answer' },
 	      this.props.answer.title,
 	      React.createElement('br', null),
@@ -31650,6 +31655,7 @@
 	  },
 	
 	  handleSubmit: function (e) {
+	
 	    e.preventDefault();
 	    var formData = new FormData();
 	    formData.append("answer[title]", this.state.title);
@@ -31658,7 +31664,7 @@
 	    } else {
 	      formData.append("answer[image]", "");
 	    }
-	    formData.append("answer[question_id]", this.props.questionId);
+	    formData.append("answer[question_id]", this.props.question.id);
 	    AnswersApiUtil.createOneAnswer(formData);
 	  },
 	
@@ -31803,7 +31809,6 @@
 	};
 	
 	answerStore.__onDispatch = function (payload) {
-	  debugger;
 	  switch (payload.actionType) {
 	    case AnswerConstants.ANSWERS_RECIEVED:
 	      answerStore.resetAnswers(payload.answers);

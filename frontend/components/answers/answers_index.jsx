@@ -12,29 +12,29 @@ var CurrentUserStore = require('../../stores/current_user_store');
 
 var AnswersIndex = React.createClass({
 
-  getInitialState: function(){
-    return ({answers: AnswersStore.all(this.props.question.id)});
-  },
-
-  _onChange: function() {
-    this.setState({answers: AnswersStore.all(this.props.question.id)});
-  },
-
-  componentWillUnmount: function() {
-    this.setState({answers: AnswersStore.resetAnswer()});
-  },
-
-  componentDidMount: function(){
-    AnswersStore.addListener(this._onChange);
-    AnswerApiUtil.fetchQuestionAnswers(this.props.question.id);
-  },
+  // getInitialState: function(){
+  //   return ({answers: AnswersStore.all(this.props.question.id)});
+  // },
+  //
+  // _onChange: function() {
+  //   this.setState({answers: AnswersStore.all(this.props.question.id)});
+  // },
+  //
+  // componentWillUnmount: function() {
+  //   this.setState({answers: AnswersStore.resetAnswers()});
+  // },
+  //
+  // componentDidMount: function(){
+  //   AnswersStore.addListener(this._onChange);
+  //   AnswerApiUtil.fetchQuestionAnswers(this.props.question.id);
+  // },
 
 
   render: function() {
 
     console.log(AnswersStore.all());
-
-    var answers = this.state.answers.map(function (answer) {
+    
+    var answers = this.props.question.answers.map(function (answer) {
       return <AnswersIndexItem answer={answer} key={answer.id}/>;
     });
 
@@ -44,7 +44,7 @@ var AnswersIndex = React.createClass({
         <div>
           {answers}
         </div>
-      < AnswerForm questionId={this.props.question.id}/>
+      < AnswerForm question={this.props.question}/>
       </div>
     );
 

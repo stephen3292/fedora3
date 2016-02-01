@@ -27,6 +27,7 @@ var AnswerForm = React.createClass({
   },
 
   handleSubmit: function(e) {
+
     e.preventDefault();
     var formData = new FormData();
     formData.append("answer[title]", this.state.title);
@@ -35,7 +36,7 @@ var AnswerForm = React.createClass({
     } else {
       formData.append("answer[image]", "");
     }
-    formData.append("answer[question_id]", this.props.questionId);
+    formData.append("answer[question_id]", this.props.question.id);
     AnswersApiUtil.createOneAnswer(formData);
   },
 
