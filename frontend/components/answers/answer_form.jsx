@@ -16,7 +16,7 @@ var AnswerForm = React.createClass({
     var file = e.currentTarget.files[0];
 
     reader.onloadend = function () {
-      this.setState({imageFile: file, iamgeUrl: reader.result});
+      this.setState({imageFile: file, imageUrl: reader.result});
     }.bind(this);
 
     if (file) {
@@ -28,7 +28,6 @@ var AnswerForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-
     var formData = new FormData();
     formData.append("answer[title]", this.state.title);
     if (this.state.imageFile) {

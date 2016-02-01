@@ -25,11 +25,11 @@ var Header = React.createClass({
     if (CurrentUserStore.isLoggedIn()) {
 
       var answerQuestions = '#/questions';
-
+      var user_home_page = '/';
       return (
         <header className="top-header">
           <div className="header-nav group">
-            <h1 className="fedora-logo">Fedora</h1>
+            <h1 className="fedora-logo"><a className="home-link" href={user_home_page}>Fedora</a></h1>
             <input className="search" placeholder="Ask or Search Fedora"></input>
             <button className="search-button">Ask Question</button>
             <div className="header-username">{ this.state.currentUser.username }</div>

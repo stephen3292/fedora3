@@ -31003,7 +31003,7 @@
 	    if (CurrentUserStore.isLoggedIn()) {
 	
 	      var answerQuestions = '#/questions';
-	
+	      var user_home_page = '/';
 	      return React.createElement(
 	        'header',
 	        { className: 'top-header' },
@@ -31013,7 +31013,11 @@
 	          React.createElement(
 	            'h1',
 	            { className: 'fedora-logo' },
-	            'Fedora'
+	            React.createElement(
+	              'a',
+	              { className: 'home-link', href: user_home_page },
+	              'Fedora'
+	            )
 	          ),
 	          React.createElement('input', { className: 'search', placeholder: 'Ask or Search Fedora' }),
 	          React.createElement(
@@ -31304,7 +31308,8 @@
 	
 	  render: function () {
 	
-	    var questions = this.state.questions.map(function (question) {
+	    var r_questions = this.state.questions.reverse();
+	    var questions = r_questions.map(function (question) {
 	      return React.createElement(QuestionIndexItem, { question: question, key: question.id });
 	    });
 	
@@ -31427,6 +31432,7 @@
 	  },
 	
 	  toggleState: function (e) {
+	    e.stopPropagation();
 	    this.history.pushState(null, "/question/" + this.props.question.id);
 	    var newDetail = this.state.detail ? false : true;
 	    this.setState({ detail: newDetail });
@@ -31435,6 +31441,7 @@
 	
 	  render: function () {
 	
+	    debugger;
 	    return React.createElement(
 	      'li',
 	      { className: 'single-question group', onClick: this.toggleState },
@@ -31447,7 +31454,7 @@
 	        this.props.question.username
 	      ),
 	      React.createElement('br', null),
-	      React.createElement(AnswersIndex, null)
+	      React.createElement(AnswersIndex, { question: this.props.question })
 	    );
 	  }
 	});
@@ -31489,7 +31496,7 @@
 	  },
 	
 	  render: function () {
-	
+	    debugger;
 	    if (this.state.question) {
 	
 	      return React.createElement(
@@ -31510,7 +31517,7 @@
 	            this.state.question.user_id,
 	            React.createElement('br', null),
 	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url }),
-	            React.createElement(AnswersIndex, { questionId: this.state.question.id })
+	            React.createElement(AnswersIndex, { question: this.state.question })
 	          )
 	        )
 	      );
@@ -31544,16 +31551,20 @@
 	  displayName: 'AnswersIndex',
 	
 	  getInitialState: function () {
-	    return { answers: AnswersStore.all() };
+	    return { answers: AnswersStore.all(this.props.question.id) };
 	  },
 	
 	  _onChange: function () {
-	    this.setState({ answers: AnswersStore.all() });
+	    this.setState({ answers: AnswersStore.all(this.props.question.id) });
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.setState({ answers: AnswersStore.resetAnswer() });
 	  },
 	
 	  componentDidMount: function () {
 	    AnswersStore.addListener(this._onChange);
-	    AnswerApiUtil.fetchQuestionAnswers(this.props.questionId);
+	    AnswerApiUtil.fetchQuestionAnswers(this.props.question.id);
 	  },
 	
 	  render: function () {
@@ -31572,7 +31583,7 @@
 	        null,
 	        answers
 	      ),
-	      React.createElement(AnswerForm, { questionId: this.props.questionId })
+	      React.createElement(AnswerForm, { questionId: this.props.question.id })
 	    );
 	  }
 	
@@ -31628,7 +31639,7 @@
 	    var file = e.currentTarget.files[0];
 	
 	    reader.onloadend = function () {
-	      this.setState({ imageFile: file, iamgeUrl: reader.result });
+	      this.setState({ imageFile: file, imageUrl: reader.result });
 	    }.bind(this);
 	
 	    if (file) {
@@ -31640,7 +31651,6 @@
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
-	
 	    var formData = new FormData();
 	    formData.append("answer[title]", this.state.title);
 	    if (this.state.imageFile) {
@@ -31770,8 +31780,12 @@
 	var answerStore = new Store(AppDispatcher);
 	
 	answerStore.resetAnswers = function (answers) {
+	  _answers = {};
 	  for (var i = 0; i < answers.length; i++) {
-	    _answers[answers[i].id] = answers[i];
+	    var questionId = answers[i].question_id;
+	    var answerArray = _answers[questionId];
+	    answerArray = answerArray || [];
+	    answerArray.push(answers[i]);
 	  }
 	};
 	
@@ -31779,12 +31793,9 @@
 	  _answers[answer.id] = answer;
 	};
 	
-	answerStore.all = function () {
-	  var result = [];
-	  for (var i in _answers) {
-	    result.push(_answers[i]);
-	  }
-	  return result;
+	answerStore.all = function (questionId) {
+	  var answers = _answers[questionId] || [];
+	  return answers.slice();
 	};
 	
 	answerStore.find = function (id) {
@@ -31792,7 +31803,7 @@
 	};
 	
 	answerStore.__onDispatch = function (payload) {
-	
+	  debugger;
 	  switch (payload.actionType) {
 	    case AnswerConstants.ANSWERS_RECIEVED:
 	      answerStore.resetAnswers(payload.answers);
@@ -31800,7 +31811,9 @@
 	    case AnswerConstants.ANSWER_RECEIVED:
 	      answerStore.resetAnswer(payload.answer);
 	      break;
+	
 	  }
+	
 	  console.log(payload.answer);
 	  answerStore.__emitChange();
 	};
@@ -31965,8 +31978,8 @@
 	      dataType: 'json',
 	      data: attrs,
 	      success: function (user) {
-	
 	        UserActions.receiveUser(user);
+	        callback && callback(user);
 	      }
 	    });
 	  }
@@ -32047,17 +32060,20 @@
 	    formData.append("user[username]", this.state.username);
 	    formData.append("user[password]", this.state.password);
 	
-	    SessionsApiUtil.login(formData);
+	    SessionsApiUtil.login(formData, function () {
+	      this.history.pushState(null, "/");
+	    }.bind(this));
 	  },
 	
 	  handleGuest: function (e) {
 	    e.preventDefault();
-	    debugger;
 	    var formData = new FormData();
 	    formData.append("user[username]", "guest user");
 	    formData.append("user[password]", "guest user");
 	
-	    SessionsApiUtil.login(formData);
+	    SessionsApiUtil.login(formData, function () {
+	      this.history.pushState(null, "/");
+	    }.bind(this));
 	  },
 	
 	  render: function () {
@@ -32113,7 +32129,7 @@
 	        ),
 	        React.createElement(
 	          'form',
-	          { className: 'guest-user-sign-in group', onSubmit: this.guestSubmit, method: 'post' },
+	          { className: 'guest-user-sign-in group', onSubmit: this.handleGuest },
 	          React.createElement(
 	            'button',
 	            { type: 'submit', className: 'guest-sign-in-button' },
@@ -32180,13 +32196,14 @@
 	    formData.append("user[username]", this.state.username);
 	    if (this.state.imageFile) {
 	      formData.append("user[avatar]", this.state.imageFile);
-	      debugger;
 	    } else {
 	      formData.append("user[avatar]", "");
 	    }
 	    formData.append("user[password]", this.state.password);
 	    formData.append("user[description]", this.state.description);
-	    UserApiUtil.createUser(formData);
+	    UserApiUtil.createUser(formData, function () {
+	      this.history.pushState(null, "/");
+	    }.bind(this));
 	  },
 	
 	  render: function () {

@@ -6,8 +6,12 @@ var _answers = {};
 var answerStore = new Store(AppDispatcher);
 
 answerStore.resetAnswers = function(answers){
+  _answers = {};
   for (var i = 0; i < answers.length; i++) {
-    _answers[answers[i].id] = answers[i];
+    var questionId = answers[i].question_id;
+    var answerArray = _answers[questionId];
+    answerArray = answerArray || [];
+    answerArray.push(answers[i]);
   }
 };
 
@@ -15,12 +19,9 @@ answerStore.resetAnswer = function(answer){
   _answers[answer.id] = answer;
 };
 
-answerStore.all = function(){
-  var result = [];
-  for (var i in _answers) {
-    result.push(_answers[i]);
-  }
-  return result;
+answerStore.all = function(questionId){
+  var answers = _answers[questionId] || [];
+  return answers.slice();
 };
 
 answerStore.find = function(id) {
@@ -28,7 +29,7 @@ answerStore.find = function(id) {
 };
 
 answerStore.__onDispatch = function (payload) {
-
+  debugger
   switch(payload.actionType) {
     case AnswerConstants.ANSWERS_RECIEVED:
       answerStore.resetAnswers(payload.answers);
@@ -36,7 +37,9 @@ answerStore.__onDispatch = function (payload) {
     case AnswerConstants.ANSWER_RECEIVED:
       answerStore.resetAnswer(payload.answer);
       break;
+
   }
+
   console.log(payload.answer);
   answerStore.__emitChange();
 };

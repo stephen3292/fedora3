@@ -23,7 +23,8 @@ var QuestionsIndex = React.createClass({
   render: function() {
 
 
-    var questions = this.state.questions.map(function (question) {
+    var r_questions = this.state.questions.reverse();
+      var questions = r_questions.map(function (question) {
       return <QuestionIndexItem question={question} key={question.id}/>;
     });
 

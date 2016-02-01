@@ -40,18 +40,23 @@ var SessionForm = React.createClass({
     formData.append("user[username]", this.state.username);
     formData.append("user[password]", this.state.password);
 
-    SessionsApiUtil.login(formData);
+    SessionsApiUtil.login(formData, function() {
+      this.history.pushState(null, "/" );
+    }.bind(this));
   },
 
   handleGuest: function(e) {
     e.preventDefault();
-    debugger
     var formData = new FormData();
       formData.append("user[username]", "guest user");
       formData.append("user[password]", "guest user");
 
-      SessionsApiUtil.login(formData);
+      SessionsApiUtil.login(formData, function() {
+        this.history.pushState(null, "/" );
+      }.bind(this));
   },
+
+
 
   render: function() {
 
@@ -83,7 +88,7 @@ var SessionForm = React.createClass({
             <button className="login-button">Login</button>
           </form>
 
-          <form className="guest-user-sign-in group" onSubmit={this.guestSubmit} method="post">
+          <form className="guest-user-sign-in group" onSubmit={this.handleGuest}>
             <button type="submit" className="guest-sign-in-button">Demo</button>
           </form>
         </div>

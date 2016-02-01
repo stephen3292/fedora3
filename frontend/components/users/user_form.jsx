@@ -44,13 +44,14 @@ var UserForm = React.createClass({
     formData.append("user[username]", this.state.username);
     if (this.state.imageFile) {
       formData.append("user[avatar]", this.state.imageFile);
-      debugger
     } else {
       formData.append("user[avatar]", "");
     }
     formData.append("user[password]", this.state.password);
     formData.append("user[description]", this.state.description);
-    UserApiUtil.createUser(formData);
+    UserApiUtil.createUser(formData, function(){
+      this.history.pushState(null, "/");
+    }.bind(this));
   },
 
   render: function() {

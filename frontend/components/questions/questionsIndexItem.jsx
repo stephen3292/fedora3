@@ -13,6 +13,7 @@ var QuestionIndexItem = React.createClass({
   },
 
   toggleState: function (e) {
+    e.stopPropagation();
     this.history.pushState(null, "/question/" + this.props.question.id);
     var newDetail = this.state.detail ? false : true;
     this.setState({detail: newDetail});
@@ -21,14 +22,13 @@ var QuestionIndexItem = React.createClass({
 
   render: function() {
 
-
+    debugger
     return(
       <li className="single-question group" onClick={this.toggleState}>
         {this.props.question.title}<br/>
         <img className="question-image" src={this.props.question.image_url} />
         <div className="q-username">{this.props.question.username}</div><br/>
-
-        < AnswersIndex />
+        < AnswersIndex question={this.props.question} />
       </li>
     );
   }

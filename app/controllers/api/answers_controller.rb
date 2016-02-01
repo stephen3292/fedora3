@@ -1,6 +1,6 @@
 class Api::AnswersController < ApplicationController
   def index
-    render json: Answer.all.where(question_id: params[:question_id])
+    render json: Question.find(params[:question_id]).answers
   end
 
 

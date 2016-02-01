@@ -13,19 +13,21 @@ var CurrentUserStore = require('../../stores/current_user_store');
 var AnswersIndex = React.createClass({
 
   getInitialState: function(){
-    return ({answers: AnswersStore.all()});
+    return ({answers: AnswersStore.all(this.props.question.id)});
   },
 
   _onChange: function() {
-    this.setState({answers: AnswersStore.all()});
+    this.setState({answers: AnswersStore.all(this.props.question.id)});
+  },
+
+  componentWillUnmount: function() {
+    this.setState({answers: AnswersStore.resetAnswer()});
   },
 
   componentDidMount: function(){
     AnswersStore.addListener(this._onChange);
-    AnswerApiUtil.fetchQuestionAnswers(this.props.questionId);
+    AnswerApiUtil.fetchQuestionAnswers(this.props.question.id);
   },
-
-
 
 
   render: function() {
@@ -42,7 +44,7 @@ var AnswersIndex = React.createClass({
         <div>
           {answers}
         </div>
-      < AnswerForm questionId={this.props.questionId}/>
+      < AnswerForm questionId={this.props.question.id}/>
       </div>
     );
 
