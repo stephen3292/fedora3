@@ -31320,7 +31320,7 @@
 	  },
 	
 	  _onChange: function () {
-	    this.setState({ questions: questionsStore.all() });
+	    this.setState({ questions: questionsStore.all().reverse() });
 	  },
 	
 	  componentDidMount: function () {
@@ -32050,6 +32050,7 @@
 	
 	  search: function (e) {
 	    var query = e.target.value;
+	    debugger;
 	    SearchApiUtil.search(query, 1);
 	
 	    this.setState({ page: 1, query: query });
@@ -32069,6 +32070,7 @@
 	  render: function () {
 	
 	    var searchResults = SearchResultsStore.all().map(function (searchResult) {
+	      debugger;
 	      if (searchResult._type === "Question") {
 	        return React.createElement(QuestionIndexItem, { question: searchResult });
 	      } else {
@@ -32086,7 +32088,21 @@
 	        'Search!'
 	      ),
 	      React.createElement('input', { placeholder: 'Search before asking!',
-	        onKeyUp: this.search })
+	        onKeyUp: this.search }),
+	      'Displaying ',
+	      SearchResultsStore.all().length,
+	      ' of',
+	      SearchResultsStore.meta().totalCount,
+	      React.createElement(
+	        'button',
+	        { onClick: this.nextPage },
+	        'Next >'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'users-index' },
+	        searchResults
+	      )
 	    );
 	  }
 	
@@ -32148,12 +32164,14 @@
 	var SearchApiUtil = {
 	
 	  search: function (query, page) {
+	
 	    $.ajax({
 	      url: '/api/search',
 	      type: 'GET',
 	      dataType: 'json',
 	      data: { query: query, page: page },
 	      success: function (data) {
+	        debugger;
 	        SearchActions.receiveResults(data);
 	      }
 	    });

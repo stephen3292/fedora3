@@ -19,6 +19,7 @@ var Search = React.createClass({
 
   search: function(e) {
     var query = e.target.value;
+    debugger
     SearchApiUtil.search(query, 1);
 
     this.setState({page: 1, query: query});
@@ -38,6 +39,7 @@ var Search = React.createClass({
   render: function(){
 
     var searchResults = SearchResultsStore.all().map(function(searchResult) {
+      debugger
       if (searchResult._type === "Question") {
         return <QuestionIndexItem question={searchResult} />;
       } else {
@@ -50,8 +52,11 @@ var Search = React.createClass({
       <h1 className="ask-search">Search!</h1>
       <input placeholder="Search before asking!"
       onKeyUp={this.search} />
+      Displaying {SearchResultsStore.all().length} of
+      {SearchResultsStore.meta().totalCount}
+      <button onClick={this.nextPage}>Next ></button>
 
-
+      <ul className="users-index">{ searchResults }</ul>
       </div>
     );
   }

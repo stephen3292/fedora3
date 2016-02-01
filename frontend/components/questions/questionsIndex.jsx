@@ -12,7 +12,7 @@ var QuestionsIndex = React.createClass({
   },
 
   _onChange: function(){
-    this.setState({questions: questionsStore.all()});
+    this.setState({questions: questionsStore.all().reverse()});
   },
 
   componentDidMount: function(){
