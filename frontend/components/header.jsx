@@ -24,7 +24,7 @@ var Header = React.createClass({
   render: function() {
     if (CurrentUserStore.isLoggedIn()) {
 
-      // var readQuestions = '#/users/' + this.props.user.id + '/all';
+      var answerQuestions = '#/questions';
 
       return (
         <header className="top-header">
@@ -35,8 +35,8 @@ var Header = React.createClass({
             <div className="header-username">{ this.state.currentUser.username }</div>
             <img className="header-image" src={this.state.currentUser.image_url} />
               <ul className="nav-links group">
-                <li className="nav-link"><a className="user-questions-link">Read</a></li>
-                <li className="nav-link">Answer</li>
+                <li className="nav-link">Read</li>
+                <li className="nav-link"><a className="user-questions-link" href={answerQuestions}>Answer</a></li>
                 <li className="nav-link">Notifications</li>
               </ul>
             <button className="sign-out-button" onClick={ this.logout }>Sign Out</button>

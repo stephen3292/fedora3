@@ -73,7 +73,8 @@
 	  React.createElement(IndexRoute, { component: UserShow, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: SessionForm }),
 	  React.createElement(Route, { path: 'users/new', component: UserForm }),
-	  React.createElement(Route, { path: 'question/:questionId', component: QuestionDetail })
+	  React.createElement(Route, { path: 'question/:questionId', component: QuestionDetail }),
+	  React.createElement(Route, { path: 'questions', component: QuestionsIndex })
 	);
 	
 	console.log('hi');
@@ -31001,7 +31002,7 @@
 	  render: function () {
 	    if (CurrentUserStore.isLoggedIn()) {
 	
-	      // var readQuestions = '#/users/' + this.props.user.id + '/all';
+	      var answerQuestions = '#/questions';
 	
 	      return React.createElement(
 	        'header',
@@ -31032,16 +31033,16 @@
 	            React.createElement(
 	              'li',
 	              { className: 'nav-link' },
-	              React.createElement(
-	                'a',
-	                { className: 'user-questions-link' },
-	                'Read'
-	              )
+	              'Read'
 	            ),
 	            React.createElement(
 	              'li',
 	              { className: 'nav-link' },
-	              'Answer'
+	              React.createElement(
+	                'a',
+	                { className: 'user-questions-link', href: answerQuestions },
+	                'Answer'
+	              )
 	            ),
 	            React.createElement(
 	              'li',

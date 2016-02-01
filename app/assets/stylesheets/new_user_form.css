@@ -66,5 +66,18 @@
   text-align: right;
   margin-left: 200px;
   margin-top: 92px
+}
 
+.guest-sign-in-button{
+  display: block;
+  transition-delay: 100ms;
+  border-radius: 3px;
+  padding: 5px 7px 4px 7px;
+  background: #3e78ad;
+  color: #fff;;
+  font-weight: 500;
+  border: 1px solid #3a66ad;
+  cursor: pointer;
+  text-align: right;
+  margin-top: 50px
 }

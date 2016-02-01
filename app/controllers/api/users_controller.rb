@@ -24,7 +24,8 @@ class Api::UsersController < ApplicationController
 
   def show
     # @user = User.includes(:username, :description, :questions).find(params[:id])
-    user = User.find(params[:id]) 
+    user = User.find(params[:id])
+    render json: {}
   end
 
   private

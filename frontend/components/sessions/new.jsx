@@ -65,6 +65,7 @@ var SessionForm = React.createClass({
             A question site you've probably never heard of
           </h2>
         </header>
+
         <div className="opening-page group">
         < UserForm />
         <form className="new-session-form" onSubmit={ this.handleSubmit }>
