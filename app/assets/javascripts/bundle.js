@@ -32055,7 +32055,6 @@
 	
 	  search: function (e) {
 	    var query = e.target.value;
-	    debugger;
 	    SearchApiUtil.search(query, 1);
 	
 	    this.setState({ page: 1, query: query });
@@ -32075,7 +32074,7 @@
 	  render: function () {
 	
 	    var searchResults = SearchResultsStore.all().map(function (searchResult) {
-	      debugger;
+	
 	      if (searchResult._type === "Question") {
 	        return React.createElement(QuestionIndexItem, { question: searchResult });
 	      } else {
@@ -32176,7 +32175,6 @@
 	      dataType: 'json',
 	      data: { query: query, page: page },
 	      success: function (data) {
-	        debugger;
 	        SearchActions.receiveResults(data);
 	      }
 	    });

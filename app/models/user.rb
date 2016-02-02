@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, default_url: "missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
-  # include PgSearch
-  # multisearchable :against => [:username, :user_id]
+  include PgSearch
+  multisearchable :against => [:username, :user_id]
 
 
 

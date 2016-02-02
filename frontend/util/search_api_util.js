@@ -10,7 +10,6 @@ var SearchApiUtil = {
       dataType: 'json',
       data: {query: query, page: page},
       success: function (data) {
-        debugger
         SearchActions.receiveResults(data);
       }
     });
