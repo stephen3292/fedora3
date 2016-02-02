@@ -3,7 +3,7 @@
 
 [Heroku link][heroku] **NB:** This should be a link to your production site
 
-[heroku]: http://www.herokuapp.com
+[heroku]: http://www.askfedora.com
 
 ## Minimum Viable Product
 
