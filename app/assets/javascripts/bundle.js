@@ -31002,6 +31002,8 @@
 	var React = __webpack_require__(1);
 	var CurrentUserStore = __webpack_require__(233);
 	var AskForm = __webpack_require__(206);
+	var SessionsApiUtil = __webpack_require__(235);
+	var History = __webpack_require__(159).History;
 	
 	var Header = React.createClass({
 	  displayName: 'Header',
@@ -31020,7 +31022,9 @@
 	    this.setState({ currentUser: CurrentUserStore.currentUser() });
 	  },
 	
-	  logout: function () {},
+	  logout: function () {
+	    SessionsApiUtil.logout();
+	  },
 	
 	  render: function () {
 	    if (CurrentUserStore.isLoggedIn()) {
@@ -31044,7 +31048,7 @@
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'q-form' },
+	            { className: 'ask-form' },
 	            React.createElement(AskForm, null)
 	          ),
 	          React.createElement(
@@ -31152,6 +31156,7 @@
 	var CurrentUserActions = __webpack_require__(236);
 	var SessionsApiUtil = {
 	  login: function (credentials, success) {
+	
 	    $.ajax({
 	      url: '/api/session',
 	      type: 'POST',
@@ -31167,15 +31172,15 @@
 	    });
 	  },
 	
-	  logout: function (callback) {
+	  logout: function (success) {
 	    $.ajax({
 	      url: '/api/session',
 	      type: 'POST',
 	      method: 'DELETE',
 	      dataType: 'json',
-	      success: function () {
-	        CurrentUserActions.userLogOut();
-	        callback && callback();
+	      success: function (currentUser) {
+	        CurrentUserActions.userLogOut(currentUser);
+	        success && success();
 	      }
 	    });
 	  },
@@ -31212,7 +31217,7 @@
 	    });
 	  },
 	  userLogOut: function () {
-	    Dispatcher.dispatch({
+	    AppDispatcher.dispatch({
 	      actionType: CurrentUserConstants.USER_LOG_OUT
 	    });
 	  }
@@ -32257,8 +32262,8 @@
 	  handleGuest: function (e) {
 	    e.preventDefault();
 	    var formData = new FormData();
-	    formData.append("user[username]", "guest user");
-	    formData.append("user[password]", "guest user");
+	    formData.append("user[username]", "Guest User");
+	    formData.append("user[password]", "Guest User");
 	
 	    SessionsApiUtil.login(formData, function () {
 	      this.history.pushState(null, "/");

@@ -9,7 +9,7 @@ var CurrentUserActions = {
     });
   },
   userLogOut: function () {
-  Dispatcher.dispatch({
+  AppDispatcher.dispatch({
     actionType: CurrentUserConstants.USER_LOG_OUT,
   });
 }

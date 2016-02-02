@@ -1,6 +1,7 @@
 var CurrentUserActions = require("./../actions/current_user_actions");
 var SessionsApiUtil = {
   login: function (credentials, success) {
+
     $.ajax({
       url: '/api/session',
       type: 'POST',
@@ -16,15 +17,15 @@ var SessionsApiUtil = {
     });
   },
 
-  logout: function (callback) {
+  logout: function (success) {
     $.ajax({
       url: '/api/session',
       type: 'POST',
       method: 'DELETE',
       dataType: 'json',
-      success: function () {
-        CurrentUserActions.userLogOut();
-        callback && callback();
+      success: function (currentUser) {
+        CurrentUserActions.userLogOut(currentUser);
+        success && success();
       }
     });
   },

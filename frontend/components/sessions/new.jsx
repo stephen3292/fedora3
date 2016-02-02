@@ -48,8 +48,8 @@ var SessionForm = React.createClass({
   handleGuest: function(e) {
     e.preventDefault();
     var formData = new FormData();
-      formData.append("user[username]", "guest user");
-      formData.append("user[password]", "guest user");
+      formData.append("user[username]", "Guest User");
+      formData.append("user[password]", "Guest User");
 
       SessionsApiUtil.login(formData, function() {
         this.history.pushState(null, "/" );

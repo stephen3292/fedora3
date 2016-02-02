@@ -10,7 +10,7 @@ class Api::UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       sign_in!(@user)
-      render :show
+      render "api/users/show"
     else
       flash.now[:errors] = @user.errors.full_messages
       render :new
@@ -25,7 +25,6 @@ class Api::UsersController < ApplicationController
   def show
     # @user = User.includes(:username, :description, :questions).find(params[:id])
     @user = User.find(params[:id])
-    render json: {}
   end
 
   private

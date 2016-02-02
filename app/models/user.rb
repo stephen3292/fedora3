@@ -20,9 +20,13 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true }
   has_attached_file :avatar, default_url: "missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
-  has_attached_file :avatar, styles: { thumb: ["32x32#", :png] }
+
   # include PgSearch
   # multisearchable :against => [:username, :user_id]
+
+
+
+
 
   attr_reader :password
   before_validation :ensure_session_token!

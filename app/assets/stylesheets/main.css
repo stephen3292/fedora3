@@ -12,16 +12,17 @@
   float: left;
   width: 140px;
   padding: 20px;
-  height: 240px;
+  height: 280px;
   background: pink;
   border-radius: 5px
 }
 
-.ask-a-question {
-
+.single-answer {
+  margin-top: 10px;
 }
 
 .image-attachment{
+  visibility: hidden;
   color: #666;
   font-size: 10px;
   margin-left: 20px

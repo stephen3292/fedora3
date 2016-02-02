@@ -1,6 +1,8 @@
 var React = require('react');
 var CurrentUserStore = require('../stores/current_user_store');
 var AskForm = require('../components/questions/questionForm');
+var SessionsApiUtil = require('../util/sessions_api_util');
+var History = require('react-router').History;
 
 var Header = React.createClass({
 
@@ -19,7 +21,7 @@ var Header = React.createClass({
   },
 
   logout: function () {
-
+    SessionsApiUtil.logout();
   },
 
   render: function() {
@@ -32,7 +34,7 @@ var Header = React.createClass({
           <div className="header-nav group">
             <h1 className="fedora-logo"><a className="home-link" href={user_home_page}>Fedora</a></h1>
 
-            <div className='q-form'><AskForm/></div>
+            <div className='ask-form'><AskForm/></div>
             <div className="header-username">{ this.state.currentUser.username }</div>
             <img className="header-image" src={this.state.currentUser.image_url} />
               <ul className="nav-links group">
