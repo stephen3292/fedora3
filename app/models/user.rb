@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :replies
 
+  has_many :user_taggings
+  has_many :user_tags, through: :user_taggings
+
+
 
   def self.find_by_credentials(username, password)
     @user = User.find_by_username(username)

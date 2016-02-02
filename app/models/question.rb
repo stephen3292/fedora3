@@ -20,7 +20,16 @@ class Question < ActiveRecord::Base
   has_attached_file :image, default_url: "missing.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   belongs_to :user
+
   has_many :answers
+
+  has_many :question_taggings 
+  has_many :tags, through: :question_taggings
+
+
+
+
+
   include PgSearch
   multisearchable :against => [:title, :image, :username]
 end
