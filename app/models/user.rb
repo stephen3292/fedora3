@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   include PgSearch
-  multisearchable :against => [:username, :user_id]
+  multisearchable :against => [:username, :id]
 
 
 
