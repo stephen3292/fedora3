@@ -58,9 +58,10 @@
 	var Search = __webpack_require__(262);
 	var QuestionsReadIndex = __webpack_require__(267);
 	var AskQuestion = __webpack_require__(238);
+	var TagShow = __webpack_require__(270);
 	
-	var SessionForm = __webpack_require__(270);
-	var UserForm = __webpack_require__(271);
+	var SessionForm = __webpack_require__(271);
+	var UserForm = __webpack_require__(272);
 	ApiUtil = __webpack_require__(244);
 	QuestionsIndex = __webpack_require__(243);
 	QuestionStore = __webpack_require__(207);
@@ -80,7 +81,8 @@
 	  React.createElement(Route, { path: 'questions', component: QuestionsIndex }),
 	  React.createElement(Route, { path: 'search', component: Search }),
 	  React.createElement(Route, { path: 'read', component: QuestionsReadIndex }),
-	  React.createElement(Route, { path: 'ask', component: AskQuestion })
+	  React.createElement(Route, { path: 'ask', component: AskQuestion }),
+	  React.createElement(Route, { path: 'question_tags/:tagId', component: TagShow })
 	);
 	
 	function _ensureLoggedIn(nextState, replace, callback) {
@@ -31361,8 +31363,19 @@
 	    });
 	  },
 	
+	  fetchOneTag: function (id) {
+	    $.ajax({
+	      type: "get",
+	      url: "api/question_tags/" + id,
+	      dataType: "json",
+	      success: function (data) {
+	        debugger;
+	        TagActions.receiveSingleTag(data);
+	      }
+	    });
+	  },
+	
 	  createTag: function (title, questionId) {
-	    debugger;
 	    var coolName = title.questionId;
 	    $.ajax({
 	      type: "post",
@@ -31416,7 +31429,7 @@
 	var AppDispatcher = __webpack_require__(208);
 	var Store = __webpack_require__(212).Store;
 	var TagConstants = __webpack_require__(231);
-	var _answers = {};
+	var _tags = {};
 	
 	var tagStore = new Store(AppDispatcher);
 	
@@ -31431,12 +31444,20 @@
 	};
 	
 	tagStore.resetTag = function (tag) {
-	  _answers[tag.id] = tag;
+	  _tags[tag.id] = tag;
 	};
 	
 	tagStore.all = function (questionId) {
 	  var tags = _tags[questionId] || [];
 	  return tags.slice();
+	};
+	
+	tagStore.everyTag = function () {
+	  var result = [];
+	  for (var i in _tags) {
+	    result.push(_tags[i]);
+	  }
+	  return result;
 	};
 	
 	tagStore.find = function (id) {
@@ -31454,7 +31475,6 @@
 	
 	  }
 	
-	  console.log(payload.answer);
 	  tagStore.__emitChange();
 	};
 	
@@ -31856,17 +31876,40 @@
 	
 	  render: function () {
 	    // var tags = {this.props.tag.name}
-	    debugger;
+	    var tagId = this.props.tag.id;
+	    var tagLink = '#/question_tags/' + tagId;
 	    var tags = this.props.tag.name;
 	    return React.createElement(
 	      'div',
 	      { className: 'single-tag' },
-	      tags
+	      React.createElement(
+	        'a',
+	        { className: 'tag-link', href: tagLink },
+	        tags
+	      )
 	    );
 	  }
 	});
 	
 	module.exports = TagsIndexItem;
+	
+	// render: function() {
+	// // var tags = {this.props.tag.name}
+	//
+	//   var tagName = this.props.tag.name;
+	//   var tagId = this.props.tag.id;
+	//   var tagLink = '#/question_tags/' + tagId;
+	//
+	//
+	//   return(
+	//     <div className="single-tag">
+	//       <li className="nav-link"><a className="tag-link" href={tagLink}>tagName</a></li>
+	//     </div>
+	//   );
+	// }
+	// });
+	//
+	// module.exports = TagsIndexItem;
 
 /***/ },
 /* 250 */
@@ -32708,9 +32751,48 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var TagStore = __webpack_require__(241);
+	var TagsApiUtil = __webpack_require__(239);
+	var QuestionsIndexItem = __webpack_require__(247);
+	
+	var tagShow = React.createClass({
+	  displayName: 'tagShow',
+	
+	  getStateFromStore: function () {
+	    return TagStore.find(parseInt(this.props.params.tagId));
+	  },
+	
+	  getInitialState: function () {
+	    return { tag: this.getStateFromStore() };
+	  },
+	
+	  componentDidMount: function () {
+	    TagsApiUtil.fetchOneTag(parseInt(this.props.params.tagId));
+	  },
+	
+	  render: function () {
+	    {
+	      debugger;
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Hello!'
+	      );
+	    }
+	  }
+	
+	});
+	
+	module.exports = tagShow;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
 	var SessionsApiUtil = __webpack_require__(236);
-	var UserForm = __webpack_require__(271);
+	var UserForm = __webpack_require__(272);
 	
 	var SessionForm = React.createClass({
 	  displayName: 'SessionForm',
@@ -32836,7 +32918,7 @@
 	module.exports = SessionForm;
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);

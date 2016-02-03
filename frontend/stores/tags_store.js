@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatcher/dispatch');
 var Store = require('flux/utils').Store;
 var TagConstants = require('../constants/tag_constants');
-var _answers = {};
+var _tags = {};
 
 var tagStore = new Store(AppDispatcher);
 
@@ -16,12 +16,20 @@ tagStore.resetTags = function(tags){
 };
 
 tagStore.resetTag = function(tag){
-  _answers[tag.id] = tag;
+  _tags[tag.id] = tag;
 };
 
 tagStore.all = function(questionId){
   var tags = _tags[questionId] || [];
   return tags.slice();
+};
+
+tagStore.everyTag = function(){
+  var result = [];
+  for (var i in _tags) {
+    result.push(_tags[i]);
+  }
+  return result;
 };
 
 tagStore.find = function(id) {
@@ -39,7 +47,6 @@ tagStore.__onDispatch = function (payload) {
 
   }
 
-  console.log(payload.answer);
   tagStore.__emitChange();
 };
 

@@ -16,8 +16,19 @@ var tagApiUtil = {
     });
   },
 
+  fetchOneTag: function(id) {
+    $.ajax({
+      type: "get",
+      url: "api/question_tags/" + id,
+      dataType: "json",
+      success: function(data) {
+        debugger
+        TagActions.receiveSingleTag(data);
+      }
+    });
+  },
+
   createTag: function (title, questionId) {
-    debugger
     var coolName = title.questionId;
     $.ajax({
       type: "post",

@@ -19,13 +19,15 @@ class Api::QuestionTagsController < ApplicationController
   end
 
   def show
-    @question_tag = QuestionTag.find(params[:id])
+    debugger
+    @question_tag = QuestionTag.find(params[:id].to_i)
+    
   end
 
 
   private
-  def answer_params
-    params.require(:question_tag).permit(:name, :title, :questionId)
+  def question_tag_params
+    params.require(:question_tag).permit(:name, :title, :questionId, :id)
   end
 
 end
