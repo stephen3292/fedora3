@@ -15,7 +15,6 @@ var AnswersIndex = React.createClass({
 
   render: function() {
 
-    console.log(AnswersStore.all());
     var answers = this.props.question.answers.map(function (answer) {
       return <AnswersIndexItem answer={answer} key={answer.id}/>;
     });

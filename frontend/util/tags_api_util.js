@@ -23,8 +23,6 @@ var tagApiUtil = {
       type: "post",
       url: "api/questions/" + coolName + "/question_tags",
       dataType: "json",
-      processData: false,
-      contentType: false,
       data: title,
       success: function(data) {
         TagActions.receiveSingleTag(data);

@@ -16,6 +16,7 @@
 #
 
 class Question < ActiveRecord::Base
+  include Taggable
   validates :title, presence: true
   has_attached_file :image, default_url: "missing.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
@@ -28,7 +29,9 @@ class Question < ActiveRecord::Base
 
 
 
-
+  def question_tag_list
+    QuestionTags.all.uniq
+  end
 
   include PgSearch
   multisearchable :against => [:title, :image, :username]

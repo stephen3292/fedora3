@@ -7,7 +7,7 @@ var TagsIndexItem = React.createClass({
 
   render: function() {
   // var tags = {this.props.tag.name}
-
+    debugger
     var tags = this.props.tag.name;
     return(
       <div className="single-tag">

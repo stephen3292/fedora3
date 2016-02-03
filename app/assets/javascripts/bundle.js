@@ -31224,7 +31224,6 @@
 	      type: 'GET',
 	      dataType: 'json',
 	      success: function (currentUser) {
-	        console.log("fetched current user!");
 	        CurrentUserActions.receiveCurrentUser(currentUser);
 	        cb && cb(currentUser);
 	      }
@@ -31303,7 +31302,6 @@
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	    var formData = new FormData();
-	    var tagData = new FormData();
 	
 	    formData.append("question[title]", this.state.title);
 	    if (this.state.imageFile) {
@@ -31312,7 +31310,6 @@
 	      formData.append("question[image]", "");
 	    }
 	    formData.append("question[body]", this.state.body);
-	    tagData.append("question_tag[name]", this.state.tag);
 	    ApiUtil.createQuestion(formData, function (question) {
 	      TagsApiUtil.createTag({ name: this.state.tag, questionId: question.id });
 	    }.bind(this));
@@ -31371,8 +31368,6 @@
 	      type: "post",
 	      url: "api/questions/" + coolName + "/question_tags",
 	      dataType: "json",
-	      processData: false,
-	      contentType: false,
 	      data: title,
 	      success: function (data) {
 	        TagActions.receiveSingleTag(data);
@@ -31728,7 +31723,6 @@
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	    var formData = new FormData();
-	    var tagData = new FormData();
 	
 	    formData.append("question[title]", this.state.title);
 	    if (this.state.imageFile) {
@@ -31737,7 +31731,6 @@
 	      formData.append("question[image]", "");
 	    }
 	    formData.append("question[body]", this.state.body);
-	    tagData.append("question_tag[name]", this.state.tag);
 	    ApiUtil.createQuestion(formData, function (question) {
 	      TagsApiUtil.createTag({ name: this.state.tag, questionId: question.id });
 	    }.bind(this));
@@ -31863,7 +31856,7 @@
 	
 	  render: function () {
 	    // var tags = {this.props.tag.name}
-	
+	    debugger;
 	    var tags = this.props.tag.name;
 	    return React.createElement(
 	      'div',
@@ -32088,7 +32081,6 @@
 	
 	  render: function () {
 	
-	    console.log(AnswersStore.all());
 	    var answers = this.props.question.answers.map(function (answer) {
 	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
 	    });

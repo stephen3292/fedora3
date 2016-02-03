@@ -38,7 +38,6 @@ var QuestionForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var formData = new FormData();
-    var tagData = new FormData();
 
     formData.append("question[title]", this.state.title);
     if (this.state.imageFile) {
@@ -47,7 +46,6 @@ var QuestionForm = React.createClass({
       formData.append("question[image]", "");
     }
     formData.append("question[body]", this.state.body);
-    tagData.append("question_tag[name]", this.state.tag);
     ApiUtil.createQuestion(formData, function(question) {
       TagsApiUtil.createTag({name: this.state.tag, questionId: question.id});
     }.bind(this));
