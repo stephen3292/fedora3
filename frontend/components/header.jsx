@@ -2,6 +2,7 @@ var React = require('react');
 var CurrentUserStore = require('../stores/current_user_store');
 var AskForm = require('../components/questions/questionForm');
 var SessionsApiUtil = require('../util/sessions_api_util');
+// var LongAskForm = require('../components/')
 var History = require('react-router').History;
 
 var Header = React.createClass({
@@ -28,6 +29,7 @@ var Header = React.createClass({
     if (CurrentUserStore.isLoggedIn()) {
 
       var answerQuestions = '#/questions';
+      var readQuestions = '#/read';
       var user_home_page = '/';
       return (
         <header className="top-header">
@@ -38,9 +40,9 @@ var Header = React.createClass({
             <div className="header-username">{ this.state.currentUser.username }</div>
             <img className="header-image" src={this.state.currentUser.image_url} />
               <ul className="nav-links group">
-                <li className="nav-link">Read</li>
-                <li className="nav-link"><a className="user-questions-link" href={answerQuestions}>Answer</a></li>
                 <li className="nav-link">Notifications</li>
+                <li className="nav-link"><a className="user-questions-link" href={answerQuestions}>Answer</a></li>
+                <li className="nav-link"><a className="user-read-link" href={readQuestions}>Read</a></li>
               </ul>
             <button className="sign-out-button" onClick={ this.logout }>Sign Out</button>
           </div>

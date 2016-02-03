@@ -56,9 +56,11 @@
 	var CurrentUserStore = __webpack_require__(234);
 	var SessionsApiUtil = __webpack_require__(236);
 	var Search = __webpack_require__(258);
+	var QuestionsReadIndex = __webpack_require__(263);
+	var AskQuestion = __webpack_require__(268);
 	
-	var SessionForm = __webpack_require__(263);
-	var UserForm = __webpack_require__(264);
+	var SessionForm = __webpack_require__(264);
+	var UserForm = __webpack_require__(265);
 	ApiUtil = __webpack_require__(240);
 	QuestionsIndex = __webpack_require__(239);
 	QuestionStore = __webpack_require__(207);
@@ -76,7 +78,8 @@
 	  React.createElement(Route, { path: 'users/new', component: UserForm }),
 	  React.createElement(Route, { path: 'question/:questionId', component: QuestionDetail }),
 	  React.createElement(Route, { path: 'questions', component: QuestionsIndex }),
-	  React.createElement(Route, { path: 'search', component: Search })
+	  React.createElement(Route, { path: 'search', component: Search }),
+	  React.createElement(Route, { path: 'read', component: QuestionsReadIndex })
 	);
 	
 	console.log('hi');
@@ -31025,6 +31028,7 @@
 	var CurrentUserStore = __webpack_require__(234);
 	var AskForm = __webpack_require__(206);
 	var SessionsApiUtil = __webpack_require__(236);
+	// var LongAskForm = require('../components/')
 	var History = __webpack_require__(159).History;
 	
 	var Header = React.createClass({
@@ -31052,6 +31056,7 @@
 	    if (CurrentUserStore.isLoggedIn()) {
 	
 	      var answerQuestions = '#/questions';
+	      var readQuestions = '#/read';
 	      var user_home_page = '/';
 	      return React.createElement(
 	        'header',
@@ -31085,7 +31090,7 @@
 	            React.createElement(
 	              'li',
 	              { className: 'nav-link' },
-	              'Read'
+	              'Notifications'
 	            ),
 	            React.createElement(
 	              'li',
@@ -31099,7 +31104,11 @@
 	            React.createElement(
 	              'li',
 	              { className: 'nav-link' },
-	              'Notifications'
+	              React.createElement(
+	                'a',
+	                { className: 'user-read-link', href: readQuestions },
+	                'Read'
+	              )
 	            )
 	          ),
 	          React.createElement(
@@ -31610,7 +31619,6 @@
 	    // var tags = {this.props.tag.name}
 	
 	    var tags = this.props.tag.name;
-	    debugger;
 	    return React.createElement(
 	      'div',
 	      { className: 'single-tag' },
@@ -31833,23 +31841,6 @@
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',
 	
-	  // getInitialState: function(){
-	  //   return ({answers: AnswersStore.all(this.props.question.id)});
-	  // },
-	  //
-	  // _onChange: function() {
-	  //   this.setState({answers: AnswersStore.all(this.props.question.id)});
-	  // },
-	  //
-	  // componentWillUnmount: function() {
-	  //   this.setState({answers: AnswersStore.resetAnswers()});
-	  // },
-	  //
-	  // componentDidMount: function(){
-	  //   AnswersStore.addListener(this._onChange);
-	  //   AnswerApiUtil.fetchQuestionAnswers(this.props.question.id);
-	  // },
-	
 	  render: function () {
 	
 	    console.log(AnswersStore.all());
@@ -31960,7 +31951,7 @@
 	      'div',
 	      { className: 'answer-form' },
 	      React.createElement('h2', { className: 'answer-header' }),
-	      React.createElement('input', { className: 'a-form-title', placeholder: 'no', onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement('input', { className: 'a-form-title', placeholder: 'Answer', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
 	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
 	      React.createElement(
@@ -32347,9 +32338,60 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var questionsStore = __webpack_require__(207);
+	var questionApiUtil = __webpack_require__(240);
+	var QuestionsReadIndexItem = __webpack_require__(266);
+	
+	var QuestionsIndex = React.createClass({
+	  displayName: 'QuestionsIndex',
+	
+	  getInitialState: function () {
+	    return { questions: questionsStore.all() };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ questions: questionsStore.all().reverse() });
+	  },
+	
+	  componentDidMount: function () {
+	    questionsStore.addListener(this._onChange);
+	    questionApiUtil.fetchAllQuestions();
+	  },
+	
+	  render: function () {
+	
+	    var r_questions = this.state.questions;
+	    var questions = r_questions.map(function (question) {
+	      return React.createElement(QuestionsReadIndexItem, { question: question, key: question.id });
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'q-index' },
+	      React.createElement(
+	        'ul',
+	        { className: 'more-q group' },
+	        React.createElement(
+	          'div',
+	          { className: 'all-the-questions' },
+	          questions
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = QuestionsIndex;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
 	var SessionsApiUtil = __webpack_require__(236);
-	var UserForm = __webpack_require__(264);
+	var UserForm = __webpack_require__(265);
 	
 	var SessionForm = React.createClass({
 	  displayName: 'SessionForm',
@@ -32475,7 +32517,7 @@
 	module.exports = SessionForm;
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32577,6 +32619,173 @@
 	});
 	
 	module.exports = UserForm;
+
+/***/ },
+/* 266 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var TagsIndex = __webpack_require__(243);
+	var History = __webpack_require__(159).History;
+	var QuestionDetail = __webpack_require__(249);
+	var ReadAnswersIndex = __webpack_require__(267);
+	var QuestionIndexItem = React.createClass({
+	  displayName: 'QuestionIndexItem',
+	
+	  mixins: [History],
+	
+	  getInitialState: function () {
+	    return { detail: false };
+	  },
+	
+	  toggleState: function (e) {
+	    // e.stopPropagation();
+	    //maybe dont do this....
+	
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'li',
+	      { className: 'single-question group' },
+	      React.createElement(TagsIndex, { question: this.props.question }),
+	      this.props.question.title,
+	      React.createElement('br', null),
+	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
+	      React.createElement(
+	        'div',
+	        { className: 'q-username' },
+	        this.props.question.username
+	      ),
+	      React.createElement('br', null),
+	      React.createElement(ReadAnswersIndex, { question: this.props.question })
+	    );
+	  }
+	});
+	
+	module.exports = QuestionIndexItem;
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var React = __webpack_require__(1);
+	var QuestionIndexItem = __webpack_require__(242);
+	var AnswersIndexItem = __webpack_require__(251);
+	var AnswersStore = __webpack_require__(248);
+	var CurrentUserStore = __webpack_require__(234);
+	AnswerApiUtil = __webpack_require__(246);
+	
+	var AnswersIndex = React.createClass({
+	  displayName: 'AnswersIndex',
+	
+	  render: function () {
+	
+	    console.log(AnswersStore.all());
+	    var answers = this.props.question.answers.map(function (answer) {
+	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'answer-list' },
+	        answers
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = AnswersIndex;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1),
+	    questionsStore = __webpack_require__(207);
+	
+	var QuestionForm = React.createClass({
+	  displayName: 'QuestionForm',
+	
+	  getInitialState: function () {
+	    return { title: "", body: "", tag: "", imageFile: null, imageUrl: "" };
+	  },
+	
+	  updateTitle: function (e) {
+	    this.setState({ title: e.currentTarget.value });
+	  },
+	
+	  updateBody: function (e) {
+	    this.setState({ body: e.currentTarget.value });
+	  },
+	
+	  updateTag: function (e) {
+	    this.setState({ tag: e.currentTarget.value });
+	  },
+	
+	  changeFile: function (e) {
+	    var reader = new FileReader();
+	    var file = e.currentTarget.files[0];
+	
+	    reader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: reader.result });
+	    }.bind(this);
+	
+	    if (file) {
+	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
+	    } else {
+	        this.setState({ imageFile: null, imageUrl: "" });
+	      }
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    this.handleTag(e);
+	    var formData = new FormData();
+	    var tagData = new FormData();
+	
+	    formData.append("question[title]", this.state.title);
+	    if (this.state.imageFile) {
+	      formData.append("question[image]", this.state.imageFile);
+	    } else {
+	      formData.append("question[image]", "");
+	    }
+	    formData.append("question[body]", this.state.body);
+	    tagData.append("question_tag[name]", this.state.tag);
+	
+	    ApiUtil.createQuestion(formData);
+	    TagApiUtil.createTag(tagData);
+	  },
+	
+	  resetForm: function () {
+	    this.setState({ title: "", body: "", imageFile: null, imageUrl: "" });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'ask-a-question group' },
+	      React.createElement('h2', { className: 'ask-header' }),
+	      React.createElement('input', { className: 'form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement('input', { className: 'form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
+	      React.createElement(
+	        'button',
+	        { className: 'form-button', onClick: this.handleSubmit },
+	        'Ask Question'
+	      ),
+	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
+	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
+	      React.createElement('input', { className: 'form-body', onInput: this.updateBody, value: this.state.body })
+	    );
+	  }
+	});
+	
+	module.exports = QuestionForm;
 
 /***/ }
 /******/ ]);

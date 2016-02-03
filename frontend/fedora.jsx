@@ -10,6 +10,8 @@ var UsersIndex = require('./components/users/users_index');
 var CurrentUserStore = require('./stores/current_user_store');
 var SessionsApiUtil = require('./util/sessions_api_util');
 var Search = require('./components/search');
+var QuestionsReadIndex = require('./components/questions/questionsRead');
+var AskQuestion = require('./components/questions/questionLongForm');
 
 var SessionForm = require('./components/sessions/new');
 var UserForm = require('./components/users/user_form');
@@ -32,6 +34,7 @@ var routes = (
     <Route path="question/:questionId" component={QuestionDetail}/>
     <Route path="questions" component={QuestionsIndex}/>
     <Route path="search" component={ Search } />
+    <Route path="read" component={QuestionsReadIndex} />
   </Route>
 
 );
