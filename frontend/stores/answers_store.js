@@ -39,7 +39,6 @@ answerStore.__onDispatch = function (payload) {
 
   }
 
-  console.log(payload.answer);
   answerStore.__emitChange();
 };
 

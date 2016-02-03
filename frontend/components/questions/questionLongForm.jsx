@@ -35,7 +35,6 @@ var QuestionForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    this.handleTag(e);
     var formData = new FormData();
     var tagData = new FormData();
 
@@ -60,12 +59,12 @@ var QuestionForm = React.createClass({
     return(
       <div className="ask-a-question group">
           <h2 className='ask-header'></h2>
-          <input className="form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
-          <input className="form-tag" placeholder="Topic" onInput={this.updateTag} value={this.state.tag}></input>
-          <button className="form-button" onClick={this.handleSubmit}>Ask Question</button>
-          <input className="image-attachment" type="file" onChange={this.changeFile} />
-          <img className="preview-image" src={this.state.imageUrl}/>
-          <input className="form-body" onInput={this.updateBody} value={this.state.body}></input>
+          <input className="long-form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
+          <input className="long-form-tag" placeholder="Topic" onInput={this.updateTag} value={this.state.tag}></input>
+          <button className="long-form-button" onClick={this.handleSubmit}>Ask Question</button>
+          <input className="long-image-attachment" type="file" onChange={this.changeFile} />
+          <img className="long-preview-image" src={this.state.imageUrl}/>
+          <input className="long-form-body" onInput={this.updateBody} value={this.state.body}></input>
 
       </div>
     );

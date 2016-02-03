@@ -35,11 +35,11 @@ var routes = (
     <Route path="questions" component={QuestionsIndex}/>
     <Route path="search" component={ Search } />
     <Route path="read" component={QuestionsReadIndex} />
+    <Route path="ask" component={AskQuestion} />
   </Route>
 
 );
 
-console.log('hi');
 
   function _ensureLoggedIn(nextState, replace, callback) {
     if (CurrentUserStore.userHasBeenFetched()) {
