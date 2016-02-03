@@ -1,5 +1,7 @@
 var React = require('react'),
     questionsStore = require('./../../stores/questions_store');
+    TagsApiUtil = require('./../../util/tags_api_util');
+
 
 var QuestionForm = React.createClass({
   getInitialState: function(){
@@ -46,9 +48,9 @@ var QuestionForm = React.createClass({
     }
     formData.append("question[body]", this.state.body);
     tagData.append("question_tag[name]", this.state.tag);
-
-    ApiUtil.createQuestion(formData);
-    TagApiUtil.createTag(tagData);
+    ApiUtil.createQuestion(formData, function(question) {
+      TagsApiUtil.createTag({name: this.state.tag, questionId: question.id});
+    }.bind(this));
   },
 
   resetForm: function() {

@@ -1,6 +1,8 @@
 var AppDispatcher = require('../dispatcher/dispatch');
 var QuestionActions = require('../actions/question_actions');
 var QuestionsStore = require('../stores/questions_store');
+var QuestionLongForm = require('../components/questions/QuestionLongForm');
+var TagsApiUtil = require('./tags_api_util');
 
 
 var questionApiUtil = {
@@ -28,7 +30,7 @@ var questionApiUtil = {
     });
   },
 
-  createQuestion: function(formData) {
+  createQuestion: function(formData, cb) {
     $.ajax({
       type: "post",
       url: "api/questions",
@@ -38,6 +40,8 @@ var questionApiUtil = {
       data: formData,
       success: function(data) {
         QuestionActions.receiveSingleQuestion(data);
+        cb && cb(data);
+
       }
     });
   }
