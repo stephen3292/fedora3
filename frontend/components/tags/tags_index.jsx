@@ -1,8 +1,6 @@
 
 var React = require('react');
-var QuestionIndexItem = require('../questions/questionsIndexItem');
 // var TagForm = require('./tag_form');
-var TagsStore = require('./../../stores/tags_store');
 var TagsIndexItem = require('./tags_index_item');
 var CurrentUserStore = require('../../stores/current_user_store');
  AnswerApiUtil = require('./../../util/answers_api_util');

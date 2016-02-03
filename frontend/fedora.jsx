@@ -23,8 +23,6 @@ var UserForm = require('./components/users/user_form');
  QuestionDetail = require('./components/questions/questionDetail');
 
 
-console.log(ApiUtil.fetchAllQuestions());
-console.log(QuestionStore.all());
 
 
 var routes = (

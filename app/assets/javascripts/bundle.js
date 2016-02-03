@@ -50,26 +50,23 @@
 	var QuestionForm = __webpack_require__(206);
 	var Route = __webpack_require__(159).Route;
 	var IndexRoute = __webpack_require__(159).IndexRoute;
-	var App = __webpack_require__(232);
-	var UserShow = __webpack_require__(242);
-	var UsersIndex = __webpack_require__(257);
-	var CurrentUserStore = __webpack_require__(234);
-	var SessionsApiUtil = __webpack_require__(236);
-	var Search = __webpack_require__(262);
-	var QuestionsReadIndex = __webpack_require__(267);
-	var AskQuestion = __webpack_require__(238);
+	var App = __webpack_require__(233);
+	var UserShow = __webpack_require__(258);
+	var UsersIndex = __webpack_require__(260);
+	var CurrentUserStore = __webpack_require__(235);
+	var SessionsApiUtil = __webpack_require__(237);
+	var Search = __webpack_require__(265);
+	var QuestionsReadIndex = __webpack_require__(242);
+	var AskQuestion = __webpack_require__(239);
 	var TagShow = __webpack_require__(270);
 	
-	var SessionForm = __webpack_require__(271);
-	var UserForm = __webpack_require__(272);
-	ApiUtil = __webpack_require__(244);
-	QuestionsIndex = __webpack_require__(243);
+	var SessionForm = __webpack_require__(272);
+	var UserForm = __webpack_require__(273);
+	ApiUtil = __webpack_require__(243);
+	QuestionsIndex = __webpack_require__(259);
 	QuestionStore = __webpack_require__(207);
-	AnswersStore = __webpack_require__(252);
-	QuestionDetail = __webpack_require__(253);
-	
-	console.log(ApiUtil.fetchAllQuestions());
-	console.log(QuestionStore.all());
+	AnswersStore = __webpack_require__(251);
+	QuestionDetail = __webpack_require__(252);
 	
 	var routes = React.createElement(
 	  Route,
@@ -24129,6 +24126,7 @@
 	var AnswerConstants = __webpack_require__(230);
 	var TagConstants = __webpack_require__(231);
 	var _questions = {};
+	var TagsStore = __webpack_require__(232);
 	
 	var questionStore = new Store(AppDispatcher);
 	
@@ -24155,8 +24153,10 @@
 	  question.answers.push(answer);
 	};
 	
-	questionStore.addTag = function (tag) {
-	  var question = _questions[tag.question_id];
+	questionStore.addTag = function (tag, questionId) {
+	  var question = _questions[questionId];
+	  question.question_tags = question.question_tags.concat(tag);
+	  debugger;
 	};
 	
 	questionStore.find = function (id) {
@@ -24176,10 +24176,7 @@
 	      questionStore.addAnswer(payload.answer);
 	      break;
 	    case TagConstants.TAG_RECEIVED:
-	      tagStore.addTag(payload.tag);
-	      break;
-	    case TagConstants.TAGS_RECEIVED:
-	      tagStore.addTag(payload.tag);
+	      questionStore.addTag(payload.tag, payload.questionId);
 	      break;
 	  }
 	  questionStore.__emitChange();
@@ -30987,10 +30984,70 @@
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var AppDispatcher = __webpack_require__(208);
+	var Store = __webpack_require__(212).Store;
+	var TagConstants = __webpack_require__(231);
+	var _tags = {};
+	
+	var tagStore = new Store(AppDispatcher);
+	
+	tagStore.resetTags = function (tags) {
+	  _tags = {};
+	  for (var i = 0; i < tags.length; i++) {
+	    var tagId = tags[i].question_id;
+	    var tagArray = _tags[tagId];
+	    tagArray = tagArray || [];
+	    tagArray.push(tags[i]);
+	  }
+	};
+	
+	tagStore.resetTag = function (tag) {
+	  _tags[tag.id] = tag;
+	};
+	
+	tagStore.all = function (questionId) {
+	  var tags = _tags[questionId] || [];
+	  return tags.slice();
+	};
+	
+	tagStore.everyTag = function () {
+	  var result = [];
+	  for (var i in _tags) {
+	    result.push(_tags[i]);
+	  }
+	  return result;
+	};
+	
+	tagStore.addTag = function () {};
+	
+	tagStore.find = function (id) {
+	  return _tags[id];
+	};
+	
+	tagStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case TagConstants.TAGS_RECEIVED:
+	      tagStore.resetTags(payload.tags);
+	      break;
+	    case TagConstants.TAG_RECEIVED:
+	      tagStore.resetTag(payload.tag);
+	      break;
+	
+	  }
+	
+	  tagStore.__emitChange();
+	};
+	
+	module.exports = tagStore;
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var React = __webpack_require__(1),
-	    Header = __webpack_require__(233),
-	    SessionsApiUtil = __webpack_require__(236),
-	    CurrentUserStore = __webpack_require__(234);
+	    Header = __webpack_require__(234),
+	    SessionsApiUtil = __webpack_require__(237),
+	    CurrentUserStore = __webpack_require__(235);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -31022,14 +31079,14 @@
 	module.exports = App;
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var CurrentUserStore = __webpack_require__(234);
+	var CurrentUserStore = __webpack_require__(235);
 	var AskForm = __webpack_require__(206);
-	var SessionsApiUtil = __webpack_require__(236);
-	var LongAskForm = __webpack_require__(238);
+	var SessionsApiUtil = __webpack_require__(237);
+	var LongAskForm = __webpack_require__(239);
 	var History = __webpack_require__(159).History;
 	
 	var Header = React.createClass({
@@ -31140,12 +31197,12 @@
 	module.exports = Header;
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(212).Store;
 	var AppDispatcher = __webpack_require__(208);
-	var CurrentUserConstants = __webpack_require__(235);
+	var CurrentUserConstants = __webpack_require__(236);
 	
 	var _currentUser = {};
 	var _currentUserHasBeenFetched = false;
@@ -31174,7 +31231,7 @@
 	module.exports = CurrentUserStore;
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports) {
 
 	var CurrentUserConstants = {
@@ -31185,10 +31242,10 @@
 	module.exports = CurrentUserConstants;
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var CurrentUserActions = __webpack_require__(237);
+	var CurrentUserActions = __webpack_require__(238);
 	var SessionsApiUtil = {
 	  login: function (credentials, success) {
 	
@@ -31237,11 +31294,11 @@
 	module.exports = SessionsApiUtil;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(208);
-	var CurrentUserConstants = __webpack_require__(235);
+	var CurrentUserConstants = __webpack_require__(236);
 	
 	var CurrentUserActions = {
 	  receiveCurrentUser: function (currentUser) {
@@ -31260,12 +31317,13 @@
 	module.exports = CurrentUserActions;
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1),
 	    questionsStore = __webpack_require__(207);
-	TagsApiUtil = __webpack_require__(239);
+	TagsApiUtil = __webpack_require__(240);
+	QuestionsRead = __webpack_require__(242);
 	
 	var QuestionForm = React.createClass({
 	  displayName: 'QuestionForm',
@@ -31335,7 +31393,8 @@
 	      ),
 	      React.createElement('input', { className: 'long-image-attachment', type: 'file', onChange: this.changeFile }),
 	      React.createElement('img', { className: 'long-preview-image', src: this.state.imageUrl }),
-	      React.createElement('input', { className: 'long-form-body', onInput: this.updateBody, value: this.state.body })
+	      React.createElement('input', { className: 'long-form-body', onInput: this.updateBody, value: this.state.body }),
+	      React.createElement(QuestionsRead, null)
 	    );
 	  }
 	});
@@ -31343,11 +31402,11 @@
 	module.exports = QuestionForm;
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(208);
-	var TagActions = __webpack_require__(240);
+	var TagActions = __webpack_require__(241);
 	
 	var tagApiUtil = {
 	  fetchQuestionTags: function (questionId) {
@@ -31369,7 +31428,7 @@
 	      url: "api/question_tags/" + id,
 	      dataType: "json",
 	      success: function (data) {
-	        debugger;
+	
 	        TagActions.receiveSingleTag(data);
 	      }
 	    });
@@ -31383,7 +31442,8 @@
 	      dataType: "json",
 	      data: title,
 	      success: function (data) {
-	        TagActions.receiveSingleTag(data);
+	
+	        TagActions.receiveSingleTag(data, coolName);
 	      }
 	
 	    });
@@ -31393,13 +31453,13 @@
 	module.exports = tagApiUtil;
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var AppDispatcher = __webpack_require__(208);
 	var TagConstants = __webpack_require__(231);
-	var TagStore = __webpack_require__(241);
+	var TagStore = __webpack_require__(232);
 	
 	var tagActions = {
 	
@@ -31411,10 +31471,11 @@
 	    });
 	  },
 	
-	  receiveSingleTag: function (tag) {
+	  receiveSingleTag: function (tag, questionId) {
 	    AppDispatcher.dispatch({
 	      actionType: TagConstants.TAG_RECEIVED,
-	      tag: tag
+	      tag: tag,
+	      questionId: questionId
 	    });
 	  }
 	
@@ -31423,71 +31484,746 @@
 	module.exports = tagActions;
 
 /***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(208);
-	var Store = __webpack_require__(212).Store;
-	var TagConstants = __webpack_require__(231);
-	var _tags = {};
-	
-	var tagStore = new Store(AppDispatcher);
-	
-	tagStore.resetTags = function (tags) {
-	  _tags = {};
-	  for (var i = 0; i < tags.length; i++) {
-	    var tagId = tags[i].question_id;
-	    var tagArray = _tags[tagId];
-	    tagArray = tagArray || [];
-	    tagArray.push(tags[i]);
-	  }
-	};
-	
-	tagStore.resetTag = function (tag) {
-	  _tags[tag.id] = tag;
-	};
-	
-	tagStore.all = function (questionId) {
-	  var tags = _tags[questionId] || [];
-	  return tags.slice();
-	};
-	
-	tagStore.everyTag = function () {
-	  var result = [];
-	  for (var i in _tags) {
-	    result.push(_tags[i]);
-	  }
-	  return result;
-	};
-	
-	tagStore.find = function (id) {
-	  return _tags[id];
-	};
-	
-	tagStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case TagConstants.TAGS_RECEIVED:
-	      tagStore.resetTags(payload.tags);
-	      break;
-	    case TagConstants.TAG_RECEIVED:
-	      tagStore.resetAnswer(payload.tag);
-	      break;
-	
-	  }
-	
-	  tagStore.__emitChange();
-	};
-	
-	module.exports = tagStore;
-
-/***/ },
 /* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var SessionsApiUtil = __webpack_require__(236);
-	var CurrentUserStore = __webpack_require__(234);
-	var QuestionsIndex = __webpack_require__(243);
+	var questionsStore = __webpack_require__(207);
+	var questionApiUtil = __webpack_require__(243);
+	var QuestionsReadIndexItem = __webpack_require__(246);
+	
+	var QuestionsIndex = React.createClass({
+	  displayName: 'QuestionsIndex',
+	
+	  getInitialState: function () {
+	    return { questions: questionsStore.all() };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ questions: questionsStore.all().reverse() });
+	  },
+	
+	  componentDidMount: function () {
+	    questionsStore.addListener(this._onChange);
+	    questionApiUtil.fetchAllQuestions();
+	  },
+	
+	  render: function () {
+	
+	    var r_questions = this.state.questions;
+	    var questions = r_questions.map(function (question) {
+	      return React.createElement(QuestionsReadIndexItem, { question: question, key: question.id });
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'q-index' },
+	      React.createElement(
+	        'ul',
+	        { className: 'more-q group' },
+	        React.createElement(
+	          'div',
+	          { className: 'all-the-questions' },
+	          questions
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = QuestionsIndex;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(208);
+	var QuestionActions = __webpack_require__(244);
+	var QuestionsStore = __webpack_require__(207);
+	var QuestionLongForm = __webpack_require__(245);
+	var TagsApiUtil = __webpack_require__(240);
+	
+	var questionApiUtil = {
+	  fetchAllQuestions: function () {
+	    $.ajax({
+	      type: "get",
+	      url: "api/questions",
+	      dataType: "json",
+	      success: function (data) {
+	        QuestionActions.receiveAllQuestions(data);
+	      }
+	
+	    });
+	  },
+	
+	  fetchOneQuestion: function (id) {
+	    $.ajax({
+	      type: "get",
+	      url: "api/questions/" + id,
+	      dataType: "json",
+	      success: function (data) {
+	        QuestionActions.receiveSingleQuestion(data);
+	      }
+	    });
+	  },
+	
+	  createQuestion: function (formData, cb) {
+	    $.ajax({
+	      type: "post",
+	      url: "api/questions",
+	      processData: false,
+	      contentType: false,
+	      dataType: "json",
+	      data: formData,
+	      success: function (data) {
+	        QuestionActions.receiveSingleQuestion(data);
+	        cb && cb(data);
+	      }
+	    });
+	  }
+	
+	};
+	
+	module.exports = questionApiUtil;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var AppDispatcher = __webpack_require__(208);
+	var QuestionConstants = __webpack_require__(229);
+	var QuestionStore = __webpack_require__(207);
+	
+	var questionActions = {
+	
+	  receiveAllQuestions: function (questions) {
+	    AppDispatcher.dispatch({
+	      actionType: QuestionConstants.QUESTIONS_RECEIVED,
+	      questions: questions
+	    });
+	  },
+	
+	  receiveSingleQuestion: function (question) {
+	    AppDispatcher.dispatch({
+	      actionType: QuestionConstants.QUESTION_RECEIVED,
+	      question: question
+	    });
+	  }
+	
+	};
+	
+	module.exports = questionActions;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1),
+	    questionsStore = __webpack_require__(207);
+	TagsApiUtil = __webpack_require__(240);
+	QuestionsRead = __webpack_require__(242);
+	
+	var QuestionForm = React.createClass({
+	  displayName: 'QuestionForm',
+	
+	  getInitialState: function () {
+	    return { title: "", body: "", tag: "", imageFile: null, imageUrl: "" };
+	  },
+	
+	  updateTitle: function (e) {
+	    this.setState({ title: e.currentTarget.value });
+	  },
+	
+	  updateBody: function (e) {
+	    this.setState({ body: e.currentTarget.value });
+	  },
+	
+	  updateTag: function (e) {
+	    this.setState({ tag: e.currentTarget.value });
+	  },
+	
+	  changeFile: function (e) {
+	    var reader = new FileReader();
+	    var file = e.currentTarget.files[0];
+	
+	    reader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: reader.result });
+	    }.bind(this);
+	
+	    if (file) {
+	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
+	    } else {
+	        this.setState({ imageFile: null, imageUrl: "" });
+	      }
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var formData = new FormData();
+	
+	    formData.append("question[title]", this.state.title);
+	    if (this.state.imageFile) {
+	      formData.append("question[image]", this.state.imageFile);
+	    } else {
+	      formData.append("question[image]", "");
+	    }
+	    formData.append("question[body]", this.state.body);
+	    ApiUtil.createQuestion(formData, function (question) {
+	      TagsApiUtil.createTag({ name: this.state.tag, questionId: question.id });
+	    }.bind(this));
+	  },
+	
+	  resetForm: function () {
+	    this.setState({ title: "", body: "", imageFile: null, imageUrl: "" });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'ask-a-question group' },
+	      React.createElement('h2', { className: 'ask-header' }),
+	      React.createElement('input', { className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement('input', { className: 'long-form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
+	      React.createElement(
+	        'button',
+	        { className: 'long-form-button', onClick: this.handleSubmit },
+	        'Ask Question'
+	      ),
+	      React.createElement('input', { className: 'long-image-attachment', type: 'file', onChange: this.changeFile }),
+	      React.createElement('img', { className: 'long-preview-image', src: this.state.imageUrl }),
+	      React.createElement('input', { className: 'long-form-body', onInput: this.updateBody, value: this.state.body }),
+	      React.createElement(QuestionsRead, null)
+	    );
+	  }
+	});
+	
+	module.exports = QuestionForm;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var TagsIndex = __webpack_require__(247);
+	var History = __webpack_require__(159).History;
+	var QuestionDetail = __webpack_require__(252);
+	var ReadAnswersIndex = __webpack_require__(256);
+	var QuestionsReadIndexItem = React.createClass({
+	  displayName: 'QuestionsReadIndexItem',
+	
+	  mixins: [History],
+	
+	  render: function () {
+	    return React.createElement(
+	      'li',
+	      { className: 'single-question group' },
+	      React.createElement(TagsIndex, { question: this.props.question }),
+	      this.props.question.title,
+	      React.createElement('br', null),
+	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
+	      React.createElement(
+	        'div',
+	        { className: 'q-username' },
+	        this.props.question.username
+	      ),
+	      React.createElement('br', null),
+	      React.createElement(ReadAnswersIndex, { question: this.props.question })
+	    );
+	  }
+	});
+	
+	module.exports = QuestionsReadIndexItem;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var React = __webpack_require__(1);
+	// var TagForm = require('./tag_form');
+	var TagsIndexItem = __webpack_require__(248);
+	var CurrentUserStore = __webpack_require__(235);
+	AnswerApiUtil = __webpack_require__(249);
+	
+	var TagsIndex = React.createClass({
+	  displayName: 'TagsIndex',
+	
+	  render: function () {
+	
+	    var tags = this.props.question.question_tags.map(function (tag) {
+	      return React.createElement(TagsIndexItem, { tag: tag, key: tag.id });
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'tag-list' },
+	        tags
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = TagsIndex;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	
+	var TagsIndexItem = React.createClass({
+	  displayName: 'TagsIndexItem',
+	
+	  mixins: [History],
+	
+	  render: function () {
+	    // var tags = {this.props.tag.name}
+	    var tagId = this.props.tag.id;
+	    var tagLink = '#/question_tags/' + tagId;
+	    var tags = this.props.tag.name;
+	    return React.createElement(
+	      'div',
+	      { className: 'single-tag' },
+	      React.createElement(
+	        'a',
+	        { className: 'tag-link', href: tagLink },
+	        tags
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = TagsIndexItem;
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(208);
+	var AnswerActions = __webpack_require__(250);
+	// var AnswerStore = require('../stores/answer_store');
+	
+	var answerApiUtil = {
+	  fetchQuestionAnswers: function (questionId) {
+	    console.log("running");
+	    $.ajax({
+	      type: "get",
+	      url: "api/questions/" + questionId + "/answers",
+	      dataType: "json",
+	      success: function (data) {
+	        console.log(data);
+	        AnswerActions.receiveAllAnswers(data);
+	      }
+	    });
+	  },
+	
+	  createOneAnswer: function (formData, questionId) {
+	    $.ajax({
+	      type: "post",
+	      url: "api/questions/" + questionId + "/answers",
+	      dataType: "json",
+	      processData: false,
+	      contentType: false,
+	      data: formData,
+	      success: function (data) {
+	        console.log('got it!');
+	        AnswerActions.receiveSingleAnswer(data);
+	      }
+	
+	    });
+	  }
+	};
+	
+	module.exports = answerApiUtil;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var AppDispatcher = __webpack_require__(208);
+	var AnswerConstants = __webpack_require__(230);
+	var AnswerStore = __webpack_require__(251);
+	
+	var answerActions = {
+	
+	  receiveAllAnswers: function (answers) {
+	    console.log(answers);
+	    AppDispatcher.dispatch({
+	      actionType: AnswerConstants.ANSWERS_RECEIVED,
+	      answers: answers
+	
+	    });
+	  },
+	
+	  receiveSingleAnswer: function (answer) {
+	    AppDispatcher.dispatch({
+	      actionType: AnswerConstants.ANSWER_RECEIVED,
+	      answer: answer
+	    });
+	  }
+	
+	};
+	
+	module.exports = answerActions;
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(208);
+	var Store = __webpack_require__(212).Store;
+	var AnswerConstants = __webpack_require__(230);
+	var _answers = {};
+	
+	var answerStore = new Store(AppDispatcher);
+	
+	answerStore.resetAnswers = function (answers) {
+	  _answers = {};
+	  for (var i = 0; i < answers.length; i++) {
+	    var questionId = answers[i].question_id;
+	    var answerArray = _answers[questionId];
+	    answerArray = answerArray || [];
+	    answerArray.push(answers[i]);
+	  }
+	};
+	
+	answerStore.resetAnswer = function (answer) {
+	  _answers[answer.id] = answer;
+	};
+	
+	answerStore.all = function (questionId) {
+	  var answers = _answers[questionId] || [];
+	  return answers.slice();
+	};
+	
+	answerStore.find = function (id) {
+	  return _answers[id];
+	};
+	
+	answerStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case AnswerConstants.ANSWERS_RECIEVED:
+	      answerStore.resetAnswers(payload.answers);
+	      break;
+	    case AnswerConstants.ANSWER_RECEIVED:
+	      answerStore.resetAnswer(payload.answer);
+	      break;
+	
+	  }
+	
+	  answerStore.__emitChange();
+	};
+	
+	module.exports = answerStore;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var questionsStore = __webpack_require__(207);
+	var questionApiUtil = __webpack_require__(243);
+	var AnswersIndex = __webpack_require__(253);
+	
+	var questionDetail = React.createClass({
+	  displayName: 'questionDetail',
+	
+	  getStateFromStore: function () {
+	    return questionsStore.find(parseInt(this.props.params.questionId));
+	  },
+	
+	  getInitialState: function () {
+	    return { question: this.getStateFromStore() };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ question: this.getStateFromStore() });
+	  },
+	
+	  componentDidMount: function () {
+	    questionsStore.addListener(this._onChange);
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    var id = parseInt(newProps.params.questionId);
+	    var question = apiUtil.fetchOneQuestion(id);
+	    this.setState({ question: question });
+	  },
+	
+	  render: function () {
+	
+	    if (this.state.question) {
+	
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'question-detail-pane' },
+	          React.createElement(
+	            'div',
+	            { className: 'question-detail-each' },
+	            this.state.question.title,
+	            React.createElement('br', null),
+	            this.state.question.body,
+	            React.createElement('br', null),
+	            this.state.question.username,
+	            React.createElement('br', null),
+	            this.state.question.user_id,
+	            React.createElement('br', null),
+	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url }),
+	            React.createElement(AnswersIndex, { question: this.state.question })
+	          )
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Error'
+	      );
+	    }
+	  }
+	
+	});
+	
+	module.exports = questionDetail;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var React = __webpack_require__(1);
+	var AnswersIndexItem = __webpack_require__(254);
+	var AnswerForm = __webpack_require__(255);
+	var CurrentUserStore = __webpack_require__(235);
+	AnswerApiUtil = __webpack_require__(249);
+	
+	var AnswersIndex = React.createClass({
+	  displayName: 'AnswersIndex',
+	
+	  render: function () {
+	
+	    var answers = this.props.question.answers.map(function (answer) {
+	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'answer-list' },
+	        answers
+	      ),
+	      React.createElement(AnswerForm, { question: this.props.question })
+	    );
+	  }
+	
+	});
+	
+	module.exports = AnswersIndex;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var AnswersIndexItem = React.createClass({
+	  displayName: 'AnswersIndexItem',
+	
+	  mixins: [History],
+	
+	  render: function () {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'single-answer' },
+	      React.createElement(
+	        'ul',
+	        null,
+	        React.createElement('li', { className: 'answer-writer' }),
+	        this.props.answer.username,
+	        React.createElement('br', null),
+	        React.createElement('li', { className: 'answer-body' }),
+	        this.props.answer.title
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = AnswersIndexItem;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var AnswersApiUtil = __webpack_require__(249);
+	
+	var AnswerForm = React.createClass({
+	  displayName: 'AnswerForm',
+	
+	  getInitialState: function () {
+	    return { title: "", imageFile: null, imageUrl: "" };
+	  },
+	
+	  updateTitle: function (e) {
+	    this.setState({ title: e.currentTarget.value });
+	  },
+	
+	  changeFile: function (e) {
+	    var reader = new FileReader();
+	    var file = e.currentTarget.files[0];
+	
+	    reader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: reader.result });
+	    }.bind(this);
+	
+	    if (file) {
+	      reader.readAsDataURL(file);
+	    } else {
+	      this.setState({ imageFile: null, imageUrl: "" });
+	    }
+	  },
+	
+	  handleSubmit: function (e) {
+	
+	    e.preventDefault();
+	    var formData = new FormData();
+	    formData.append("answer[title]", this.state.title);
+	    if (this.state.imageFile) {
+	      formData.append("answer[image]", this.state.imageFile);
+	    } else {
+	      formData.append("answer[image]", "");
+	    }
+	    formData.append("answer[question_id]", this.props.question.id);
+	    AnswersApiUtil.createOneAnswer(formData);
+	  },
+	
+	  resetForm: function () {
+	    this.setState({ title: "", imageFile: null, imageUrl: "" });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'answer-form' },
+	      React.createElement('h2', { className: 'answer-header' }),
+	      React.createElement('input', { className: 'a-form-title', placeholder: 'Answer', onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
+	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
+	      React.createElement(
+	        'button',
+	        { className: 'form-button', onClick: this.handleSubmit },
+	        'Answer Question'
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = AnswerForm;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var React = __webpack_require__(1);
+	var QuestionIndexItem = __webpack_require__(257);
+	var AnswersIndexItem = __webpack_require__(254);
+	var AnswersStore = __webpack_require__(251);
+	var CurrentUserStore = __webpack_require__(235);
+	AnswerApiUtil = __webpack_require__(249);
+	
+	var AnswersIndex = React.createClass({
+	  displayName: 'AnswersIndex',
+	
+	  render: function () {
+	    var answers = this.props.question.answers.map(function (answer) {
+	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'answer-list' },
+	        answers
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = AnswersIndex;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var TagsIndex = __webpack_require__(247);
+	var History = __webpack_require__(159).History;
+	var QuestionDetail = __webpack_require__(252);
+	var AnswersIndex = __webpack_require__(253);
+	
+	var QuestionIndexItem = React.createClass({
+	  displayName: 'QuestionIndexItem',
+	
+	  mixins: [History],
+	
+	  // render: function() {
+	  //     <li className="single-question group">
+	  //         < TagsIndex question={this.props.question} />
+	  //       {this.props.question.title}<br/>
+	  //       <img className="question-image" src={this.props.question.image_url} />
+	  //       <div className="q-username">{this.props.question.username}</div><br/>
+	  //       < AnswersIndex question={this.props.question} />
+	  //     </li>
+	  //   );
+	  // }
+	
+	  render: function () {
+	    return React.createElement(
+	      'li',
+	      { className: 'single-question group' },
+	      React.createElement(TagsIndex, { question: this.props.question }),
+	      this.props.question.title,
+	      React.createElement('br', null),
+	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
+	      React.createElement(
+	        'div',
+	        { className: 'q-username' },
+	        this.props.question.username
+	      ),
+	      React.createElement('br', null),
+	      React.createElement(AnswersIndex, { question: this.props.question })
+	    );
+	  }
+	});
+	
+	module.exports = QuestionIndexItem;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var SessionsApiUtil = __webpack_require__(237);
+	var CurrentUserStore = __webpack_require__(235);
+	var QuestionsIndex = __webpack_require__(259);
 	
 	var UserShow = React.createClass({
 	  displayName: 'UserShow',
@@ -31563,13 +32299,13 @@
 	module.exports = UserShow;
 
 /***/ },
-/* 243 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var questionsStore = __webpack_require__(207);
-	var questionApiUtil = __webpack_require__(244);
-	var QuestionIndexItem = __webpack_require__(247);
+	var questionApiUtil = __webpack_require__(243);
+	var QuestionIndexItem = __webpack_require__(257);
 	var QuestionForm = __webpack_require__(206);
 	
 	var QuestionsIndex = React.createClass({
@@ -31591,6 +32327,7 @@
 	  render: function () {
 	
 	    var r_questions = this.state.questions;
+	
 	    var questions = r_questions.map(function (question) {
 	      return React.createElement(QuestionIndexItem, { question: question, key: question.id });
 	    });
@@ -31615,643 +32352,12 @@
 	module.exports = QuestionsIndex;
 
 /***/ },
-/* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(208);
-	var QuestionActions = __webpack_require__(245);
-	var QuestionsStore = __webpack_require__(207);
-	var QuestionLongForm = __webpack_require__(246);
-	var TagsApiUtil = __webpack_require__(239);
-	
-	var questionApiUtil = {
-	  fetchAllQuestions: function () {
-	    console.log("running");
-	    $.ajax({
-	      type: "get",
-	      url: "api/questions",
-	      dataType: "json",
-	      success: function (data) {
-	        QuestionActions.receiveAllQuestions(data);
-	      }
-	
-	    });
-	  },
-	
-	  fetchOneQuestion: function (id) {
-	    $.ajax({
-	      type: "get",
-	      url: "api/questions/" + id,
-	      dataType: "json",
-	      success: function (data) {
-	        QuestionActions.receiveSingleQuestion(data);
-	      }
-	    });
-	  },
-	
-	  createQuestion: function (formData, cb) {
-	    $.ajax({
-	      type: "post",
-	      url: "api/questions",
-	      processData: false,
-	      contentType: false,
-	      dataType: "json",
-	      data: formData,
-	      success: function (data) {
-	        QuestionActions.receiveSingleQuestion(data);
-	        cb && cb(data);
-	      }
-	    });
-	  }
-	
-	};
-	
-	module.exports = questionApiUtil;
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var AppDispatcher = __webpack_require__(208);
-	var QuestionConstants = __webpack_require__(229);
-	var QuestionStore = __webpack_require__(207);
-	
-	var questionActions = {
-	
-	  receiveAllQuestions: function (questions) {
-	    AppDispatcher.dispatch({
-	      actionType: QuestionConstants.QUESTIONS_RECEIVED,
-	      questions: questions
-	    });
-	  },
-	
-	  receiveSingleQuestion: function (question) {
-	    console.log('hi');
-	    AppDispatcher.dispatch({
-	      actionType: QuestionConstants.QUESTION_RECEIVED,
-	      question: question
-	    });
-	  }
-	
-	};
-	
-	module.exports = questionActions;
-
-/***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1),
-	    questionsStore = __webpack_require__(207);
-	TagsApiUtil = __webpack_require__(239);
-	
-	var QuestionForm = React.createClass({
-	  displayName: 'QuestionForm',
-	
-	  getInitialState: function () {
-	    return { title: "", body: "", tag: "", imageFile: null, imageUrl: "" };
-	  },
-	
-	  updateTitle: function (e) {
-	    this.setState({ title: e.currentTarget.value });
-	  },
-	
-	  updateBody: function (e) {
-	    this.setState({ body: e.currentTarget.value });
-	  },
-	
-	  updateTag: function (e) {
-	    this.setState({ tag: e.currentTarget.value });
-	  },
-	
-	  changeFile: function (e) {
-	    var reader = new FileReader();
-	    var file = e.currentTarget.files[0];
-	
-	    reader.onloadend = function () {
-	      this.setState({ imageFile: file, imageUrl: reader.result });
-	    }.bind(this);
-	
-	    if (file) {
-	      reader.readAsDataURL(file); // will trigger a load end event when it completes, and invoke reader.onloadend
-	    } else {
-	        this.setState({ imageFile: null, imageUrl: "" });
-	      }
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	    var formData = new FormData();
-	
-	    formData.append("question[title]", this.state.title);
-	    if (this.state.imageFile) {
-	      formData.append("question[image]", this.state.imageFile);
-	    } else {
-	      formData.append("question[image]", "");
-	    }
-	    formData.append("question[body]", this.state.body);
-	    ApiUtil.createQuestion(formData, function (question) {
-	      TagsApiUtil.createTag({ name: this.state.tag, questionId: question.id });
-	    }.bind(this));
-	  },
-	
-	  resetForm: function () {
-	    this.setState({ title: "", body: "", imageFile: null, imageUrl: "" });
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'ask-a-question group' },
-	      React.createElement('h2', { className: 'ask-header' }),
-	      React.createElement('input', { className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
-	      React.createElement('input', { className: 'long-form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
-	      React.createElement(
-	        'button',
-	        { className: 'long-form-button', onClick: this.handleSubmit },
-	        'Ask Question'
-	      ),
-	      React.createElement('input', { className: 'long-image-attachment', type: 'file', onChange: this.changeFile }),
-	      React.createElement('img', { className: 'long-preview-image', src: this.state.imageUrl }),
-	      React.createElement('input', { className: 'long-form-body', onInput: this.updateBody, value: this.state.body })
-	    );
-	  }
-	});
-	
-	module.exports = QuestionForm;
-
-/***/ },
-/* 247 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var TagsIndex = __webpack_require__(248);
-	var History = __webpack_require__(159).History;
-	var QuestionDetail = __webpack_require__(253);
-	var AnswersIndex = __webpack_require__(254);
-	var QuestionIndexItem = React.createClass({
-	  displayName: 'QuestionIndexItem',
-	
-	  mixins: [History],
-	
-	  getInitialState: function () {
-	    return { detail: false };
-	  },
-	
-	  toggleState: function (e) {
-	    // e.stopPropagation();
-	    //maybe dont do this....
-	
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'li',
-	      { className: 'single-question group' },
-	      React.createElement(TagsIndex, { question: this.props.question }),
-	      this.props.question.title,
-	      React.createElement('br', null),
-	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
-	      React.createElement(
-	        'div',
-	        { className: 'q-username' },
-	        this.props.question.username
-	      ),
-	      React.createElement('br', null),
-	      React.createElement(AnswersIndex, { question: this.props.question })
-	    );
-	  }
-	});
-	
-	module.exports = QuestionIndexItem;
-
-/***/ },
-/* 248 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var React = __webpack_require__(1);
-	var QuestionIndexItem = __webpack_require__(247);
-	// var TagForm = require('./tag_form');
-	var TagsStore = __webpack_require__(241);
-	var TagsIndexItem = __webpack_require__(249);
-	var CurrentUserStore = __webpack_require__(234);
-	AnswerApiUtil = __webpack_require__(250);
-	
-	var TagsIndex = React.createClass({
-	  displayName: 'TagsIndex',
-	
-	  render: function () {
-	
-	    var tags = this.props.question.question_tags.map(function (tag) {
-	      return React.createElement(TagsIndexItem, { tag: tag, key: tag.id });
-	    });
-	
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'tag-list' },
-	        tags
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = TagsIndex;
-
-/***/ },
-/* 249 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var History = __webpack_require__(159).History;
-	var TagsIndexItem = React.createClass({
-	  displayName: 'TagsIndexItem',
-	
-	  mixins: [History],
-	
-	  render: function () {
-	    // var tags = {this.props.tag.name}
-	    var tagId = this.props.tag.id;
-	    var tagLink = '#/question_tags/' + tagId;
-	    var tags = this.props.tag.name;
-	    return React.createElement(
-	      'div',
-	      { className: 'single-tag' },
-	      React.createElement(
-	        'a',
-	        { className: 'tag-link', href: tagLink },
-	        tags
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = TagsIndexItem;
-	
-	// render: function() {
-	// // var tags = {this.props.tag.name}
-	//
-	//   var tagName = this.props.tag.name;
-	//   var tagId = this.props.tag.id;
-	//   var tagLink = '#/question_tags/' + tagId;
-	//
-	//
-	//   return(
-	//     <div className="single-tag">
-	//       <li className="nav-link"><a className="tag-link" href={tagLink}>tagName</a></li>
-	//     </div>
-	//   );
-	// }
-	// });
-	//
-	// module.exports = TagsIndexItem;
-
-/***/ },
-/* 250 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(208);
-	var AnswerActions = __webpack_require__(251);
-	// var AnswerStore = require('../stores/answer_store');
-	
-	var answerApiUtil = {
-	  fetchQuestionAnswers: function (questionId) {
-	    console.log("running");
-	    $.ajax({
-	      type: "get",
-	      url: "api/questions/" + questionId + "/answers",
-	      dataType: "json",
-	      success: function (data) {
-	        console.log(data);
-	        AnswerActions.receiveAllAnswers(data);
-	      }
-	    });
-	  },
-	
-	  createOneAnswer: function (formData, questionId) {
-	    $.ajax({
-	      type: "post",
-	      url: "api/questions/" + questionId + "/answers",
-	      dataType: "json",
-	      processData: false,
-	      contentType: false,
-	      data: formData,
-	      success: function (data) {
-	        console.log('got it!');
-	        AnswerActions.receiveSingleAnswer(data);
-	      }
-	
-	    });
-	  }
-	};
-	
-	module.exports = answerApiUtil;
-
-/***/ },
-/* 251 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var AppDispatcher = __webpack_require__(208);
-	var AnswerConstants = __webpack_require__(230);
-	var AnswerStore = __webpack_require__(252);
-	
-	var answerActions = {
-	
-	  receiveAllAnswers: function (answers) {
-	    console.log(answers);
-	    AppDispatcher.dispatch({
-	      actionType: AnswerConstants.ANSWERS_RECEIVED,
-	      answers: answers
-	
-	    });
-	  },
-	
-	  receiveSingleAnswer: function (answer) {
-	    AppDispatcher.dispatch({
-	      actionType: AnswerConstants.ANSWER_RECEIVED,
-	      answer: answer
-	    });
-	  }
-	
-	};
-	
-	module.exports = answerActions;
-
-/***/ },
-/* 252 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(208);
-	var Store = __webpack_require__(212).Store;
-	var AnswerConstants = __webpack_require__(230);
-	var _answers = {};
-	
-	var answerStore = new Store(AppDispatcher);
-	
-	answerStore.resetAnswers = function (answers) {
-	  _answers = {};
-	  for (var i = 0; i < answers.length; i++) {
-	    var questionId = answers[i].question_id;
-	    var answerArray = _answers[questionId];
-	    answerArray = answerArray || [];
-	    answerArray.push(answers[i]);
-	  }
-	};
-	
-	answerStore.resetAnswer = function (answer) {
-	  _answers[answer.id] = answer;
-	};
-	
-	answerStore.all = function (questionId) {
-	  var answers = _answers[questionId] || [];
-	  return answers.slice();
-	};
-	
-	answerStore.find = function (id) {
-	  return _answers[id];
-	};
-	
-	answerStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case AnswerConstants.ANSWERS_RECIEVED:
-	      answerStore.resetAnswers(payload.answers);
-	      break;
-	    case AnswerConstants.ANSWER_RECEIVED:
-	      answerStore.resetAnswer(payload.answer);
-	      break;
-	
-	  }
-	
-	  answerStore.__emitChange();
-	};
-	
-	module.exports = answerStore;
-
-/***/ },
-/* 253 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var questionsStore = __webpack_require__(207);
-	var questionApiUtil = __webpack_require__(244);
-	var AnswersIndex = __webpack_require__(254);
-	
-	var questionDetail = React.createClass({
-	  displayName: 'questionDetail',
-	
-	  getStateFromStore: function () {
-	    return questionsStore.find(parseInt(this.props.params.questionId));
-	  },
-	
-	  getInitialState: function () {
-	    return { question: this.getStateFromStore() };
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ question: this.getStateFromStore() });
-	  },
-	
-	  componentDidMount: function () {
-	    questionsStore.addListener(this._onChange);
-	  },
-	
-	  componentWillReceiveProps: function (newProps) {
-	    var id = parseInt(newProps.params.questionId);
-	    var question = apiUtil.fetchOneQuestion(id);
-	    this.setState({ question: question });
-	  },
-	
-	  render: function () {
-	
-	    if (this.state.question) {
-	
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'div',
-	          { className: 'question-detail-pane' },
-	          React.createElement(
-	            'div',
-	            { className: 'question-detail-each' },
-	            this.state.question.title,
-	            React.createElement('br', null),
-	            this.state.question.body,
-	            React.createElement('br', null),
-	            this.state.question.username,
-	            React.createElement('br', null),
-	            this.state.question.user_id,
-	            React.createElement('br', null),
-	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url }),
-	            React.createElement(AnswersIndex, { question: this.state.question })
-	          )
-	        )
-	      );
-	    } else {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'Error'
-	      );
-	    }
-	  }
-	
-	});
-	
-	module.exports = questionDetail;
-
-/***/ },
-/* 254 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var React = __webpack_require__(1);
-	var QuestionIndexItem = __webpack_require__(247);
-	var AnswersIndexItem = __webpack_require__(255);
-	var AnswerForm = __webpack_require__(256);
-	var AnswersStore = __webpack_require__(252);
-	var CurrentUserStore = __webpack_require__(234);
-	AnswerApiUtil = __webpack_require__(250);
-	
-	var AnswersIndex = React.createClass({
-	  displayName: 'AnswersIndex',
-	
-	  render: function () {
-	
-	    var answers = this.props.question.answers.map(function (answer) {
-	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
-	    });
-	
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'answer-list' },
-	        answers
-	      ),
-	      React.createElement(AnswerForm, { question: this.props.question })
-	    );
-	  }
-	
-	});
-	
-	module.exports = AnswersIndex;
-
-/***/ },
-/* 255 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var History = __webpack_require__(159).History;
-	var AnswersIndexItem = React.createClass({
-	  displayName: 'AnswersIndexItem',
-	
-	  mixins: [History],
-	
-	  render: function () {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'single-answer' },
-	      React.createElement(
-	        'ul',
-	        null,
-	        React.createElement('li', { className: 'answer-writer' }),
-	        this.props.answer.username,
-	        React.createElement('br', null),
-	        React.createElement('li', { className: 'answer-body' }),
-	        this.props.answer.title
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = AnswersIndexItem;
-
-/***/ },
-/* 256 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var AnswersApiUtil = __webpack_require__(250);
-	
-	var AnswerForm = React.createClass({
-	  displayName: 'AnswerForm',
-	
-	  getInitialState: function () {
-	    return { title: "", imageFile: null, imageUrl: "" };
-	  },
-	
-	  updateTitle: function (e) {
-	    this.setState({ title: e.currentTarget.value });
-	  },
-	
-	  changeFile: function (e) {
-	    var reader = new FileReader();
-	    var file = e.currentTarget.files[0];
-	
-	    reader.onloadend = function () {
-	      this.setState({ imageFile: file, imageUrl: reader.result });
-	    }.bind(this);
-	
-	    if (file) {
-	      reader.readAsDataURL(file);
-	    } else {
-	      this.setState({ imageFile: null, imageUrl: "" });
-	    }
-	  },
-	
-	  handleSubmit: function (e) {
-	
-	    e.preventDefault();
-	    var formData = new FormData();
-	    formData.append("answer[title]", this.state.title);
-	    if (this.state.imageFile) {
-	      formData.append("answer[image]", this.state.imageFile);
-	    } else {
-	      formData.append("answer[image]", "");
-	    }
-	    formData.append("answer[question_id]", this.props.question.id);
-	    AnswersApiUtil.createOneAnswer(formData);
-	  },
-	
-	  resetForm: function () {
-	    this.setState({ title: "", imageFile: null, imageUrl: "" });
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'answer-form' },
-	      React.createElement('h2', { className: 'answer-header' }),
-	      React.createElement('input', { className: 'a-form-title', placeholder: 'Answer', onInput: this.updateTitle, value: this.state.title }),
-	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
-	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
-	      React.createElement(
-	        'button',
-	        { className: 'form-button', onClick: this.handleSubmit },
-	        'Answer Question'
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = AnswerForm;
-
-/***/ },
-/* 257 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var UsersStore = __webpack_require__(258);
-	var UsersApiUtil = __webpack_require__(260);
+	var UsersStore = __webpack_require__(261);
+	var UsersApiUtil = __webpack_require__(263);
 	
 	var UsersIndex = React.createClass({
 	  displayName: 'UsersIndex',
@@ -32306,12 +32412,12 @@
 	module.exports = UsersIndex;
 
 /***/ },
-/* 258 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(212).Store;
 	var AppDispatcher = __webpack_require__(208);
-	var UserConstants = __webpack_require__(259);
+	var UserConstants = __webpack_require__(262);
 	
 	var _users = [];
 	var CHANGE_EVENT = "change";
@@ -32354,7 +32460,7 @@
 	module.exports = UsersStore;
 
 /***/ },
-/* 259 */
+/* 262 */
 /***/ function(module, exports) {
 
 	var UserConstants = {
@@ -32365,10 +32471,10 @@
 	module.exports = UserConstants;
 
 /***/ },
-/* 260 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var UserActions = __webpack_require__(261);
+	var UserActions = __webpack_require__(264);
 	
 	var UsersApiUtil = {
 	  fetchUsers: function () {
@@ -32413,11 +32519,11 @@
 	module.exports = UsersApiUtil;
 
 /***/ },
-/* 261 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(208);
-	var UserConstants = __webpack_require__(259);
+	var UserConstants = __webpack_require__(262);
 	
 	var UserActions = {
 	  receiveUsers: function (users) {
@@ -32438,14 +32544,14 @@
 	module.exports = UserActions;
 
 /***/ },
-/* 262 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var SearchResultsStore = __webpack_require__(263);
-	var QuestionIndexItem = __webpack_require__(247);
-	var SearchApiUtil = __webpack_require__(265);
-	var AnswerIndexItem = __webpack_require__(255);
+	var SearchResultsStore = __webpack_require__(266);
+	var QuestionIndexItem = __webpack_require__(257);
+	var SearchApiUtil = __webpack_require__(268);
+	var AnswerIndexItem = __webpack_require__(254);
 	
 	var Search = React.createClass({
 	  displayName: 'Search',
@@ -32524,12 +32630,12 @@
 	module.exports = Search;
 
 /***/ },
-/* 263 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(212).Store;
 	var AppDispatcher = __webpack_require__(208);
-	var SearchConstants = __webpack_require__(264);
+	var SearchConstants = __webpack_require__(267);
 	
 	var _searchResults = [];
 	var _meta = {};
@@ -32559,7 +32665,7 @@
 	module.exports = SearchResultsStore;
 
 /***/ },
-/* 264 */
+/* 267 */
 /***/ function(module, exports) {
 
 	var SearchConstants = {
@@ -32569,10 +32675,10 @@
 	module.exports = SearchConstants;
 
 /***/ },
-/* 265 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SearchActions = __webpack_require__(266);
+	var SearchActions = __webpack_require__(269);
 	
 	var SearchApiUtil = {
 	
@@ -32594,10 +32700,10 @@
 	module.exports = SearchApiUtil;
 
 /***/ },
-/* 266 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SearchConstants = __webpack_require__(264);
+	var SearchConstants = __webpack_require__(267);
 	var AppDispatcher = __webpack_require__(208);
 	
 	var SearchActions = {
@@ -32614,146 +32720,13 @@
 	module.exports = SearchActions;
 
 /***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var questionsStore = __webpack_require__(207);
-	var questionApiUtil = __webpack_require__(244);
-	var QuestionsReadIndexItem = __webpack_require__(268);
-	
-	var QuestionsIndex = React.createClass({
-	  displayName: 'QuestionsIndex',
-	
-	  getInitialState: function () {
-	    return { questions: questionsStore.all() };
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ questions: questionsStore.all().reverse() });
-	  },
-	
-	  componentDidMount: function () {
-	    questionsStore.addListener(this._onChange);
-	    questionApiUtil.fetchAllQuestions();
-	  },
-	
-	  render: function () {
-	
-	    var r_questions = this.state.questions;
-	    var questions = r_questions.map(function (question) {
-	      return React.createElement(QuestionsReadIndexItem, { question: question, key: question.id });
-	    });
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'q-index' },
-	      React.createElement(
-	        'ul',
-	        { className: 'more-q group' },
-	        React.createElement(
-	          'div',
-	          { className: 'all-the-questions' },
-	          questions
-	        )
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = QuestionsIndex;
-
-/***/ },
-/* 268 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var TagsIndex = __webpack_require__(248);
-	var History = __webpack_require__(159).History;
-	var QuestionDetail = __webpack_require__(253);
-	var ReadAnswersIndex = __webpack_require__(269);
-	var QuestionIndexItem = React.createClass({
-	  displayName: 'QuestionIndexItem',
-	
-	  mixins: [History],
-	
-	  getInitialState: function () {
-	    return { detail: false };
-	  },
-	
-	  toggleState: function (e) {
-	    // e.stopPropagation();
-	    //maybe dont do this....
-	
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'li',
-	      { className: 'single-question group' },
-	      React.createElement(TagsIndex, { question: this.props.question }),
-	      this.props.question.title,
-	      React.createElement('br', null),
-	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
-	      React.createElement(
-	        'div',
-	        { className: 'q-username' },
-	        this.props.question.username
-	      ),
-	      React.createElement('br', null),
-	      React.createElement(ReadAnswersIndex, { question: this.props.question })
-	    );
-	  }
-	});
-	
-	module.exports = QuestionIndexItem;
-
-/***/ },
-/* 269 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var React = __webpack_require__(1);
-	var QuestionIndexItem = __webpack_require__(247);
-	var AnswersIndexItem = __webpack_require__(255);
-	var AnswersStore = __webpack_require__(252);
-	var CurrentUserStore = __webpack_require__(234);
-	AnswerApiUtil = __webpack_require__(250);
-	
-	var AnswersIndex = React.createClass({
-	  displayName: 'AnswersIndex',
-	
-	  render: function () {
-	
-	    console.log(AnswersStore.all());
-	    var answers = this.props.question.answers.map(function (answer) {
-	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
-	    });
-	
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'answer-list' },
-	        answers
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = AnswersIndex;
-
-/***/ },
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var TagStore = __webpack_require__(241);
-	var TagsApiUtil = __webpack_require__(239);
-	var QuestionsIndexItem = __webpack_require__(247);
+	var TagStore = __webpack_require__(232);
+	var TagsApiUtil = __webpack_require__(240);
+	var QuestionsIndexItem = __webpack_require__(271);
 	
 	var tagShow = React.createClass({
 	  displayName: 'tagShow',
@@ -32772,7 +32745,6 @@
 	
 	  render: function () {
 	    {
-	      debugger;
 	      return React.createElement(
 	        'div',
 	        null,
@@ -32790,9 +32762,56 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var TagsIndex = __webpack_require__(247);
 	var History = __webpack_require__(159).History;
-	var SessionsApiUtil = __webpack_require__(236);
-	var UserForm = __webpack_require__(272);
+	var QuestionDetail = __webpack_require__(252);
+	var AnswersIndex = __webpack_require__(253);
+	
+	var QuestionIndexItem = React.createClass({
+	  displayName: 'QuestionIndexItem',
+	
+	  mixins: [History],
+	
+	  // render: function() {
+	  //     <li className="single-question group">
+	  //         < TagsIndex question={this.props.question} />
+	  //       {this.props.question.title}<br/>
+	  //       <img className="question-image" src={this.props.question.image_url} />
+	  //       <div className="q-username">{this.props.question.username}</div><br/>
+	  //       < AnswersIndex question={this.props.question} />
+	  //     </li>
+	  //   );
+	  // }
+	
+	  render: function () {
+	    return React.createElement(
+	      'li',
+	      { className: 'single-question group' },
+	      React.createElement(TagsIndex, { question: this.props.question }),
+	      this.props.question.title,
+	      React.createElement('br', null),
+	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
+	      React.createElement(
+	        'div',
+	        { className: 'q-username' },
+	        this.props.question.username
+	      ),
+	      React.createElement('br', null),
+	      React.createElement(AnswersIndex, { question: this.props.question })
+	    );
+	  }
+	});
+	
+	module.exports = QuestionIndexItem;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var SessionsApiUtil = __webpack_require__(237);
+	var UserForm = __webpack_require__(273);
 	
 	var SessionForm = React.createClass({
 	  displayName: 'SessionForm',
@@ -32918,12 +32937,12 @@
 	module.exports = SessionForm;
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
-	var UserApiUtil = __webpack_require__(260);
+	var UserApiUtil = __webpack_require__(263);
 	
 	var UserForm = React.createClass({
 	  displayName: 'UserForm',

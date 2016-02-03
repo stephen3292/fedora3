@@ -22,11 +22,12 @@ var QuestionsIndex = React.createClass({
 
   render: function() {
 
-
     var r_questions = this.state.questions;
-      var questions = r_questions.map(function (question) {
+
+    var questions = r_questions.map(function (question) {
       return <QuestionIndexItem question={question} key={question.id}/>;
     });
+
 
     return(
       <div className="q-index">

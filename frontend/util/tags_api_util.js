@@ -22,7 +22,7 @@ var tagApiUtil = {
       url: "api/question_tags/" + id,
       dataType: "json",
       success: function(data) {
-        debugger
+
         TagActions.receiveSingleTag(data);
       }
     });
@@ -36,7 +36,8 @@ var tagApiUtil = {
       dataType: "json",
       data: title,
       success: function(data) {
-        TagActions.receiveSingleTag(data);
+        
+        TagActions.receiveSingleTag(data, coolName);
       }
 
     });

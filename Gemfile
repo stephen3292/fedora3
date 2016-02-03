@@ -26,6 +26,7 @@ gem 'aws-sdk', '~> 1.6'
 gem 'figaro'
 gem 'pg_search'
 gem 'kaminari'
+gem 'faker'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

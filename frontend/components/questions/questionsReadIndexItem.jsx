@@ -3,21 +3,9 @@ var TagsIndex = require('../tags/tags_index');
 var History = require('react-router').History;
 var QuestionDetail = require('./questionDetail');
 var ReadAnswersIndex = require('../answers/read_answers_index');
-var QuestionIndexItem = React.createClass({
+var QuestionsReadIndexItem = React.createClass({
 
   mixins: [History],
-
-  getInitialState: function() {
-    return(
-      {detail: false}
-    );
-  },
-
-  toggleState: function (e) {
-    // e.stopPropagation();
-    //maybe dont do this....
-
-  },
 
   render: function() {
     return(
@@ -32,4 +20,4 @@ var QuestionIndexItem = React.createClass({
   }
 });
 
-module.exports = QuestionIndexItem;
+module.exports = QuestionsReadIndexItem;

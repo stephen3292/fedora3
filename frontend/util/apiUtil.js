@@ -7,7 +7,6 @@ var TagsApiUtil = require('./tags_api_util');
 
 var questionApiUtil = {
   fetchAllQuestions: function(){
-    console.log("running");
     $.ajax({
       type: "get",
       url: "api/questions",

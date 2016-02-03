@@ -10,8 +10,8 @@ module Taggable
   def tag(name)
     name.strip!
     tag = QuestionTag.where(name: name).first_or_create
-    debugger
     self.question_taggings.where(question_tag_id: tag.id).first_or_create
+    tag
   end
 
   def tag_names

@@ -1,8 +1,7 @@
 var React = require('react');
 var TagStore = require('./../../stores/tags_store');
 var TagsApiUtil = require('./../../util/tags_api_util.js');
-var QuestionsIndexItem = require('../questions/questionsIndexItem');
-
+var QuestionsIndexItem = require('./../../components/questions/QuestionsIndexItem');
 
 
 var tagShow = React.createClass({
@@ -22,7 +21,6 @@ var tagShow = React.createClass({
   },
 
   render: function() { {
-  debugger
       return(
         <div>
           Hello!

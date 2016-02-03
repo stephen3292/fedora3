@@ -4,6 +4,7 @@ var QuestionConstants = require('../constants/question_constants');
 var AnswerConstants = require('../constants/answer_constants');
 var TagConstants = require('../constants/tag_constants');
 var _questions = {};
+var TagsStore = require('./tags_store');
 
 var questionStore = new Store(AppDispatcher);
 
@@ -30,9 +31,12 @@ questionStore.addAnswer = function(answer){
   question.answers.push(answer);
 };
 
-questionStore.addTag = function(tag) {
-  var question = _questions[tag.question_id];
+questionStore.addTag = function(tag, questionId) {
+  var question = _questions[questionId];
+  question.question_tags = question.question_tags.concat(tag);
+  debugger
 };
+
 
 questionStore.find = function(id) {
   return _questions[id];
@@ -51,10 +55,7 @@ questionStore.__onDispatch = function (payload) {
       questionStore.addAnswer(payload.answer);
       break;
     case TagConstants.TAG_RECEIVED:
-      tagStore.addTag(payload.tag);
-      break;
-    case TagConstants.TAGS_RECEIVED:
-      tagStore.addTag(payload.tag);
+      questionStore.addTag(payload.tag, payload.questionId);
       break;
   }
   questionStore.__emitChange();

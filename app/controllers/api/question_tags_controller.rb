@@ -11,17 +11,18 @@ class Api::QuestionTagsController < ApplicationController
   def create
     question_id = params[:questionId].to_i
     question = Question.find(params[:questionId])
-    debugger
     tags = params[:name].split(', ')
-    tags.each do |tag|
-      question.tag(tag)
+
+    new_tags = tags.map do |tag|
+      question.tag(tag.downcase)
     end
+
+    render json: new_tags 
   end
 
   def show
-    debugger
     @question_tag = QuestionTag.find(params[:id].to_i)
-    
+
   end
 
 

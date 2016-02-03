@@ -13,7 +13,6 @@ var questionActions = {
   },
 
   receiveSingleQuestion: function(question) {
-    console.log('hi');
     AppDispatcher.dispatch({
       actionType: QuestionConstants.QUESTION_RECEIVED,
       question: question,

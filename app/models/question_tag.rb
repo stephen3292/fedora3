@@ -4,5 +4,5 @@ class QuestionTag < ActiveRecord::Base
   has_many :question_taggings
   has_many :questions, through: :question_taggings
 
-  
+  has_many :answers, through: :questions
 end

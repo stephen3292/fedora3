@@ -13,10 +13,11 @@ var tagActions = {
     });
   },
 
-  receiveSingleTag: function(tag) {
+  receiveSingleTag: function(tag, questionId) {
     AppDispatcher.dispatch({
       actionType: TagConstants.TAG_RECEIVED,
       tag: tag,
+      questionId: questionId
     });
   }
 
