@@ -31365,16 +31365,15 @@
 	  },
 	
 	  createTag: function (title, questionId) {
-	    var coolId = title.questionId;
-	    var coolName = title.name;
 	    debugger;
+	    var coolName = title.questionId;
 	    $.ajax({
 	      type: "post",
-	      url: "api/questions/" + coolId + "/question_tags",
+	      url: "api/questions/" + coolName + "/question_tags",
 	      dataType: "json",
 	      processData: false,
 	      contentType: false,
-	      data: coolName,
+	      data: title,
 	      success: function (data) {
 	        TagActions.receiveSingleTag(data);
 	      }
