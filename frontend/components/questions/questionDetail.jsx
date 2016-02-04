@@ -22,7 +22,11 @@ var questionDetail = React.createClass({
   },
 
   componentDidMount: function() {
-    questionsStore.addListener(this._onChange);
+    this.listener = questionsStore.addListener(this._onChange);
+  },
+
+  componentWillUnmount: function(){
+    this.listener.remove();
   },
 
   componentWillReceiveProps: function (newProps) {
@@ -32,7 +36,7 @@ var questionDetail = React.createClass({
   },
 
   render: function() {
-  
+
     if (this.state.question) {
 
       return(

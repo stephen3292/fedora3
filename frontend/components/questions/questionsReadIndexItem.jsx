@@ -7,7 +7,7 @@ var QuestionsReadIndexItem = React.createClass({
   mixins: [History],
 
   render: function() {
-    debugger
+
     var qId = this.props.question.id;
     var questionDetail = "#/questions/" + qId;
     var title = this.props.question.title;

@@ -15,9 +15,14 @@ var QuestionsIndex = React.createClass({
   },
 
   componentDidMount: function(){
-    questionsStore.addListener(this._onChange);
+    this.listener = questionsStore.addListener(this._onChange);
     questionApiUtil.fetchAllQuestions();
   },
+
+  componentWillUnmount: function(){
+    this.listener.remove();
+  },
+
 
   render: function() {
 

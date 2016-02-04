@@ -31519,8 +31519,12 @@
 	  },
 	
 	  componentDidMount: function () {
-	    questionsStore.addListener(this._onChange);
+	    this.listener = questionsStore.addListener(this._onChange);
 	    questionApiUtil.fetchAllQuestions();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
 	  },
 	
 	  render: function () {
@@ -31730,7 +31734,7 @@
 	  mixins: [History],
 	
 	  render: function () {
-	    debugger;
+	
 	    var qId = this.props.question.id;
 	    var questionDetail = "#/questions/" + qId;
 	    var title = this.props.question.title;
@@ -31973,7 +31977,11 @@
 	  },
 	
 	  componentDidMount: function () {
-	    questionsStore.addListener(this._onChange);
+	    this.listener = questionsStore.addListener(this._onChange);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
 	  },
 	
 	  componentWillReceiveProps: function (newProps) {
@@ -32073,18 +32081,19 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'single-answer group' },
-	      React.createElement('div', { className: 'answer-pic' }),
+	      React.createElement('img', { className: 'answer-pic', src: this.props.answer.user.image_url }),
 	      React.createElement(
 	        'div',
 	        { className: 'answer-writer' },
-	        this.props.answer.username
+	        this.props.answer.user.username
 	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'answer-description' },
-	        'Describe'
+	        this.props.answer.user.description
 	      ),
 	      React.createElement('br', null),
+	      React.createElement('img', { className: 'answer-writer', src: this.props.answer.image_url }),
 	      React.createElement(
 	        'div',
 	        { className: 'answer-body' },
@@ -32153,8 +32162,8 @@
 	      { className: 'answer-form' },
 	      React.createElement('h2', { className: 'answer-header' }),
 	      React.createElement('input', { className: 'a-form-title', placeholder: 'Answer', onInput: this.updateTitle, value: this.state.title }),
-	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
-	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
+	      React.createElement('input', { className: 'long-form-image-attachment', type: 'file', onChange: this.changeFile }),
+	      React.createElement('img', { className: 'long-preview-image', src: this.state.imageUrl }),
 	      React.createElement(
 	        'button',
 	        { className: 'form-button', onClick: this.handleSubmit },
@@ -32224,6 +32233,11 @@
 	    return React.createElement(
 	      'ul',
 	      { className: 'single-question group' },
+	      React.createElement(
+	        'div',
+	        { className: 'answer-written-in' },
+	        'Question Asked/Answer Written'
+	      ),
 	      React.createElement(TagsIndex, { question: this.props.question }),
 	      React.createElement(
 	        'li',
@@ -32235,13 +32249,7 @@
 	        )
 	      ),
 	      React.createElement('br', null),
-	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
-	      React.createElement(
-	        'div',
-	        { className: 'q-username' },
-	        this.props.question.username
-	      ),
-	      React.createElement('br', null),
+	      React.createElement('img', { className: 'post-image', src: this.props.question.image_url }),
 	      React.createElement(AnswersIndex, { question: this.props.question })
 	    );
 	  }
@@ -32352,8 +32360,12 @@
 	  },
 	
 	  componentDidMount: function () {
-	    questionsStore.addListener(this._onChange);
+	    this.listener = questionsStore.addListener(this._onChange);
 	    questionApiUtil.fetchAllQuestions();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
 	  },
 	
 	  render: function () {
@@ -33054,7 +33066,7 @@
 	  mixins: [History],
 	
 	  render: function () {
-	    debugger;
+	
 	    var qId = this.props.question.id;
 	    var questionDetail = "#/questions/" + qId;
 	    var title = this.props.question.title;

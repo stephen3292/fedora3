@@ -5,13 +5,12 @@ class Api::AnswersController < ApplicationController
 
 
   def create
-    question = Question.find(params[:answer][:question_id])
-    answer = question.answers.new(answer_params)
-    answer.body = '' unless answer.body
-    answer.user_id = current_user.id unless answer.user_id
-    answer.username = current_user.username unless answer.username
-    if answer.save!
-      render json: answer
+    question = Question.find(params[:answer][:question_id].to_i)
+    @answer = question.answers.new(answer_params)
+    @answer.body = '' unless @answer.body
+    @answer.user_id = current_user.id
+    if @answer.save!
+      render :show
     else
       render json: { errors: answer.errors.full_messages }, status: 422
     end
@@ -35,6 +34,6 @@ class Api::AnswersController < ApplicationController
 
   private
   def answer_params
-    params.require(:answer).permit(:title, :body, :user_id, :question_id, :username)
+    params.require(:answer).permit(:title, :body, :user_id, :question_id, :image, :username)
   end
 end

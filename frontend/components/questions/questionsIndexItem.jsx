@@ -16,12 +16,12 @@ var QuestionIndexItem = React.createClass({
     var title = this.props.question.title;
     return(
       <ul className="single-question group">
-          < TagsIndex question={this.props.question} />
+          <div className="answer-written-in">Question Asked/Answer Written</div>< TagsIndex question={this.props.question} />
           <li className="question-title">
             <a className="question-title-link" href={questionDetail}>{title}</a>
           </li><br/>
-        <img className="question-image" src={this.props.question.image_url} />
-        <div className="q-username">{this.props.question.username}</div><br/>
+
+        <img className="post-image" src={this.props.question.image_url} />
         < AnswersIndex question={this.props.question} />
     </ul>
     );
