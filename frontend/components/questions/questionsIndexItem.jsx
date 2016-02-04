@@ -9,28 +9,21 @@ var QuestionIndexItem = React.createClass({
   mixins: [History],
 
 
-
-  // render: function() {
-  //     <li className="single-question group">
-  //         < TagsIndex question={this.props.question} />
-  //       {this.props.question.title}<br/>
-  //       <img className="question-image" src={this.props.question.image_url} />
-  //       <div className="q-username">{this.props.question.username}</div><br/>
-  //       < AnswersIndex question={this.props.question} />
-  //     </li>
-  //   );
-  // }
-
   render: function() {
-    var questionShow = '#/questions/';
+
+    var qId = this.props.question.id;
+    var questionDetail = "#/questions/" + qId;
+    var title = this.props.question.title;
     return(
-      <li className="single-question group">
+      <ul className="single-question group">
           < TagsIndex question={this.props.question} />
-        <a>{this.props.question.title}</a><br/>
+          <li className="question-title">
+            <a className="question-title-link" href={questionDetail}>{title}</a>
+          </li><br/>
         <img className="question-image" src={this.props.question.image_url} />
         <div className="q-username">{this.props.question.username}</div><br/>
         < AnswersIndex question={this.props.question} />
-      </li>
+    </ul>
     );
   }
 });

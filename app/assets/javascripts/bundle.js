@@ -74,7 +74,7 @@
 	  React.createElement(IndexRoute, { component: UserShow, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: SessionForm }),
 	  React.createElement(Route, { path: 'users/new', component: UserForm }),
-	  React.createElement(Route, { path: 'question/:questionId', component: QuestionDetail }),
+	  React.createElement(Route, { path: 'questions/:questionId', component: QuestionDetail }),
 	  React.createElement(Route, { path: 'questions', component: QuestionsIndex }),
 	  React.createElement(Route, { path: 'search', component: Search }),
 	  React.createElement(Route, { path: 'read', component: QuestionsReadIndex }),
@@ -25722,7 +25722,6 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule invariant
 	 */
 	
 	'use strict';
@@ -25778,7 +25777,6 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule emptyFunction
 	 */
 	
 	"use strict";
@@ -31725,7 +31723,6 @@
 	var React = __webpack_require__(1);
 	var TagsIndex = __webpack_require__(247);
 	var History = __webpack_require__(159).History;
-	var QuestionDetail = __webpack_require__(252);
 	var ReadAnswersIndex = __webpack_require__(256);
 	var QuestionsReadIndexItem = React.createClass({
 	  displayName: 'QuestionsReadIndexItem',
@@ -31733,20 +31730,30 @@
 	  mixins: [History],
 	
 	  render: function () {
+	    debugger;
+	    var qId = this.props.question.id;
+	    var questionDetail = "#/questions/" + qId;
+	    var title = this.props.question.title;
+	
 	    return React.createElement(
-	      'li',
+	      'ul',
 	      { className: 'single-question group' },
 	      React.createElement(TagsIndex, { question: this.props.question }),
-	      this.props.question.title,
-	      React.createElement('br', null),
-	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
 	      React.createElement(
-	        'div',
-	        { className: 'q-username' },
-	        this.props.question.username
+	        'li',
+	        { className: 'question-title' },
+	        React.createElement(
+	          'a',
+	          { className: 'question-title-link', href: questionDetail },
+	          title
+	        )
 	      ),
 	      React.createElement('br', null),
-	      React.createElement(ReadAnswersIndex, { question: this.props.question })
+	      React.createElement(
+	        'li',
+	        null,
+	        React.createElement(ReadAnswersIndex, { question: this.props.question })
+	      )
 	    );
 	  }
 	});
@@ -32209,27 +32216,23 @@
 	
 	  mixins: [History],
 	
-	  // render: function() {
-	  //     <li className="single-question group">
-	  //         < TagsIndex question={this.props.question} />
-	  //       {this.props.question.title}<br/>
-	  //       <img className="question-image" src={this.props.question.image_url} />
-	  //       <div className="q-username">{this.props.question.username}</div><br/>
-	  //       < AnswersIndex question={this.props.question} />
-	  //     </li>
-	  //   );
-	  // }
-	
 	  render: function () {
-	    var questionShow = '#/questions/';
+	
+	    var qId = this.props.question.id;
+	    var questionDetail = "#/questions/" + qId;
+	    var title = this.props.question.title;
 	    return React.createElement(
-	      'li',
+	      'ul',
 	      { className: 'single-question group' },
 	      React.createElement(TagsIndex, { question: this.props.question }),
 	      React.createElement(
-	        'a',
-	        null,
-	        this.props.question.title
+	        'li',
+	        { className: 'question-title' },
+	        React.createElement(
+	          'a',
+	          { className: 'question-title-link', href: questionDetail },
+	          title
+	        )
 	      ),
 	      React.createElement('br', null),
 	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
@@ -32754,41 +32757,44 @@
 	var React = __webpack_require__(1);
 	var TagStore = __webpack_require__(232);
 	var TagsApiUtil = __webpack_require__(240);
-	var QuestionsIndexItem = __webpack_require__(271);
+	var QuestionsReadIndexItem = __webpack_require__(274);
 	
 	var tagShow = React.createClass({
 	  displayName: 'tagShow',
 	
-	  getInitialState: function () {
-	    return this.getStateFromStore();
+	  getStateFromStore: function () {
+	    return TagStore.find(parseInt(this.props.params.tagId));
 	  },
 	
-	  getStateFromStore: function () {
+	  getInitialState: function () {
+	    return { tag: this.getStateFromStore() };
+	  },
 	
-	    return {
-	      tag: TagStore.everyTag()
-	    };
+	  _onChange: function () {
+	    this.setState({ tag: this.getStateFromStore() });
 	  },
 	
 	  componentDidMount: function () {
 	    this.listener = TagStore.addListener(this._onChange);
 	    TagsApiUtil.fetchOneShowTag(parseInt(this.props.params.tagId));
-	    debugger;
 	  },
 	
-	  componentWillUnmount: function () {
-	    this.listener.remove();
+	  componentWillReceiveProps: function (props) {
+	    var id = parseInt(props.params.tagId);
+	    TagsApiUtil.fetchOneShowTag(id);
 	  },
 	
 	  render: function () {
 	    {
-	      // var question = this.state.tag.questions.map( function(question) {
-	      //   return <QuestionsIndexItem question={question} key={question.id}/>;
-	      // });
+	      if (this.state.tag) {
+	        var questions = this.state.tag.questions.map(function (question) {
+	          return React.createElement(QuestionsReadIndexItem, { question: question, key: question.id });
+	        });
+	      }
 	      return React.createElement(
 	        'div',
 	        null,
-	        'question1'
+	        questions
 	      );
 	    }
 	  }
@@ -32798,58 +32804,7 @@
 	module.exports = tagShow;
 
 /***/ },
-/* 271 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var TagsIndex = __webpack_require__(247);
-	var History = __webpack_require__(159).History;
-	var QuestionDetail = __webpack_require__(252);
-	var AnswersIndex = __webpack_require__(253);
-	
-	var QuestionIndexItem = React.createClass({
-	  displayName: 'QuestionIndexItem',
-	
-	  mixins: [History],
-	
-	  // render: function() {
-	  //     <li className="single-question group">
-	  //         < TagsIndex question={this.props.question} />
-	  //       {this.props.question.title}<br/>
-	  //       <img className="question-image" src={this.props.question.image_url} />
-	  //       <div className="q-username">{this.props.question.username}</div><br/>
-	  //       < AnswersIndex question={this.props.question} />
-	  //     </li>
-	  //   );
-	  // }
-	
-	  render: function () {
-	    var questionShow = '#/questions/';
-	    return React.createElement(
-	      'li',
-	      { className: 'single-question group' },
-	      React.createElement(TagsIndex, { question: this.props.question }),
-	      React.createElement(
-	        'a',
-	        null,
-	        this.props.question.title
-	      ),
-	      React.createElement('br', null),
-	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
-	      React.createElement(
-	        'div',
-	        { className: 'q-username' },
-	        this.props.question.username
-	      ),
-	      React.createElement('br', null),
-	      React.createElement(AnswersIndex, { question: this.props.question })
-	    );
-	  }
-	});
-	
-	module.exports = QuestionIndexItem;
-
-/***/ },
+/* 271 */,
 /* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -33084,6 +33039,50 @@
 	});
 	
 	module.exports = UserForm;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var TagsIndex = __webpack_require__(247);
+	var History = __webpack_require__(159).History;
+	var ReadAnswersIndex = __webpack_require__(256);
+	var QuestionsReadIndexItem = React.createClass({
+	  displayName: 'QuestionsReadIndexItem',
+	
+	  mixins: [History],
+	
+	  render: function () {
+	    debugger;
+	    var qId = this.props.question.id;
+	    var questionDetail = "#/questions/" + qId;
+	    var title = this.props.question.title;
+	
+	    return React.createElement(
+	      'ul',
+	      { className: 'single-question group' },
+	      React.createElement(TagsIndex, { question: this.props.question }),
+	      React.createElement(
+	        'li',
+	        { className: 'question-title' },
+	        React.createElement(
+	          'a',
+	          { className: 'question-title-link', href: questionDetail },
+	          title
+	        )
+	      ),
+	      React.createElement('br', null),
+	      React.createElement(
+	        'li',
+	        null,
+	        React.createElement(ReadAnswersIndex, { question: this.props.question })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = QuestionsReadIndexItem;
 
 /***/ }
 /******/ ]);

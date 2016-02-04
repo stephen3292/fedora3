@@ -1,40 +1,42 @@
 var React = require('react');
 var TagStore = require('./../../stores/tags_store');
 var TagsApiUtil = require('./../../util/tags_api_util.js');
-var QuestionsIndexItem = require('./../../components/questions/QuestionsIndexItem');
+var QuestionsReadIndexItem = require('./../../components/questions/QuestionsReadIndexItem');
 
 
 var tagShow = React.createClass({
 
-  getInitialState: function(){
-    return this.getStateFromStore();
+  getStateFromStore: function () {
+    return ( TagStore.find(parseInt(this.props.params.tagId)));
   },
 
-  getStateFromStore: function () {
+  getInitialState: function(){
+    return ({tag: this.getStateFromStore()});
+  },
 
-    return {
-      tag: TagStore.everyTag()
-    };
+  _onChange: function(){
+    this.setState({tag: this.getStateFromStore()});
   },
 
   componentDidMount: function(){
     this.listener = TagStore.addListener(this._onChange);
     TagsApiUtil.fetchOneShowTag(parseInt(this.props.params.tagId));
-    debugger
   },
 
-  componentWillUnmount: function() {
-    this.listener.remove();
-  },
+  componentWillReceiveProps: function(props) {
+    var id = parseInt(props.params.tagId);
+    TagsApiUtil.fetchOneShowTag(id);
+    },
 
   render: function() { {
-    // var question = this.state.tag.questions.map( function(question) {
-    //   return <QuestionsIndexItem question={question} key={question.id}/>;
-    // });
-      return(
-
+    if (this.state.tag) {
+      var questions = this.state.tag.questions.map( function(question) {
+        return <QuestionsReadIndexItem question={question} key={question.id}/>;
+      });
+    }
+    return(
         <div>
-          question1
+          {questions}
         </div>
       );
     }
