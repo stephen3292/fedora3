@@ -21,7 +21,6 @@ var QuestionsIndex = React.createClass({
   },
 
   render: function() {
-
     var r_questions = this.state.questions;
 
     var questions = r_questions.map(function (question) {

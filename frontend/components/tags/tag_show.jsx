@@ -6,24 +6,35 @@ var QuestionsIndexItem = require('./../../components/questions/QuestionsIndexIte
 
 var tagShow = React.createClass({
 
-  getStateFromStore: function() {
-    return TagStore.find(parseInt(this.props.params.tagId));
+  getInitialState: function(){
+    return this.getStateFromStore();
   },
 
-  getInitialState: function() {
-    return (
-      {tag: this.getStateFromStore()}
-    );
+  getStateFromStore: function () {
+
+    return {
+      tag: TagStore.everyTag()
+    };
   },
 
-  componentDidMount: function() {
-    TagsApiUtil.fetchOneTag(parseInt(this.props.params.tagId));
+  componentDidMount: function(){
+    this.listener = TagStore.addListener(this._onChange);
+    TagsApiUtil.fetchOneShowTag(parseInt(this.props.params.tagId));
+    debugger
+  },
+
+  componentWillUnmount: function() {
+    this.listener.remove();
   },
 
   render: function() { {
+    // var question = this.state.tag.questions.map( function(question) {
+    //   return <QuestionsIndexItem question={question} key={question.id}/>;
+    // });
       return(
+
         <div>
-          Hello!
+          question1
         </div>
       );
     }

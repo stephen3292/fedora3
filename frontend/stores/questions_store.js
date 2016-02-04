@@ -34,7 +34,6 @@ questionStore.addAnswer = function(answer){
 questionStore.addTag = function(tag, questionId) {
   var question = _questions[questionId];
   question.question_tags = question.question_tags.concat(tag);
-  debugger
 };
 
 

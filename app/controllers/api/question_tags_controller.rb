@@ -1,7 +1,7 @@
 class Api::QuestionTagsController < ApplicationController
 
-  def new
-
+  def index
+    @question_tags = QuestionTag.all
   end
 
 #   (byebug) params
@@ -17,7 +17,7 @@ class Api::QuestionTagsController < ApplicationController
       question.tag(tag.downcase)
     end
 
-    render json: new_tags 
+    render json: new_tags
   end
 
   def show

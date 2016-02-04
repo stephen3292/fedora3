@@ -24,7 +24,6 @@ var UserShow = React.createClass({
   },
 
   render: function() {
-
     var user = this.state.user;
     if (!user) {
       return (

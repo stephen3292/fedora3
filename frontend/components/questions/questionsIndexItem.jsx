@@ -22,10 +22,11 @@ var QuestionIndexItem = React.createClass({
   // }
 
   render: function() {
+    var questionShow = '#/questions/';
     return(
       <li className="single-question group">
           < TagsIndex question={this.props.question} />
-        {this.props.question.title}<br/>
+        <a>{this.props.question.title}</a><br/>
         <img className="question-image" src={this.props.question.image_url} />
         <div className="q-username">{this.props.question.username}</div><br/>
         < AnswersIndex question={this.props.question} />

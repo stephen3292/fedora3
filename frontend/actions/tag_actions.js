@@ -13,6 +13,13 @@ var tagActions = {
     });
   },
 
+  receiveShowTag: function(tag){
+    AppDispatcher.dispatch({
+      actionType: TagConstants.SHOW_TAG_RECEIVED,
+      tag: tag
+    });
+  },
+
   receiveSingleTag: function(tag, questionId) {
     AppDispatcher.dispatch({
       actionType: TagConstants.TAG_RECEIVED,

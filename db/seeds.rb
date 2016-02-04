@@ -21,7 +21,7 @@ QuestionTagging.destroy_all
   d = User.create(username: "Donald", password: "Donald",
         description: "Donald")
   e = User.create(username: "Guest User", password: "Guest User",
-        description: "Guest User")
+        description: "A gentleman and a scholar")
   f = User.create(username: 'Tom', password: 'password',
         description: 'ok')
   g = User.create(username: 'Hillary', password: 'password',

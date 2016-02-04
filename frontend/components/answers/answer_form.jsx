@@ -51,7 +51,7 @@ var AnswerForm = React.createClass({
           <input className="a-form-title" placeholder="Answer" onInput={this.updateTitle} value={this.state.title}></input>
           <input className="image-attachment" type="file" onChange={this.changeFile} />
           <img className="preview-image" src={this.state.imageUrl}/>
-          <button className="form-button" onClick={this.handleSubmit}>Answer Question</button>
+          <button className="form-button" onClick={this.handleSubmit}>Write Answer</button>
       </div>
     );
   }

@@ -28,6 +28,17 @@ var tagApiUtil = {
     });
   },
 
+  fetchOneShowTag: function(id) {
+    $.ajax({
+      type: "get",
+      url: "api/question_tags/" + id,
+      dataType: "json",
+      success: function(data) {
+        TagActions.receiveShowTag(data);
+      }
+    });
+  },
+
   createTag: function (title, questionId) {
     var coolName = title.questionId;
     $.ajax({
@@ -36,7 +47,7 @@ var tagApiUtil = {
       dataType: "json",
       data: title,
       success: function(data) {
-        
+
         TagActions.receiveSingleTag(data, coolName);
       }
 

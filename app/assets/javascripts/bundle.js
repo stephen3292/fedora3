@@ -24156,7 +24156,6 @@
 	questionStore.addTag = function (tag, questionId) {
 	  var question = _questions[questionId];
 	  question.question_tags = question.question_tags.concat(tag);
-	  debugger;
 	};
 	
 	questionStore.find = function (id) {
@@ -30975,7 +30974,8 @@
 
 	var TagConstants = {
 	  TAGS_RECEIVED: "TAGS_RECEIVED",
-	  TAG_RECEIVED: "TAG_RECEIVED"
+	  TAG_RECEIVED: "TAG_RECEIVED",
+	  SHOW_TAG_RECEIVED: "SHOW_TAG_RECEIVED"
 	};
 	
 	module.exports = TagConstants;
@@ -31018,8 +31018,6 @@
 	  return result;
 	};
 	
-	tagStore.addTag = function () {};
-	
 	tagStore.find = function (id) {
 	  return _tags[id];
 	};
@@ -31032,7 +31030,8 @@
 	    case TagConstants.TAG_RECEIVED:
 	      tagStore.resetTag(payload.tag);
 	      break;
-	
+	    case TagConstants.SHOW_TAG_RECEIVED:
+	      tagStore.resetTag(payload.tag);
 	  }
 	
 	  tagStore.__emitChange();
@@ -31434,6 +31433,17 @@
 	    });
 	  },
 	
+	  fetchOneShowTag: function (id) {
+	    $.ajax({
+	      type: "get",
+	      url: "api/question_tags/" + id,
+	      dataType: "json",
+	      success: function (data) {
+	        TagActions.receiveShowTag(data);
+	      }
+	    });
+	  },
+	
 	  createTag: function (title, questionId) {
 	    var coolName = title.questionId;
 	    $.ajax({
@@ -31468,6 +31478,13 @@
 	      actionType: TagConstants.TAGS_RECEIVED,
 	      tags: tags
 	
+	    });
+	  },
+	
+	  receiveShowTag: function (tag) {
+	    AppDispatcher.dispatch({
+	      actionType: TagConstants.SHOW_TAG_RECEIVED,
+	      tag: tag
 	    });
 	  },
 	
@@ -32048,14 +32065,22 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'single-answer' },
+	      { className: 'single-answer group' },
+	      React.createElement('div', { className: 'answer-pic' }),
 	      React.createElement(
-	        'ul',
-	        null,
-	        React.createElement('li', { className: 'answer-writer' }),
-	        this.props.answer.username,
-	        React.createElement('br', null),
-	        React.createElement('li', { className: 'answer-body' }),
+	        'div',
+	        { className: 'answer-writer' },
+	        this.props.answer.username
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'answer-description' },
+	        'Describe'
+	      ),
+	      React.createElement('br', null),
+	      React.createElement(
+	        'div',
+	        { className: 'answer-body' },
 	        this.props.answer.title
 	      )
 	    );
@@ -32126,7 +32151,7 @@
 	      React.createElement(
 	        'button',
 	        { className: 'form-button', onClick: this.handleSubmit },
-	        'Answer Question'
+	        'Write Answer'
 	      )
 	    );
 	  }
@@ -32196,11 +32221,16 @@
 	  // }
 	
 	  render: function () {
+	    var questionShow = '#/questions/';
 	    return React.createElement(
 	      'li',
 	      { className: 'single-question group' },
 	      React.createElement(TagsIndex, { question: this.props.question }),
-	      this.props.question.title,
+	      React.createElement(
+	        'a',
+	        null,
+	        this.props.question.title
+	      ),
 	      React.createElement('br', null),
 	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
 	      React.createElement(
@@ -32248,7 +32278,6 @@
 	  },
 	
 	  render: function () {
-	
 	    var user = this.state.user;
 	    if (!user) {
 	      return React.createElement(
@@ -32325,7 +32354,6 @@
 	  },
 	
 	  render: function () {
-	
 	    var r_questions = this.state.questions;
 	
 	    var questions = r_questions.map(function (question) {
@@ -32731,24 +32759,36 @@
 	var tagShow = React.createClass({
 	  displayName: 'tagShow',
 	
-	  getStateFromStore: function () {
-	    return TagStore.find(parseInt(this.props.params.tagId));
+	  getInitialState: function () {
+	    return this.getStateFromStore();
 	  },
 	
-	  getInitialState: function () {
-	    return { tag: this.getStateFromStore() };
+	  getStateFromStore: function () {
+	
+	    return {
+	      tag: TagStore.everyTag()
+	    };
 	  },
 	
 	  componentDidMount: function () {
-	    TagsApiUtil.fetchOneTag(parseInt(this.props.params.tagId));
+	    this.listener = TagStore.addListener(this._onChange);
+	    TagsApiUtil.fetchOneShowTag(parseInt(this.props.params.tagId));
+	    debugger;
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
 	  },
 	
 	  render: function () {
 	    {
+	      // var question = this.state.tag.questions.map( function(question) {
+	      //   return <QuestionsIndexItem question={question} key={question.id}/>;
+	      // });
 	      return React.createElement(
 	        'div',
 	        null,
-	        'Hello!'
+	        'question1'
 	      );
 	    }
 	  }
@@ -32784,11 +32824,16 @@
 	  // }
 	
 	  render: function () {
+	    var questionShow = '#/questions/';
 	    return React.createElement(
 	      'li',
 	      { className: 'single-question group' },
 	      React.createElement(TagsIndex, { question: this.props.question }),
-	      this.props.question.title,
+	      React.createElement(
+	        'a',
+	        null,
+	        this.props.question.title
+	      ),
 	      React.createElement('br', null),
 	      React.createElement('img', { className: 'question-image', src: this.props.question.image_url }),
 	      React.createElement(

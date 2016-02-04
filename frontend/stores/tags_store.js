@@ -32,10 +32,6 @@ tagStore.everyTag = function(){
   return result;
 };
 
-tagStore.addTag = function(){
-
-};
-
 tagStore.find = function(id) {
   return _tags[id];
 };
@@ -48,7 +44,8 @@ tagStore.__onDispatch = function (payload) {
     case TagConstants.TAG_RECEIVED:
       tagStore.resetTag(payload.tag);
       break;
-
+    case TagConstants.SHOW_TAG_RECEIVED:
+      tagStore.resetTag(payload.tag);
   }
 
   tagStore.__emitChange();
