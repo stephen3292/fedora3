@@ -31114,6 +31114,7 @@
 	      var readQuestions = '#/read';
 	      var user_home_page = '/';
 	      var askQuestions = '#/ask';
+	      var search = '#/search';
 	
 	      return React.createElement(
 	        'header',
@@ -31140,16 +31141,11 @@
 	            { className: 'header-username' },
 	            this.state.currentUser.username
 	          ),
+	          React.createElement('button', { className: 'sign-out-button', onClick: this.logout }),
 	          React.createElement('img', { className: 'header-image', src: this.state.currentUser.image_url }),
 	          React.createElement(
 	            'ul',
 	            { className: 'nav-links group' },
-	            React.createElement(
-	              'li',
-	              { className: 'nav-link' },
-	              React.createElement('a', { className: 'user-ask-link', href: askQuestions }),
-	              'Notifications'
-	            ),
 	            React.createElement(
 	              'li',
 	              { className: 'nav-link' },
@@ -31167,12 +31163,16 @@
 	                { className: 'user-read-link', href: readQuestions },
 	                'Read'
 	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'nav-link' },
+	              React.createElement(
+	                'a',
+	                { className: 'user-ask-link', href: search },
+	                'Notifications'
+	              )
 	            )
-	          ),
-	          React.createElement(
-	            'button',
-	            { className: 'sign-out-button', onClick: this.logout },
-	            'Sign Out'
 	          )
 	        )
 	      );
@@ -31991,7 +31991,6 @@
 	  },
 	
 	  render: function () {
-	
 	    if (this.state.question) {
 	
 	      return React.createElement(
@@ -32043,11 +32042,25 @@
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',
 	
+	  getInitialState: function () {
+	    return { form: false };
+	  },
+	
+	  toggleState: function () {
+	    this.setState({ form: !this.state.form });
+	  },
+	
+	  collapseForm: function () {
+	    this.setState({ form: false });
+	  },
+	
 	  render: function () {
 	
 	    var answers = this.props.question.answers.map(function (answer) {
 	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
 	    });
+	
+	    var showForm = this.state.form ? React.createElement(AnswerForm, { collapse: this.collapseForm, question: this.props.question }) : "";
 	
 	    return React.createElement(
 	      'div',
@@ -32057,7 +32070,13 @@
 	        { className: 'answer-list' },
 	        answers
 	      ),
-	      React.createElement(AnswerForm, { question: this.props.question })
+	      React.createElement(
+	        'button',
+	        { className: 'form-button', onClick: this.toggleState },
+	        'Write Answer'
+	      ),
+	      React.createElement('br', null),
+	      showForm
 	    );
 	  }
 	
@@ -32078,6 +32097,16 @@
 	
 	  render: function () {
 	
+	    var show = "nope";
+	    var i = "";
+	    if (this.props.answer.image_url.indexOf("missing") > -1) {
+	      i = "";
+	      show = "nope";
+	    } else {
+	      i = this.props.answer.image_url;
+	      show = "post-image";
+	    }
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'single-answer group' },
@@ -32093,7 +32122,7 @@
 	        this.props.answer.user.description
 	      ),
 	      React.createElement('br', null),
-	      React.createElement('img', { className: 'answer-writer', src: this.props.answer.image_url }),
+	      React.createElement('img', { className: show, src: i }),
 	      React.createElement(
 	        'div',
 	        { className: 'answer-body' },
@@ -32120,6 +32149,7 @@
 	  },
 	
 	  updateTitle: function (e) {
+	    debugger;
 	    this.setState({ title: e.currentTarget.value });
 	  },
 	
@@ -32150,6 +32180,7 @@
 	    }
 	    formData.append("answer[question_id]", this.props.question.id);
 	    AnswersApiUtil.createOneAnswer(formData);
+	    this.props.collapse();
 	  },
 	
 	  resetForm: function () {
@@ -32166,8 +32197,8 @@
 	      React.createElement('img', { className: 'long-preview-image', src: this.state.imageUrl }),
 	      React.createElement(
 	        'button',
-	        { className: 'form-button', onClick: this.handleSubmit },
-	        'Write Answer'
+	        { className: 'a-form-submit', onClick: this.handleSubmit },
+	        'Submit'
 	      )
 	    );
 	  }
@@ -32230,6 +32261,16 @@
 	    var qId = this.props.question.id;
 	    var questionDetail = "#/questions/" + qId;
 	    var title = this.props.question.title;
+	    var i = "";
+	    var show = "nope";
+	    if (this.props.question.image_url.indexOf("missing") > -1) {
+	      i = "";
+	      show = "nope";
+	    } else {
+	      i = this.props.question.image_url;
+	      show = "post-image";
+	    }
+	
 	    return React.createElement(
 	      'ul',
 	      { className: 'single-question group' },
@@ -32249,7 +32290,7 @@
 	        )
 	      ),
 	      React.createElement('br', null),
-	      React.createElement('img', { className: 'post-image', src: this.props.question.image_url }),
+	      React.createElement('img', { className: show, src: i }),
 	      React.createElement(AnswersIndex, { question: this.props.question })
 	    );
 	  }
@@ -32314,8 +32355,12 @@
 	      { className: 'homepage group' },
 	      React.createElement(
 	        'div',
+	        { className: 'questions' },
+	        this.state.user.username + "'s questions:"
+	      ),
+	      React.createElement(
+	        'div',
 	        { className: 'my-questions' },
-	        'My Questions:',
 	        questions
 	      ),
 	      React.createElement(

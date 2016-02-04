@@ -17,6 +17,12 @@
 
 }
 
+.nope{
+  width: 1px;
+  height: 1px;
+  display: hidden;
+}
+
 .question-image{
   visibility: hidden;
   float: right;
@@ -36,6 +42,7 @@
 }
 
 .answer-list{
+  background: #eee;
   margin-top: 10px;
   border-radius: 5px;
   font-weight: normal;
@@ -47,7 +54,7 @@
 }
 
 .a-form-title{
-  background: #00EEEE;
+  background: #CCC;
   border-radius: 5px;
   margin-top: 10px;
   margin-left: 10px;
@@ -66,14 +73,13 @@
 
 .answer-body{
   margin-top: 10px;
-  background: yellow
+  background: white
 }
 
 .answer-writer{
   text-align: left;
   display: block;
   font-size: 20px;
-  background: pink;
   padding-top: 9px;
   padding-left: 15px;
   padding-right: 7px;
@@ -84,7 +90,7 @@
 .answer-pic{
   width: 50px;
   float: left;
-  height: 50px;
+  weight: 100%;
   border-radius: 50%;
   display: block;
 }
@@ -93,7 +99,6 @@
   text-align: left;
   display: block;
   font-size: 14px;
-  background: green;
   padding-top: 19px;
   padding-left: 5px;
   padding-bottom: 3px;

@@ -36,7 +36,6 @@ var questionDetail = React.createClass({
   },
 
   render: function() {
-
     if (this.state.question) {
 
       return(

@@ -120,16 +120,18 @@ body {
   font-weight: normal
 }
 
-.form-button {
+button {
   background: white;
   float: left;
   padding: 7px;
-  border-top: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 3px;
   font-size: 14px;
-  color: #2F4F4F
+  color: #769ed6
+}
+
+button:hover{
+  border: 1px solid #5ba8ff
 }
 
 .details{

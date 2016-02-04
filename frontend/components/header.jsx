@@ -32,7 +32,8 @@ var Header = React.createClass({
       var readQuestions = '#/read';
       var user_home_page = '/';
       var askQuestions = '#/ask';
-      
+      var search = '#/search';
+
       return (
         <header className="top-header">
           <div className="header-nav group">
@@ -40,13 +41,14 @@ var Header = React.createClass({
 
             <div className='ask-form'><AskForm/></div>
             <div className="header-username">{ this.state.currentUser.username }</div>
-            <img className="header-image" src={this.state.currentUser.image_url} />
+            <button className="sign-out-button" onClick={ this.logout }></button>
+            <img className="header-image" src={this.state.currentUser.image_url}></img>
               <ul className="nav-links group">
-                <li className="nav-link"><a className="user-ask-link" href={askQuestions}></a>Notifications</li>
                 <li className="nav-link"><a className="user-questions-link" href={answerQuestions}>Answer</a></li>
                 <li className="nav-link"><a className="user-read-link" href={readQuestions}>Read</a></li>
+                <li className="nav-link"><a className="user-ask-link" href={search}>Notifications</a></li>
               </ul>
-            <button className="sign-out-button" onClick={ this.logout }>Sign Out</button>
+
           </div>
         </header>
       );

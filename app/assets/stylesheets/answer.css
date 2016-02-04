@@ -1,0 +1,35 @@
+.a-form-submit{
+  background: #3A5894;
+  color: white;
+  display: block;
+  margin-right: 20px;
+  border-radius: 3px;
+  margin-top: 3px;
+}
+
+a {
+  -webkit-transision: 1s;
+}
+
+.a-form-submit:hover{
+  cursor: pointer;
+}
+
+.answer-form{
+  margin-top: 20px;
+  border: 1px solid blue;
+  background: #C6E2FF;
+  font-size: 12px;
+  font-weight: normal
+}
+
+.a-form-title{
+  background: white;
+  width: 300px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px;
+  font-weight: normal;
+  color: #666
+}

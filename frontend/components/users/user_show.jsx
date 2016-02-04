@@ -43,7 +43,8 @@ var UserShow = React.createClass({
     return (
       <div className="homepage group">
 
-        <div className="my-questions">My Questions:{questions}</div>
+        <div className="questions">{this.state.user.username + "'s questions:"}</div>
+        <div className="my-questions">{questions}</div>
         <div className="some-questions">Top Stories For You</div>
         <div className="questions-index">< QuestionsIndex /></div>
       </div>

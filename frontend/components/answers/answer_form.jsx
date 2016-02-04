@@ -8,6 +8,7 @@ var AnswerForm = React.createClass({
   },
 
   updateTitle: function(e){
+    debugger
     this.setState({title: e.currentTarget.value});
   },
 
@@ -38,6 +39,7 @@ var AnswerForm = React.createClass({
     }
     formData.append("answer[question_id]", this.props.question.id);
     AnswersApiUtil.createOneAnswer(formData);
+    this.props.collapse();
   },
 
   resetForm: function() {
@@ -51,7 +53,7 @@ var AnswerForm = React.createClass({
           <input className="a-form-title" placeholder="Answer" onInput={this.updateTitle} value={this.state.title}></input>
           <input className="long-form-image-attachment" type="file" onChange={this.changeFile} />
           <img className="long-preview-image" src={this.state.imageUrl}/>
-          <button className="form-button" onClick={this.handleSubmit}>Write Answer</button>
+          <button className="a-form-submit" onClick={this.handleSubmit}>Submit</button>
       </div>
     );
   }
