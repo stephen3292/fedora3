@@ -35,7 +35,7 @@ var tagShow = React.createClass({
       });
     }
     return(
-        <div>
+        <div className="tag-show">
           {questions}
         </div>
       );

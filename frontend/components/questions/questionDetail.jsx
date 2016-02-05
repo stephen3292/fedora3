@@ -22,11 +22,7 @@ var questionDetail = React.createClass({
   },
 
   componentDidMount: function() {
-    this.listener = questionsStore.addListener(this._onChange);
-  },
-
-  componentWillUnmount: function(){
-    this.listener.remove();
+    questionsStore.addListener(this._onChange);
   },
 
   componentWillReceiveProps: function (newProps) {
@@ -43,14 +39,16 @@ var questionDetail = React.createClass({
         <div>
           <div className="question-detail-pane">
             <div className="question-detail-each">
+              <div className="little-detail">
               {this.state.question.title}<br/>
               {this.state.question.body}<br/>
               {this.state.question.username}<br/>
-              {this.state.question.user_id}<br/>
-
+              </div>
               <img className="post-image" src={this.state.question.image_url} />
+              <div className="detail-answers">
+                  < AnswersIndex question={this.state.question}/>
+              </div>
 
-              < AnswersIndex question={this.state.question}/>
             </div>
           </div>
         </div>

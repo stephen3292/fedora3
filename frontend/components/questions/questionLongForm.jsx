@@ -59,9 +59,8 @@ var QuestionForm = React.createClass({
   render: function(){
 
     return(
-      <div className="ask-a-question group">
-          <h2 className='ask-header'></h2>
-          <input className="long-form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
+      <div className="ask-a-question-please">
+          <input type="textarea" className="long-form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
           <input className="long-form-tag" placeholder="Topic" onInput={this.updateTag} value={this.state.tag}></input>
           <button className="long-form-button" onClick={this.handleSubmit}>Ask Question</button>
           <input className="long-image-attachment" type="file" onChange={this.changeFile} />

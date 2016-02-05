@@ -19,6 +19,13 @@ a {
   cursor: pointer;
 }
 
+.answer-the-questions{
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+
 .answer-form{
   margin-top: 20px;
   border: 1px solid blue;
@@ -38,6 +45,12 @@ a {
   font-weight: normal;
   color: #666
   padding: 5px;
+}
+
+.answer-pic{
+  width: 100%;
+  height: auto;
+  max-width: 100px;
 }
 
 .answer-body{

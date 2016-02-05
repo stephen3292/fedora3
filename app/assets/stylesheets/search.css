@@ -1,0 +1,83 @@
+
+
+.search-land{
+  width: 600px;
+  margin: 0 auto;
+}
+
+.ask-search{
+  margin: 0 auto;
+  padding: 5px;
+  font-size: 55pt;
+  font-family: "Georgia";
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.search-title{
+  text-align: center;
+}
+
+.big-search{
+  margin: 0 auto;
+  display: block;
+}
+
+.S{
+  float: left;
+  color: #0057e7
+}
+
+.e{
+  float: left;
+  color: 	#d62d20
+}
+
+.a{
+  float: left;
+  color: #ffa700
+}
+
+.r{
+  float: left;
+  color: #0057e7
+}
+
+.c{
+  float: left;
+  color: #008744
+}
+
+.h{
+  float: left;
+  color: 	#d62d20
+}
+
+.x{
+  float: left;
+  color: #0057e7
+}
+
+
+.search-input{
+  margin-left: 7px;
+  text-align: center;
+  width: 300px;
+  border: 2px solid #ccc
+}
+
+.results-show{
+  visibility: hidden;
+  margin-top: 20px;
+  background: green;
+  color: #666;
+  font-family: "Georgia"
+}
+
+.searchButton{
+  visibility: hidden
+}
+
+.users-index{
+  margin-top: 40px;
+}

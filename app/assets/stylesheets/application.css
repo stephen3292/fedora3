@@ -120,14 +120,20 @@ body {
 }
 
 .post-image{
-  width: 100px;
-  height: 100px
+  width: 200px;
+  max-width: 200px;
+  height: auto;
+  align-content: center;
 }
 .q-username {
   display: block;
   float: left;
   padding: 10px;
   font-weight: normal
+}
+
+.r-all-the-questions{
+  margin-top: 15px;
 }
 
 button {
@@ -138,6 +144,10 @@ button {
   border-radius: 3px;
   font-size: 14px;
   color: #769ed6
+}
+
+.my-name{
+  padding: 5px;
 }
 
 button:hover{

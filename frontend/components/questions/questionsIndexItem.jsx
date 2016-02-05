@@ -27,7 +27,7 @@ var QuestionIndexItem = React.createClass({
 
     return(
       <ul className="single-question group">
-          <div className="answer-written-in">Question Asked In< TagsIndex question={this.props.question} /> </div>
+          <div className="answer-written-in">Question Asked In:< TagsIndex question={this.props.question} /> </div>
 
         <li className="question-title">
             <a className="question-title-link" href={questionDetail}>{title}</a>

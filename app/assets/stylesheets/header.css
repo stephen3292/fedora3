@@ -80,6 +80,9 @@
   margin-top: 5px
 }
 
+.e-sign-out{
+  color: #eee
+}
 .nav-link:hover{
   color: #5fbce7;
 }
@@ -96,8 +99,13 @@
   margin-top: 5px;
 }
 
+.header-username:hover{
+  color: #5fbce7;
+  cursor: crosshair;
+}
+
 .image-attachment{
-  width: 2px
+  width: 1px
 }
 
 .ask-form{

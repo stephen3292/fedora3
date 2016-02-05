@@ -40,20 +40,30 @@ var Search = React.createClass({
     var searchResults = SearchResultsStore.all().map(function(searchResult) {
 
       if (searchResult._type === "Question") {
-        return <QuestionIndexItem question={searchResult} />;
+        return <QuestionIndexItem key={searchResult.id} question={searchResult} />;
       } else {
-        return <AnswerIndexItem answer={searchResult} />;
+        return <AnswerIndexItem key={searchResult.id} answer={searchResult} />;
       }
     });
 
     return(
-      <div>you are here
-      <h1 className="ask-search">Search!</h1>
-      <input placeholder="Search before asking!"
+      <div className="search-land">
+        <div className="big-search">
+      <h1 className="ask-search">
+        <div className="S">F</div>
+        <div className="e">e</div>
+        <div className="a">d</div>
+        <div className="r">o</div>
+        <div className="c">r</div>
+        <div className="h">a</div>
+        <div className="x">!</div>
+      </h1>
+      </div>
+      <input className="search-input"placeholder="Search before asking!"
       onKeyUp={this.search} />
-      Displaying {SearchResultsStore.all().length} of
-      {SearchResultsStore.meta().totalCount}
-      <button onClick={this.nextPage}>Next ></button>
+    <div className="results-show">Displaying {SearchResultsStore.all().length}
+      {SearchResultsStore.meta().totalCount}</div>
+    <button className="searchButton" onClick={this.nextPage}>Next ></button>
 
       <ul className="users-index">{ searchResults }</ul>
       </div>

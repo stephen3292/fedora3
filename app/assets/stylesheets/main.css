@@ -17,6 +17,26 @@
 
 }
 
+.ask-a-question{
+
+}
+
+.more-q{
+  margin-top: 15px;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.r-all-the-questions{
+  margin-top: 15px;
+}
+
+
+.read-header{
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
 .sign-out-button{
   visibility: hidden;
 }
@@ -93,6 +113,11 @@
   margin-top: 7px;
 }
 
+.more-q{
+  margin-top: 2px;
+}
+
+
 .answer-pic{
   width: 50px;
   float: left;
@@ -112,6 +137,7 @@
 
 .answer-written-in{
   font-size: 10px;
+  margin-bottom: 5px
 }
 
 .r-all-the-questions{

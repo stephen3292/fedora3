@@ -41,7 +41,7 @@ var Header = React.createClass({
             <h1 className="fedora-logo"><a className="home-link" href={user_home_page}>Fedora</a></h1>
 
             <div className='ask-form'><AskForm/></div>
-            <div className="header-username">{ this.state.currentUser.username }</div>
+            <div className="header-username"><a href={askQuestions}>{this.state.currentUser.username }</a></div>
             <button className="sign-out-button" onClick={ this.logout }></button>
             <img className="header-image" src={this.state.currentUser.image_url}></img>
               <ul className="nav-links group">

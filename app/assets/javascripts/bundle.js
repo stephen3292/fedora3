@@ -31142,7 +31142,11 @@
 	          React.createElement(
 	            'div',
 	            { className: 'header-username' },
-	            this.state.currentUser.username
+	            React.createElement(
+	              'a',
+	              { href: askQuestions },
+	              this.state.currentUser.username
+	            )
 	          ),
 	          React.createElement('button', { className: 'sign-out-button', onClick: this.logout }),
 	          React.createElement('img', { className: 'header-image', src: this.state.currentUser.image_url }),
@@ -31383,9 +31387,8 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'ask-a-question group' },
-	      React.createElement('h2', { className: 'ask-header' }),
-	      React.createElement('input', { className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
+	      { className: 'ask-a-question-please' },
+	      React.createElement('input', { type: 'textarea', className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement('input', { className: 'long-form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
 	      React.createElement(
 	        'button',
@@ -31548,6 +31551,11 @@
 	        'ul',
 	        { className: 'more-q group' },
 	        React.createElement(
+	          'h1',
+	          { className: 'read-header' },
+	          'Read Questions'
+	        ),
+	        React.createElement(
 	          'div',
 	          { className: 'r-all-the-questions' },
 	          questions
@@ -31709,9 +31717,8 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'ask-a-question group' },
-	      React.createElement('h2', { className: 'ask-header' }),
-	      React.createElement('input', { className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
+	      { className: 'ask-a-question-please' },
+	      React.createElement('input', { type: 'textarea', className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement('input', { className: 'long-form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
 	      React.createElement(
 	        'button',
@@ -31985,11 +31992,7 @@
 	  },
 	
 	  componentDidMount: function () {
-	    this.listener = questionsStore.addListener(this._onChange);
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.listener.remove();
+	    questionsStore.addListener(this._onChange);
 	  },
 	
 	  componentWillReceiveProps: function (newProps) {
@@ -32011,16 +32014,22 @@
 	          React.createElement(
 	            'div',
 	            { className: 'question-detail-each' },
-	            this.state.question.title,
-	            React.createElement('br', null),
-	            this.state.question.body,
-	            React.createElement('br', null),
-	            this.state.question.username,
-	            React.createElement('br', null),
-	            this.state.question.user_id,
-	            React.createElement('br', null),
+	            React.createElement(
+	              'div',
+	              { className: 'little-detail' },
+	              this.state.question.title,
+	              React.createElement('br', null),
+	              this.state.question.body,
+	              React.createElement('br', null),
+	              this.state.question.username,
+	              React.createElement('br', null)
+	            ),
 	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url }),
-	            React.createElement(AnswersIndex, { question: this.state.question })
+	            React.createElement(
+	              'div',
+	              { className: 'detail-answers' },
+	              React.createElement(AnswersIndex, { question: this.state.question })
+	            )
 	          )
 	        )
 	      );
@@ -32286,7 +32295,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'answer-written-in' },
-	        'Question Asked In',
+	        'Question Asked In:',
 	        React.createElement(TagsIndex, { question: this.props.question }),
 	        ' '
 	      ),
@@ -32697,30 +32706,70 @@
 	    var searchResults = SearchResultsStore.all().map(function (searchResult) {
 	
 	      if (searchResult._type === "Question") {
-	        return React.createElement(QuestionIndexItem, { question: searchResult });
+	        return React.createElement(QuestionIndexItem, { key: searchResult.id, question: searchResult });
 	      } else {
-	        return React.createElement(AnswerIndexItem, { answer: searchResult });
+	        return React.createElement(AnswerIndexItem, { key: searchResult.id, answer: searchResult });
 	      }
 	    });
 	
 	    return React.createElement(
 	      'div',
-	      null,
-	      'you are here',
+	      { className: 'search-land' },
 	      React.createElement(
-	        'h1',
-	        { className: 'ask-search' },
-	        'Search!'
+	        'div',
+	        { className: 'big-search' },
+	        React.createElement(
+	          'h1',
+	          { className: 'ask-search' },
+	          React.createElement(
+	            'div',
+	            { className: 'S' },
+	            'F'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'e' },
+	            'e'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'a' },
+	            'd'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'r' },
+	            'o'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'c' },
+	            'r'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'h' },
+	            'a'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'x' },
+	            '!'
+	          )
+	        )
 	      ),
-	      React.createElement('input', { placeholder: 'Search before asking!',
+	      React.createElement('input', { className: 'search-input', placeholder: 'Search before asking!',
 	        onKeyUp: this.search }),
-	      'Displaying ',
-	      SearchResultsStore.all().length,
-	      ' of',
-	      SearchResultsStore.meta().totalCount,
+	      React.createElement(
+	        'div',
+	        { className: 'results-show' },
+	        'Displaying ',
+	        SearchResultsStore.all().length,
+	        SearchResultsStore.meta().totalCount
+	      ),
 	      React.createElement(
 	        'button',
-	        { onClick: this.nextPage },
+	        { className: 'searchButton', onClick: this.nextPage },
 	        'Next >'
 	      ),
 	      React.createElement(
@@ -32868,7 +32917,7 @@
 	      }
 	      return React.createElement(
 	        'div',
-	        null,
+	        { className: 'tag-show' },
 	        questions
 	      );
 	    }
@@ -33205,6 +33254,11 @@
 	      React.createElement(
 	        'ul',
 	        { className: 'more-q group' },
+	        React.createElement(
+	          'h1',
+	          { className: 'answer-the-questions' },
+	          'Answer Questions'
+	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'r-all-the-questions' },
