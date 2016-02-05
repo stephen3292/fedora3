@@ -18,16 +18,20 @@ var questionDetail = React.createClass({
   },
 
   _onChange: function() {
+
     this.setState({question: this.getStateFromStore()});
   },
 
   componentDidMount: function() {
+
     questionsStore.addListener(this._onChange);
+    var id = parseInt(this.props.params.questionId);
+    questionApiUtil.fetchOneQuestion(id);
   },
 
   componentWillReceiveProps: function (newProps) {
     var id = parseInt(newProps.params.questionId);
-    var question = apiUtil.fetchOneQuestion(id);
+    var question = questionApiUtil.fetchOneQuestion(id);
     this.setState({question: question});
   },
 
@@ -41,7 +45,7 @@ var questionDetail = React.createClass({
             <div className="question-detail-each">
               <div className="little-detail">
               {this.state.question.title}<br/>
-              {this.state.question.body}<br/>
+            <div className="q-detail-body">{this.state.question.body}</div><br/>
               {this.state.question.username}<br/>
               </div>
               <img className="post-image" src={this.state.question.image_url} />

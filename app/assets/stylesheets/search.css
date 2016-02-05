@@ -3,6 +3,7 @@
 .search-land{
   width: 600px;
   margin: 0 auto;
+  margin-top: 50px;
 }
 
 .ask-search{
@@ -80,4 +81,9 @@
 
 .users-index{
   margin-top: 40px;
+}
+
+.long-image-attachment{
+  padding: 20px;
+  text-align: right;
 }

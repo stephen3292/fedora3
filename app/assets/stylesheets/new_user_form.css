@@ -47,7 +47,7 @@
   display: block;
   background: #eee;
   border: 1px solid #e2e2e2;
-  padding: 8px;  
+  padding: 8px;
   width: 240px;
   margin-top: 37px;
   border-radius: 3px;
@@ -64,11 +64,20 @@
   border: 1px solid #3a66ad;
   cursor: pointer;
   text-align: right;
-  margin-left: 200px;
-  margin-top: 92px
+  float: right;
+  margin-top: 92px;
+  margin-right: 20px;
+
+}
+
+.guest-user-sign-in{
+
 }
 
 .guest-sign-in-button{
+
+  margin-top: 92px;
+  z-index: 1;
   display: block;
   transition-delay: 100ms;
   border-radius: 3px;
@@ -78,6 +87,6 @@
   font-weight: 500;
   border: 1px solid #3a66ad;
   cursor: pointer;
-  text-align: right;
-  margin-top: 50px
+  float: left;
+
 }

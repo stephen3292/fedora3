@@ -87,11 +87,9 @@ var SessionForm = React.createClass({
               </label>
             </div>
             <button className="login-button">Login</button>
+            <button type="submit" className="guest-sign-in-button" onClick={this.handleGuest}>Demo</button>
           </form>
 
-          <form className="guest-user-sign-in group" onSubmit={this.handleGuest}>
-            <button type="submit" className="guest-sign-in-button">Demo</button>
-          </form>
         </div>
       </div>
     );

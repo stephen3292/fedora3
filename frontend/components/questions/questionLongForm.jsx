@@ -63,9 +63,9 @@ var QuestionForm = React.createClass({
           <input type="textarea" className="long-form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
           <input className="long-form-tag" placeholder="Topic" onInput={this.updateTag} value={this.state.tag}></input>
           <button className="long-form-button" onClick={this.handleSubmit}>Ask Question</button>
+          <input className="long-form-body" placeholder="Body" onInput={this.updateBody} value={this.state.body}></input>
           <input className="long-image-attachment" type="file" onChange={this.changeFile} />
-          <img className="long-preview-image" src={this.state.imageUrl}/>
-          <input className="long-form-body" onInput={this.updateBody} value={this.state.body}></input>
+
           < QuestionsIndex />
       </div>
     );

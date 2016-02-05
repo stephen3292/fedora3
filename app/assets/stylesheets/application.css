@@ -147,7 +147,9 @@ button {
 }
 
 .my-name{
+  margin-top: 3px;
   padding: 5px;
+  font-weight: bold;
 }
 
 button:hover{

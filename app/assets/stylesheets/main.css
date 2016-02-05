@@ -5,12 +5,13 @@
 
 .some-questions{
   display: block;
-  padding: 10px;
-  margin-left: 20px;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 24px;
 }
 .my-questions{
   float: left;
-  width: 140px;
+  width: 160px;
   padding: 20px;
   height: 280px;
   border-top: 1px solid #ccc;
@@ -26,6 +27,8 @@
   width: 600px;
   margin: 0 auto;
 }
+
+
 
 .r-all-the-questions{
   margin-top: 15px;
@@ -87,6 +90,10 @@
   padding: 5px;
   font-weight: normal;
   color: #666
+}
+
+.tag-link:hover{
+  color: #5fbce7;
 }
 
 

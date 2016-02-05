@@ -14,20 +14,13 @@ var QuestionIndexItem = React.createClass({
     var qId = this.props.question.id;
     var questionDetail = "#/questions/" + qId;
     var title = this.props.question.title;
-    var i = "";
-    var show = "nope";
-    if (this.props.question.image_url.indexOf("missing") > -1){
-      i = "";
-      show = "nope";
-    } else {
-      i = this.props.question.image_url;
-      show = "post-image";
+    var image;
+    if (this.props.question.image_url.indexOf("missing") === -1){
+      image = <img className="post-image" src={this.props.question.image_url} />;
     }
-
-
     return(
       <ul className="single-question group">
-          <div className="answer-written-in">Question Asked In:< TagsIndex question={this.props.question} /> </div>
+          <div className="answer-written-in">Question Asked:< TagsIndex question={this.props.question} /> </div>
 
         <li className="question-title">
             <a className="question-title-link" href={questionDetail}>{title}</a>
@@ -35,7 +28,7 @@ var QuestionIndexItem = React.createClass({
 
         <br/>
 
-        <img className={show} src={i} />
+        {image}
         < AnswersIndex question={this.props.question} />
     </ul>
     );

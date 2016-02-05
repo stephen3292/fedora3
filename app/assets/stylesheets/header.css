@@ -105,7 +105,8 @@
 }
 
 .image-attachment{
-  width: 1px
+  width: 1px;
+  height: 1px;
 }
 
 .ask-form{
