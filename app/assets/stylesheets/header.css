@@ -1,5 +1,4 @@
 .top-header{
-
   display: block;
   border-top: 2px solid #B22222;
   border-bottom: 1px solid #ccc
@@ -81,7 +80,7 @@
 }
 
 .e-sign-out{
-  color: #eee
+  color: white
 }
 .nav-link:hover{
   color: #5fbce7;
