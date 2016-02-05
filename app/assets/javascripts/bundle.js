@@ -31111,7 +31111,7 @@
 	  },
 	
 	  render: function () {
-	    debugger;
+	
 	    if (CurrentUserStore.isLoggedIn()) {
 	
 	      var answerQuestions = '#/questions';
@@ -32260,6 +32260,7 @@
 	  },
 	
 	  render: function () {
+	
 	    var user = this.state.user;
 	    if (!user) {
 	      return React.createElement(
@@ -32273,15 +32274,32 @@
 	    if (user) {
 	      user.questions && user.questions.forEach(function (question) {
 	        var linkId = question.id;
-	        var link = "/#questions/" + linkId;
+	        var link = "#/questions/" + linkId;
 	
 	        questions.push(React.createElement(
 	          'li',
 	          { key: question.id },
 	          React.createElement(
 	            'a',
-	            { key: linkId, src: link },
+	            { key: question.name, href: link },
 	            question.title
+	          )
+	        ));
+	      });
+	    }
+	
+	    var tags = [];
+	    if (user) {
+	      user.question_tags && user.question_tags.forEach(function (tag) {
+	        var tagId = tag.id;
+	        var link = "#/question_tags/" + tagId;
+	        tags.push(React.createElement(
+	          'li',
+	          { key: tag.name },
+	          React.createElement(
+	            'a',
+	            { key: tag.name, href: link },
+	            tag.name
 	          )
 	        ));
 	      });
@@ -32296,10 +32314,19 @@
 	        this.state.user.username + "'s Questions"
 	      ),
 	      React.createElement(
-	        'div',
+	        'ul',
 	        { className: 'my-questions' },
-	        'My Questions:',
 	        questions
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'my-tags' },
+	        React.createElement(
+	          'div',
+	          { className: 'my-name' },
+	          this.state.user.username + "'s Tags"
+	        ),
+	        tags
 	      ),
 	      React.createElement(
 	        'div',
@@ -32898,6 +32925,10 @@
 	  componentDidMount: function () {
 	    this.listener = TagStore.addListener(this._onChange);
 	    TagsApiUtil.fetchOneShowTag(parseInt(this.props.params.tagId));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
 	  },
 	
 	  componentWillReceiveProps: function (props) {

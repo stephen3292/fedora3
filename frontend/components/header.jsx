@@ -27,7 +27,7 @@ var Header = React.createClass({
   },
 
   render: function() {
-    debugger
+    
     if (CurrentUserStore.isLoggedIn()) {
 
       var answerQuestions = '#/questions';

@@ -23,6 +23,10 @@ var tagShow = React.createClass({
     TagsApiUtil.fetchOneShowTag(parseInt(this.props.params.tagId));
   },
 
+  componentWillUnmount: function(){
+    this.listener.remove();
+  },
+
   componentWillReceiveProps: function(props) {
     var id = parseInt(props.params.tagId);
     TagsApiUtil.fetchOneShowTag(id);

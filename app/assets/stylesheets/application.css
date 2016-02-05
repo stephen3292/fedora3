@@ -150,6 +150,27 @@ button {
   margin-top: 3px;
   padding: 5px;
   font-weight: bold;
+
+
+}
+
+.my-tags{
+  color: #666;
+  background: pink;
+  float: right;
+  width: 180px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.my-tags li {
+  float: left;
+  padding: 10px;
+
+}
+
+.my-tags li:hover {
+   color: #5ba8ff
 }
 
 button:hover{
