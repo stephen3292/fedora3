@@ -18,6 +18,7 @@ var Header = React.createClass({
   },
 
   _onChange: function () {
+
     this.setState({currentUser: CurrentUserStore.currentUser()});
   },
 
@@ -26,6 +27,7 @@ var Header = React.createClass({
   },
 
   render: function() {
+    debugger
     if (CurrentUserStore.isLoggedIn()) {
 
       var answerQuestions = '#/questions';

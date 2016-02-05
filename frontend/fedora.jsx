@@ -28,17 +28,17 @@ var UserForm = require('./components/users/user_form');
 
 var routes = (
 
-  <Route path="/" component={App} >
+  <Route path="/" component={App}  >
    <IndexRoute component={ UserShow } onEnter={_ensureLoggedIn} />
     <Route path="login" component={ SessionForm }/>
     <Route path="users/new" component={ UserForm } />
-    <Route path="questions/:questionId" component={QuestionDetail}/>
-    <Route path="questions" component={QuestionsIndex}/>
+    <Route path="questions/:questionId" component={QuestionDetail} onEnter={_ensureLoggedIn}/>
+    <Route path="questions" component={QuestionsIndex} onEnter={_ensureLoggedIn}/>
     <Route path="search" component={ Search } />
-    <Route path="read" component={QuestionsReadIndex} />
-    <Route path="ask" component={AskQuestion} />
-    <Route path="answer" component={QuestionsAnswer}/>
-    <Route path="question_tags/:tagId" component={TagShow} />
+    <Route path="read" component={QuestionsReadIndex} onEnter={_ensureLoggedIn} />
+    <Route path="ask" component={AskQuestion} onEnter={_ensureLoggedIn} />
+    <Route path="answer" component={QuestionsAnswer} onEnter={_ensureLoggedIn}/>
+    <Route path="question_tags/:tagId" component={TagShow} onEnter={_ensureLoggedIn} />
   </Route>
 
 );

@@ -75,13 +75,13 @@
 	  React.createElement(IndexRoute, { component: UserShow, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: SessionForm }),
 	  React.createElement(Route, { path: 'users/new', component: UserForm }),
-	  React.createElement(Route, { path: 'questions/:questionId', component: QuestionDetail }),
-	  React.createElement(Route, { path: 'questions', component: QuestionsIndex }),
+	  React.createElement(Route, { path: 'questions/:questionId', component: QuestionDetail, onEnter: _ensureLoggedIn }),
+	  React.createElement(Route, { path: 'questions', component: QuestionsIndex, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'search', component: Search }),
-	  React.createElement(Route, { path: 'read', component: QuestionsReadIndex }),
-	  React.createElement(Route, { path: 'ask', component: AskQuestion }),
-	  React.createElement(Route, { path: 'answer', component: QuestionsAnswer }),
-	  React.createElement(Route, { path: 'question_tags/:tagId', component: TagShow })
+	  React.createElement(Route, { path: 'read', component: QuestionsReadIndex, onEnter: _ensureLoggedIn }),
+	  React.createElement(Route, { path: 'ask', component: AskQuestion, onEnter: _ensureLoggedIn }),
+	  React.createElement(Route, { path: 'answer', component: QuestionsAnswer, onEnter: _ensureLoggedIn }),
+	  React.createElement(Route, { path: 'question_tags/:tagId', component: TagShow, onEnter: _ensureLoggedIn })
 	);
 	
 	function _ensureLoggedIn(nextState, replace, callback) {
@@ -31102,6 +31102,7 @@
 	  },
 	
 	  _onChange: function () {
+	
 	    this.setState({ currentUser: CurrentUserStore.currentUser() });
 	  },
 	
@@ -31110,6 +31111,7 @@
 	  },
 	
 	  render: function () {
+	    debugger;
 	    if (CurrentUserStore.isLoggedIn()) {
 	
 	      var answerQuestions = '#/questions';
@@ -32775,7 +32777,7 @@
 	        React.createElement(
 	          'h1',
 	          { className: 'read-header' },
-	          'Read Questions'
+	          'Read Answers'
 	        ),
 	        React.createElement(
 	          'div',
