@@ -11,6 +11,10 @@ a {
   -webkit-transision: 1s;
 }
 
+.a-form-button{
+  margin-top: 10px;
+}
+
 .a-form-submit:hover{
   cursor: pointer;
 }
@@ -23,6 +27,7 @@ a {
   font-weight: normal
 }
 
+
 .a-form-title{
   background: white;
   width: 300px;
@@ -32,4 +37,14 @@ a {
   padding: 5px;
   font-weight: normal;
   color: #666
+  padding: 5px;
+}
+
+.answer-body{
+  padding: 3px;
+  font-family: "Georgia";
+}
+
+.long-form-image-attachment{
+  font-size: 10px;
 }

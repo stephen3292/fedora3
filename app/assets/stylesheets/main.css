@@ -17,6 +17,10 @@
 
 }
 
+.sign-out-button{
+  visibility: hidden;
+}
+
 .nope{
   width: 1px;
   height: 1px;
@@ -30,6 +34,9 @@
   height: 1px;
 }
 
+.question-title-link:hover{
+  text-decoration: underline;
+}
 
 .single-answer {
   margin-top: 10px;
@@ -54,7 +61,6 @@
 }
 
 .a-form-title{
-  background: #CCC;
   border-radius: 5px;
   margin-top: 10px;
   margin-left: 10px;
@@ -102,9 +108,15 @@
   padding-top: 19px;
   padding-left: 5px;
   padding-bottom: 3px;
-  color: #aaa
 }
 
 .answer-written-in{
   font-size: 10px;
+}
+
+.r-all-the-questions{
+  margin-top: 100px;
+  width: 600px;
+  margin: 0px auto;
+
 }

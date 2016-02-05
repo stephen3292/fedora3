@@ -59,6 +59,7 @@
 	var QuestionsReadIndex = __webpack_require__(242);
 	var AskQuestion = __webpack_require__(239);
 	var TagShow = __webpack_require__(270);
+	var QuestionsAnswer = __webpack_require__(275);
 	
 	var SessionForm = __webpack_require__(272);
 	var UserForm = __webpack_require__(273);
@@ -79,6 +80,7 @@
 	  React.createElement(Route, { path: 'search', component: Search }),
 	  React.createElement(Route, { path: 'read', component: QuestionsReadIndex }),
 	  React.createElement(Route, { path: 'ask', component: AskQuestion }),
+	  React.createElement(Route, { path: 'answer', component: QuestionsAnswer }),
 	  React.createElement(Route, { path: 'question_tags/:tagId', component: TagShow })
 	);
 	
@@ -31115,6 +31117,7 @@
 	      var user_home_page = '/';
 	      var askQuestions = '#/ask';
 	      var search = '#/search';
+	      var answer = '#/answer';
 	
 	      return React.createElement(
 	        'header',
@@ -31151,7 +31154,7 @@
 	              { className: 'nav-link' },
 	              React.createElement(
 	                'a',
-	                { className: 'user-questions-link', href: answerQuestions },
+	                { className: 'user-questions-link', href: answer },
 	                'Answer'
 	              )
 	            ),
@@ -31320,7 +31323,7 @@
 	var React = __webpack_require__(1),
 	    questionsStore = __webpack_require__(207);
 	TagsApiUtil = __webpack_require__(240);
-	QuestionsRead = __webpack_require__(242);
+	QuestionsIndex = __webpack_require__(259);
 	
 	var QuestionForm = React.createClass({
 	  displayName: 'QuestionForm',
@@ -31377,6 +31380,7 @@
 	  },
 	
 	  render: function () {
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'ask-a-question group' },
@@ -31391,7 +31395,7 @@
 	      React.createElement('input', { className: 'long-image-attachment', type: 'file', onChange: this.changeFile }),
 	      React.createElement('img', { className: 'long-preview-image', src: this.state.imageUrl }),
 	      React.createElement('input', { className: 'long-form-body', onInput: this.updateBody, value: this.state.body }),
-	      React.createElement(QuestionsRead, null)
+	      React.createElement(QuestionsIndex, null)
 	    );
 	  }
 	});
@@ -31528,11 +31532,14 @@
 	  },
 	
 	  render: function () {
-	
-	    var r_questions = this.state.questions;
-	    var questions = r_questions.map(function (question) {
-	      return React.createElement(QuestionsReadIndexItem, { question: question, key: question.id });
-	    });
+	    if (this.state.questions) {
+	      var r_questions = this.state.questions;
+	      var questions = r_questions.map(function (question) {
+	        if (question.answers.length > 0) {
+	          return React.createElement(QuestionsReadIndexItem, { question: question, key: question.id });
+	        }
+	      });
+	    }
 	
 	    return React.createElement(
 	      'div',
@@ -31542,7 +31549,7 @@
 	        { className: 'more-q group' },
 	        React.createElement(
 	          'div',
-	          { className: 'all-the-questions' },
+	          { className: 'r-all-the-questions' },
 	          questions
 	        )
 	      )
@@ -31642,7 +31649,7 @@
 	var React = __webpack_require__(1),
 	    questionsStore = __webpack_require__(207);
 	TagsApiUtil = __webpack_require__(240);
-	QuestionsRead = __webpack_require__(242);
+	QuestionsIndex = __webpack_require__(259);
 	
 	var QuestionForm = React.createClass({
 	  displayName: 'QuestionForm',
@@ -31699,6 +31706,7 @@
 	  },
 	
 	  render: function () {
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'ask-a-question group' },
@@ -31713,7 +31721,7 @@
 	      React.createElement('input', { className: 'long-image-attachment', type: 'file', onChange: this.changeFile }),
 	      React.createElement('img', { className: 'long-preview-image', src: this.state.imageUrl }),
 	      React.createElement('input', { className: 'long-form-body', onInput: this.updateBody, value: this.state.body }),
-	      React.createElement(QuestionsRead, null)
+	      React.createElement(QuestionsIndex, null)
 	    );
 	  }
 	});
@@ -31991,6 +31999,7 @@
 	  },
 	
 	  render: function () {
+	
 	    if (this.state.question) {
 	
 	      return React.createElement(
@@ -32072,7 +32081,7 @@
 	      ),
 	      React.createElement(
 	        'button',
-	        { className: 'form-button', onClick: this.toggleState },
+	        { className: 'a-form-button', onClick: this.toggleState },
 	        'Write Answer'
 	      ),
 	      React.createElement('br', null),
@@ -32149,7 +32158,7 @@
 	  },
 	
 	  updateTitle: function (e) {
-	    debugger;
+	
 	    this.setState({ title: e.currentTarget.value });
 	  },
 	
@@ -32277,9 +32286,10 @@
 	      React.createElement(
 	        'div',
 	        { className: 'answer-written-in' },
-	        'Question Asked/Answer Written'
+	        'Question Asked In',
+	        React.createElement(TagsIndex, { question: this.props.question }),
+	        ' '
 	      ),
-	      React.createElement(TagsIndex, { question: this.props.question }),
 	      React.createElement(
 	        'li',
 	        { className: 'question-title' },
@@ -32342,10 +32352,17 @@
 	    var questions = [];
 	    if (user) {
 	      user.questions && user.questions.forEach(function (question) {
+	        var linkId = question.id;
+	        var link = "/#questions/" + linkId;
+	
 	        questions.push(React.createElement(
 	          'li',
 	          { key: question.id },
-	          question.title
+	          React.createElement(
+	            'a',
+	            { key: linkId, src: link },
+	            question.title
+	          )
 	        ));
 	      });
 	    }
@@ -32355,12 +32372,13 @@
 	      { className: 'homepage group' },
 	      React.createElement(
 	        'div',
-	        { className: 'questions' },
+	        { className: 'my-name' },
 	        this.state.user.username + "'s questions:"
 	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'my-questions' },
+	        'My Questions:',
 	        questions
 	      ),
 	      React.createElement(
@@ -32930,6 +32948,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'home' },
+	      React.createElement('div', { className: 'source-pic' }),
 	      React.createElement(
 	        'header',
 	        { className: 'fedora-header' },
@@ -33140,6 +33159,64 @@
 	});
 	
 	module.exports = QuestionsReadIndexItem;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var questionsStore = __webpack_require__(207);
+	var questionApiUtil = __webpack_require__(243);
+	var QuestionsIndexItem = __webpack_require__(257);
+	
+	var QuestionsAnswer = React.createClass({
+	  displayName: 'QuestionsAnswer',
+	
+	  getInitialState: function () {
+	    return { questions: questionsStore.all() };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ questions: questionsStore.all().reverse() });
+	  },
+	
+	  componentDidMount: function () {
+	    this.listener = questionsStore.addListener(this._onChange);
+	    questionApiUtil.fetchAllQuestions();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
+	  },
+	
+	  render: function () {
+	    if (this.state.questions) {
+	      var r_questions = this.state.questions;
+	      var questions = r_questions.map(function (question) {
+	        if (question.answers.length === 0) {
+	          return React.createElement(QuestionsIndexItem, { question: question, key: question.id });
+	        }
+	      });
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'q-index' },
+	      React.createElement(
+	        'ul',
+	        { className: 'more-q group' },
+	        React.createElement(
+	          'div',
+	          { className: 'r-all-the-questions' },
+	          questions
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = QuestionsAnswer;
 
 /***/ }
 /******/ ]);

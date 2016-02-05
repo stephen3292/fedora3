@@ -1,7 +1,7 @@
 var React = require('react'),
     questionsStore = require('./../../stores/questions_store');
     TagsApiUtil = require('./../../util/tags_api_util');
-    QuestionsRead = require('./questionsRead');
+    QuestionsIndex = require('./questionsIndex');
 
 
 var QuestionForm = React.createClass({
@@ -57,6 +57,7 @@ var QuestionForm = React.createClass({
   },
 
   render: function(){
+
     return(
       <div className="ask-a-question group">
           <h2 className='ask-header'></h2>
@@ -66,7 +67,7 @@ var QuestionForm = React.createClass({
           <input className="long-image-attachment" type="file" onChange={this.changeFile} />
           <img className="long-preview-image" src={this.state.imageUrl}/>
           <input className="long-form-body" onInput={this.updateBody} value={this.state.body}></input>
-          < QuestionsRead />
+          < QuestionsIndex />
       </div>
     );
   }

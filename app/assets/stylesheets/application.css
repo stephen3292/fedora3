@@ -37,6 +37,10 @@
    list-style: none;
  }
 
+ li {
+   list-style: none;
+ }
+
  img {
    display: block;
    width: 50px;
@@ -76,10 +80,16 @@ body {
   border-left: 1px solid #ccc;
 }
 
+.home{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
 .single-question {
   margin: 0 auto;
-  border-radius: 5px
 }
 
 .form-body{
@@ -133,6 +143,7 @@ button {
 button:hover{
   border: 1px solid #5ba8ff
 }
+
 
 .details{
   background: pink;

@@ -34,8 +34,11 @@ var UserShow = React.createClass({
     var questions = [];
     if (user) {
       user.questions && user.questions.forEach(function (question) {
+        var linkId = question.id;
+        var link= "/#questions/" + linkId;
+
         questions.push(
-          <li key={question.id}>{question.title }</li>
+          <li key={question.id}><a key={linkId}src={link}>{question.title }</a></li>
         );
       });
     }
@@ -43,8 +46,8 @@ var UserShow = React.createClass({
     return (
       <div className="homepage group">
 
-        <div className="questions">{this.state.user.username + "'s questions:"}</div>
-        <div className="my-questions">{questions}</div>
+        <div className="my-name">{this.state.user.username + "'s questions:" }</div>
+        <div className="my-questions">My Questions:{questions}</div>
         <div className="some-questions">Top Stories For You</div>
         <div className="questions-index">< QuestionsIndex /></div>
       </div>

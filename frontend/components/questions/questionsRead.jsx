@@ -25,17 +25,20 @@ var QuestionsIndex = React.createClass({
 
 
   render: function() {
+    if (this.state.questions) {
+      var r_questions = this.state.questions;
+        var questions = r_questions.map(function (question) {
+          if (question.answers.length > 0) {
+            return <QuestionsReadIndexItem question={question} key={question.id}/>;
+          }
+      });
+    }
 
-
-    var r_questions = this.state.questions;
-      var questions = r_questions.map(function (question) {
-      return <QuestionsReadIndexItem question={question} key={question.id}/>;
-    });
 
     return(
       <div className="q-index">
       <ul className="more-q group">
-        <div className="all-the-questions">
+        <div className="r-all-the-questions">
           {questions}
         </div>
       </ul>

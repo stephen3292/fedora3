@@ -7,7 +7,7 @@ var QuestionsReadIndexItem = React.createClass({
   mixins: [History],
 
   render: function() {
-
+  
     var qId = this.props.question.id;
     var questionDetail = "#/questions/" + qId;
     var title = this.props.question.title;
@@ -18,6 +18,7 @@ var QuestionsReadIndexItem = React.createClass({
         <li className="question-title">
           <a className="question-title-link" href={questionDetail}>{title}</a>
         </li><br/>
+
         <li>< ReadAnswersIndex question={this.props.question} /></li>
     </ul>
     );

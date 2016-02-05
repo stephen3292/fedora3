@@ -33,10 +33,7 @@ class User < ActiveRecord::Base
 
   has_many :questions
   has_many :answers
-  has_many :replies
 
-  has_many :user_taggings
-  has_many :user_tags, through: :user_taggings
 
 
 

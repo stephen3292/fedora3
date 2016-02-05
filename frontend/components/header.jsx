@@ -33,6 +33,7 @@ var Header = React.createClass({
       var user_home_page = '/';
       var askQuestions = '#/ask';
       var search = '#/search';
+      var answer ='#/answer';
 
       return (
         <header className="top-header">
@@ -44,7 +45,7 @@ var Header = React.createClass({
             <button className="sign-out-button" onClick={ this.logout }></button>
             <img className="header-image" src={this.state.currentUser.image_url}></img>
               <ul className="nav-links group">
-                <li className="nav-link"><a className="user-questions-link" href={answerQuestions}>Answer</a></li>
+                <li className="nav-link"><a className="user-questions-link" href={answer}>Answer</a></li>
                 <li className="nav-link"><a className="user-read-link" href={readQuestions}>Read</a></li>
                 <li className="nav-link"><a className="user-ask-link" href={search}>Notifications</a></li>
               </ul>

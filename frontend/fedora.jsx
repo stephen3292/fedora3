@@ -13,6 +13,7 @@ var Search = require('./components/search');
 var QuestionsReadIndex = require('./components/questions/questionsRead');
 var AskQuestion = require('./components/questions/questionLongForm');
 var TagShow = require('./components/tags/tag_show.jsx');
+var QuestionsAnswer = require('./components/questions/questionsAnswer');
 
 var SessionForm = require('./components/sessions/new');
 var UserForm = require('./components/users/user_form');
@@ -36,6 +37,7 @@ var routes = (
     <Route path="search" component={ Search } />
     <Route path="read" component={QuestionsReadIndex} />
     <Route path="ask" component={AskQuestion} />
+    <Route path="answer" component={QuestionsAnswer}/>
     <Route path="question_tags/:tagId" component={TagShow} />
   </Route>
 

@@ -8,7 +8,7 @@ var AnswerForm = React.createClass({
   },
 
   updateTitle: function(e){
-    debugger
+
     this.setState({title: e.currentTarget.value});
   },
 

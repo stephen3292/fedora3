@@ -39,7 +39,7 @@ var AnswersIndex = React.createClass({
         <div className="answer-list">
           {answers}
         </div>
-        <button className='form-button' onClick={this.toggleState}>Write Answer</button><br/>
+        <button className='a-form-button' onClick={this.toggleState}>Write Answer</button><br/>
         {showForm}
 
       </div>
