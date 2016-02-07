@@ -1,0 +1,873 @@
+.a-form-submit{
+  background: #3A5894;
+  color: white;
+  display: block;
+  margin-right: 20px;
+  border-radius: 3px;
+  margin-top: 3px;
+}
+
+a {
+  -webkit-transision: 1s;
+}
+
+.a-form-button{
+  margin-top: 10px;
+}
+
+.a-form-submit:hover{
+  cursor: pointer;
+}
+
+.answer-the-questions{
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+
+.answer-form{
+  margin-top: 20px;
+  border: 1px solid blue;
+  background: #C6E2FF;
+  font-size: 12px;
+  font-weight: normal
+}
+
+
+.a-form-title{
+  background: white;
+  width: 300px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px;
+  font-weight: normal;
+  color: #666
+  padding: 5px;
+}
+
+.answer-pic{
+  width: 100%;
+  height: auto;
+  max-width: 100px;
+}
+
+.answer-body{
+  padding: 3px;
+  font-family: "Georgia";
+}
+
+.long-form-image-attachment{
+  font-size: 10px;
+}
+
+.question-detail-pane{
+  margin: 0 auto;
+  width: 700px
+
+}
+
+.ask-a-question-please{
+  margin: 0 auto;
+  margin-top: 40px;
+  margin-left: 300px
+}
+
+.question-detail-each{
+
+}
+
+.little-detail{
+  margin-top: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  padding-top: 5px;
+  display: block;
+}
+
+.detail-answers{
+  margin-top: 50px;
+}
+
+.long-form-title{
+  width: 400px;
+  background: #FFEFD5;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 50px;
+  font-size: 16px;
+  margin-left: 50px;
+  color: #666
+}
+
+.long-form-tag{
+  width: 100px;
+  background: #BDDFEB;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 50px;
+  color: #666
+}
+
+.long-form-body{
+  width: 400px;
+  background: #ffe9ec;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 50px;
+  font-size: 16px;
+  margin-left: 50px;
+  color: #666
+}
+
+.long-image-attachment{
+  color: white;
+  font-size: 12px;
+}
+
+.q-detail-body{
+  padding: 5px;
+  color: #666;
+  font-size: 14px;
+  font-weight: normal;
+}
+.top-header{
+  display: block;
+  border-top: 2px solid #B22222;
+  border-bottom: 1px solid #ccc
+}
+
+.header-nav {
+  width: 1000px;
+  margin: 0px auto;
+  background: white;
+  padding: 10px;
+  padding-bottom: 3px;
+  display: block;
+  color: #666
+
+}
+
+.fedora-logo{
+  float: left;
+  font-size: 26px;
+  color: 	#B22222;
+  font-family: "Georgia", serif;
+  display: block;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.fedora-logo:hover {
+  color: 	#B22222;
+}
+
+.header-username {
+  float: right;
+  margin-top: 5px;
+  margin-left: 5px
+}
+.header-image{
+  float: right;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.search{
+  margin-left: 20px;
+  width: 330px;
+  float: left;
+  background: #eee;
+  padding: 6px;
+  border-radius: 3px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+
+.search-button {
+  float: left;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  color: #2F4F4F
+}
+
+.nav-links{
+  float: right;
+  display: block;
+}
+
+.ask-a-question{
+  height: 38px
+}
+
+.nav-link{
+  display: block;
+  float: left;
+  padding-left: 20px;
+  margin-right: 20px;
+  margin-top: 5px
+}
+
+.e-sign-out{
+  color: white
+}
+.nav-link:hover{
+  color: #5fbce7;
+}
+
+.user-questions-link{
+  display: block;
+}
+
+.form-title{
+  width:
+}
+.sign-out-button {
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+.header-username:hover{
+  color: #5fbce7;
+  cursor: crosshair;
+}
+
+.image-attachment{
+  width: 1px;
+  height: 1px;
+}
+
+.ask-form{
+  float: left;
+}
+.fedora-header{
+  text-align: center;
+  display: block;
+}
+
+.logo{
+  font-size: 54px;
+  color: #B22222;
+  font-family: georgia;
+  font-weight: bold;
+  padding: 10px
+}
+
+.tagline {
+  font-family: "palitino";
+  font-size: 20px;
+  padding-bottom: 20px;
+  color: #666
+}
+.homepage {
+  width: 1000px;
+  margin: 0 auto
+}
+
+.some-questions{
+  display: block;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 24px;
+}
+.my-questions{
+  float: left;
+  width: 160px;
+  padding: 20px;
+  height: 280px;
+  border-top: 1px solid #ccc;
+
+}
+
+.ask-a-question{
+
+}
+
+.more-q{
+  margin-top: 15px;
+  width: 600px;
+  margin: 0 auto;
+}
+
+
+
+.r-all-the-questions{
+  margin-top: 15px;
+}
+
+
+.read-header{
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+.sign-out-button{
+  visibility: hidden;
+}
+
+.nope{
+  width: 1px;
+  height: 1px;
+  display: hidden;
+}
+
+.question-image{
+  visibility: hidden;
+  float: right;
+  width: 1px;
+  height: 1px;
+}
+
+.question-title-link:hover{
+  text-decoration: underline;
+}
+
+.single-answer {
+  margin-top: 10px;
+}
+
+.image-attachment{
+  color: black;
+  font-size: 10px;
+  margin-left: 20px
+}
+
+.answer-list{
+  background: #eee;
+  margin-top: 10px;
+  border-radius: 5px;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.single-answer{
+  padding: 10px;
+}
+
+.a-form-title{
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px;
+  font-weight: normal;
+  color: #666
+}
+
+.tag-link:hover{
+  color: #5fbce7;
+}
+
+
+
+.single-tag{
+  background: :white;
+  font-size: 12px;
+
+}
+
+.answer-body{
+  margin-top: 10px;
+  background: white
+}
+
+.answer-writer{
+  text-align: left;
+  display: block;
+  font-size: 20px;
+  padding-top: 9px;
+  padding-left: 15px;
+  padding-right: 7px;
+  float: left;
+  margin-top: 7px;
+}
+
+.more-q{
+  margin-top: 2px;
+}
+
+
+.answer-pic{
+  width: 50px;
+  float: left;
+  weight: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+.answer-description{
+  text-align: left;
+  display: block;
+  font-size: 14px;
+  padding-top: 22px;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  color: #666
+}
+
+.answer-written-in{
+  font-size: 10px;
+  margin-bottom: 5px
+}
+
+.r-all-the-questions{
+  margin-top: 100px;
+  width: 600px;
+  margin: 0px auto;
+
+}
+.opening-page
+
+.sign-up-header {
+  font-size: 11px;
+  font-weight: bold;
+  color: #666
+}
+
+.home{
+  background: url(https://images.unsplash.com/photo-1413897255566-39fda18f373f?crop=entropy&fit=crop&fm=jpg&h=1000&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1825);
+  height: 100%;
+
+}
+.new-username-input {
+  display: block;
+  background: #eee;
+  border: 1px solid #e2e2e2;
+  padding: 8px;
+  width: 240px;
+  margin-top: 20px;
+  border-radius: 3px;
+}
+
+.guest-sign-in-button{
+  margin-bottom: 50px;
+}
+
+.new-password-input{
+  display: block;
+  background: #eee;
+  border: 1px solid #e2e2e2;
+  padding: 8px;
+  width: 240px;
+  margin-top: 37px;
+  border-radius: 3px;
+}
+
+.new-about-input{
+  display: block;
+  background: #eee;
+  border: 1px solid #e2e2e2;
+  padding: 8px;
+  width: 240px;
+  margin-top: 37px;
+  border-radius: 3px;
+}
+
+.new-avatar-input{
+
+}
+
+.signup-button {
+  display: block;
+  transition-delay: 100ms;
+  border-radius: 3px;
+  padding: 5px 7px 4px 7px;
+  background: #3e78ad;
+  color: #fff;;
+  font-weight: 500;
+  border: 1px solid #3a66ad;
+  cursor: pointer;
+  text-align: right;
+  margin-left: 200px;
+
+}
+
+
+.opening-page{
+  width: 610px;
+  padding: 20px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  height: 300px;
+  border-radius: 3px;
+  color: #666;
+}
+
+.sign-up-form{
+  float: left;
+  padding-right: 20px;
+  width: 280px;
+
+  border-right: 1px solid #ccc
+}
+
+.login-header {
+  font-size: 11px;
+  font-weight: bold;
+  color: #666
+}
+
+.new-session-form{
+  float: right;
+  width: 280px;
+}
+
+.new-session-input{
+  padding-top: 10px;
+  padding-bottom: 20px
+}
+.username-input{
+  display: block;
+  background: #eee;
+  border: 1px solid #e2e2e2;
+  padding: 8px;
+  width: 240px;
+  margin-top: 10px;
+  border-radius: 3px;
+}
+
+.password-input{
+  display: block;
+  background: #eee;
+  border: 1px solid #e2e2e2;
+  padding: 8px;
+  width: 240px;
+  margin-top: 37px;
+  border-radius: 3px;
+}
+
+.login-button {
+  display: block;
+  transition-delay: 100ms;
+  border-radius: 3px;
+  padding: 5px 7px 4px 7px;
+  background: #3e78ad;
+  color: #fff;;
+  font-weight: 500;
+  border: 1px solid #3a66ad;
+  cursor: pointer;
+  text-align: right;
+  float: right;
+  margin-top: 92px;
+  margin-right: 20px;
+
+}
+
+.guest-user-sign-in{
+
+}
+
+.guest-sign-in-button{
+
+  margin-top: 92px;
+  z-index: 1;
+  display: block;
+  transition-delay: 100ms;
+  border-radius: 3px;
+  padding: 5px 7px 4px 7px;
+  background: #3e78ad;
+  color: #fff;;
+  font-weight: 500;
+  border: 1px solid #3a66ad;
+  cursor: pointer;
+  float: left;
+
+}
+
+
+.search-land{
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.ask-search{
+  margin: 0 auto;
+  padding: 5px;
+  font-size: 55pt;
+  font-family: "Georgia";
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.search-title{
+  text-align: center;
+}
+
+.big-search{
+  margin: 0 auto;
+  display: block;
+}
+
+.S{
+  float: left;
+  color: #0057e7
+}
+
+.e{
+  float: left;
+  color: 	#d62d20
+}
+
+.a{
+  float: left;
+  color: #ffa700
+}
+
+.r{
+  float: left;
+  color: #0057e7
+}
+
+.c{
+  float: left;
+  color: #008744
+}
+
+.h{
+  float: left;
+  color: 	#d62d20
+}
+
+.x{
+  float: left;
+  color: #0057e7
+}
+
+
+.search-input{
+  margin-left: 7px;
+  text-align: center;
+  width: 300px;
+  border: 2px solid #ccc
+}
+
+.results-show{
+  visibility: hidden;
+  margin-top: 20px;
+  background: green;
+  color: #666;
+  font-family: "Georgia"
+}
+
+.searchButton{
+  visibility: hidden
+}
+
+.users-index{
+  margin-top: 40px;
+}
+
+.long-image-attachment{
+  padding: 20px;
+  text-align: right;
+}
+.tag-show{
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+
+
+ html, body, header, nav, h1, a,
+ ul, li, strong, main, button, i,
+ section, img, div, h2, p, form,
+ fieldset, label, input, textarea,
+ span, article, footer, time, small {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   outline: 0;
+   font: inherit;
+   color: inherit;
+   text-align: inherit;
+   text-decoration: inherit;
+   vertical-align: inherit;
+   box-sizing: inherit;
+   background: transparent;
+ }
+
+ ul {
+   list-style: none;
+ }
+
+ li {
+   list-style: none;
+ }
+
+ img {
+   display: block;
+   width: 50px;
+   height: auto;
+ }
+
+ .group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+
+body {
+  font-family: "Helvetica", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.question-header {
+  float: left;
+  width: 100px;
+  font-size: 20px;
+  font-weight: bold
+}
+
+
+.form-title {
+  margin-left: 10px;
+  width: 300px;
+  float: left;
+  background: #eee;
+  padding: 6px;
+  border-radius: 3px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+
+.home{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.single-question {
+  margin: 0 auto;
+}
+
+.form-body{
+  visibility: hidden;
+}
+
+.all-the-questions {
+  float: left;
+  padding: 20px;
+  padding-top: 0px;
+  width: 572px
+
+}
+
+.single-question {
+  font-size: 24px;
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px
+}
+
+.question-image{
+  float: left;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%
+}
+
+.post-image{
+  width: 200px;
+  max-width: 200px;
+  height: auto;
+  align-content: center;
+}
+.q-username {
+  display: block;
+  float: left;
+  padding: 10px;
+  font-weight: normal
+}
+
+.r-all-the-questions{
+  margin-top: 15px;
+}
+
+button {
+  background: white;
+  float: left;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  color: #769ed6
+}
+
+.my-name{
+  margin-top: 3px;
+  padding: 5px;
+  font-weight: bold;
+
+
+}
+
+.my-tags{
+  color: #666;
+  background: pink;
+  float: right;
+  width: 180px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.my-tags li {
+  float: left;
+  padding: 10px;
+
+}
+
+.my-tags li:hover {
+   color: #5ba8ff
+}
+
+button:hover{
+  border: 1px solid #5ba8ff
+}
+
+
+.details{
+  background: pink;
+  width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.preview-image {
+  width: 50px;
+  height: auto;
+}
+
+
+.ask-header {
+  visibility: hidden;
+}
