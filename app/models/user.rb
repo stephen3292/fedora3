@@ -18,7 +18,7 @@
 class User < ActiveRecord::Base
   validates :username, :session_token, :password_digest, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
-  has_attached_file :avatar, default_url: "missing.png"
+  has_attached_file :avatar, default_url: "missing.png", bucket: "fedora1-dev"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   include PgSearch
