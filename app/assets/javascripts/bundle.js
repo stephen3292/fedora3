@@ -31051,6 +31051,7 @@
 	var App = React.createClass({
 	  displayName: 'App',
 	
+	
 	  componentDidMount: function () {
 	    CurrentUserStore.addListener(this.forceUpdate.bind(this));
 	    SessionsApiUtil.fetchCurrentUser();
@@ -31090,6 +31091,7 @@
 	
 	var Header = React.createClass({
 	  displayName: 'Header',
+	
 	
 	  getInitialState: function () {
 	    return {
@@ -31519,6 +31521,7 @@
 	var QuestionsIndex = React.createClass({
 	  displayName: 'QuestionsIndex',
 	
+	
 	  getInitialState: function () {
 	    return { questions: questionsStore.all() };
 	  },
@@ -31742,6 +31745,7 @@
 	var QuestionIndexItem = React.createClass({
 	  displayName: 'QuestionIndexItem',
 	
+	
 	  mixins: [History],
 	
 	  render: function () {
@@ -31795,6 +31799,7 @@
 	var TagsIndex = React.createClass({
 	  displayName: 'TagsIndex',
 	
+	
 	  render: function () {
 	
 	    var tags = this.props.question.question_tags.map(function (tag) {
@@ -31825,6 +31830,7 @@
 	
 	var TagsIndexItem = React.createClass({
 	  displayName: 'TagsIndexItem',
+	
 	
 	  mixins: [History],
 	
@@ -31981,6 +31987,7 @@
 	var questionDetail = React.createClass({
 	  displayName: 'questionDetail',
 	
+	
 	  getStateFromStore: function () {
 	    return questionsStore.find(parseInt(this.props.params.questionId));
 	  },
@@ -32070,6 +32077,7 @@
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',
 	
+	
 	  getInitialState: function () {
 	    return { form: false };
 	  },
@@ -32120,6 +32128,7 @@
 	var History = __webpack_require__(159).History;
 	var AnswersIndexItem = React.createClass({
 	  displayName: 'AnswersIndexItem',
+	
 	
 	  mixins: [History],
 	
@@ -32768,6 +32777,7 @@
 	var QuestionsIndex = React.createClass({
 	  displayName: 'QuestionsIndex',
 	
+	
 	  getInitialState: function () {
 	    return { questions: questionsStore.all() };
 	  },
@@ -32830,6 +32840,7 @@
 	var QuestionsReadIndexItem = React.createClass({
 	  displayName: 'QuestionsReadIndexItem',
 	
+	
 	  mixins: [History],
 	
 	  render: function () {
@@ -32878,6 +32889,7 @@
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',
 	
+	
 	  render: function () {
 	    var answers = this.props.question.answers.map(function (answer) {
 	      return React.createElement(AnswersIndexItem, { answer: answer, key: answer.id });
@@ -32909,6 +32921,7 @@
 	
 	var tagShow = React.createClass({
 	  displayName: 'tagShow',
+	
 	
 	  getStateFromStore: function () {
 	    return TagStore.find(parseInt(this.props.params.tagId));
@@ -32966,6 +32979,7 @@
 	var QuestionsReadIndexItem = React.createClass({
 	  displayName: 'QuestionsReadIndexItem',
 	
+	
 	  mixins: [History],
 	
 	  render: function () {
@@ -33010,6 +33024,7 @@
 	
 	var QuestionsAnswer = React.createClass({
 	  displayName: 'QuestionsAnswer',
+	
 	
 	  getInitialState: function () {
 	    return { questions: questionsStore.all() };
