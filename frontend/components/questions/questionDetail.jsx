@@ -38,19 +38,22 @@ var questionDetail = React.createClass({
   render: function() {
 
     if (this.state.question) {
-
+      debugger
       return(
         <div>
+          <h2 className='detail-title'>Question Detail</h2>
           <div className="question-detail-pane">
             <div className="question-detail-each group">
-              <div className='detail-asker'>{this.state.question.username}</div>
-              <img className="detail-image" src={this.state.question.image_url} />
+              <div className='detail-asker'>{this.state.question.user.username}</div>
+              <div className='detail-info'>{this.state.question.user.description}</div>
+              <img className="detail-image" src={this.state.question.user.image_url} />
             </div>
                 <br/>
               <div className="little-detail group">
                 <br/>
                   {this.state.question.title}<br/>
                   <div className="q-detail-body">{this.state.question.body}</div>
+                  <img className="q-detail-image" src={this.state.question.image_url}/>
               </div>
               </div>
               <div className="detail-answers">

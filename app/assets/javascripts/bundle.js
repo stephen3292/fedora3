@@ -24110,7 +24110,7 @@
 	        'Ask Question'
 	      ),
 	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
-	      React.createElement('img', { className: 'preview-image', src: this.state.imageUrl }),
+	      React.createElement('div', { className: 'preview-image', src: this.state.imageUrl }),
 	      React.createElement('input', { className: 'form-body', onInput: this.updateBody, value: this.state.body })
 	    );
 	  }
@@ -31392,6 +31392,11 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'ask-a-question-please' },
+	      React.createElement(
+	        'h1',
+	        { className: 'detail-header' },
+	        'Ask a Detailed Question!'
+	      ),
 	      React.createElement('input', { type: 'textarea', className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement('input', { className: 'long-form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
 	      React.createElement(
@@ -31716,6 +31721,11 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'ask-a-question-please' },
+	      React.createElement(
+	        'h1',
+	        { className: 'detail-header' },
+	        'Ask a Detailed Question!'
+	      ),
 	      React.createElement('input', { type: 'textarea', className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement('input', { className: 'long-form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
 	      React.createElement(
@@ -32017,10 +32027,15 @@
 	  render: function () {
 	
 	    if (this.state.question) {
-	
+	      debugger;
 	      return React.createElement(
 	        'div',
 	        null,
+	        React.createElement(
+	          'h2',
+	          { className: 'detail-title' },
+	          'Question Detail'
+	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'question-detail-pane' },
@@ -32030,9 +32045,14 @@
 	            React.createElement(
 	              'div',
 	              { className: 'detail-asker' },
-	              this.state.question.username
+	              this.state.question.user.username
 	            ),
-	            React.createElement('img', { className: 'detail-image', src: this.state.question.image_url })
+	            React.createElement(
+	              'div',
+	              { className: 'detail-info' },
+	              this.state.question.user.description
+	            ),
+	            React.createElement('img', { className: 'detail-image', src: this.state.question.user.image_url })
 	          ),
 	          React.createElement('br', null),
 	          React.createElement(
@@ -32045,7 +32065,8 @@
 	              'div',
 	              { className: 'q-detail-body' },
 	              this.state.question.body
-	            )
+	            ),
+	            React.createElement('img', { className: 'q-detail-image', src: this.state.question.image_url })
 	          )
 	        ),
 	        React.createElement(

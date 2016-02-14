@@ -5,3 +5,7 @@ json.answers do
   json.partial! partial: 'api/answers/answer', collection: question.answers, as: :answer
 end
 json.question_tags question.question_tags
+
+json.user do
+  json.partial! 'api/users/user', user: question.user
+end

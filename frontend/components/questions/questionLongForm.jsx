@@ -60,6 +60,7 @@ var QuestionForm = React.createClass({
 
     return(
       <div className="ask-a-question-please">
+          <h1 className="detail-header">Ask a Detailed Question!</h1>
           <input type="textarea" className="long-form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
           <input className="long-form-tag" placeholder="Topic" onInput={this.updateTag} value={this.state.tag}></input>
           <button className="long-form-button" onClick={this.handleSubmit}>Ask Question</button>
