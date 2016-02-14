@@ -13,9 +13,9 @@ QuestionTag.destroy_all
 QuestionTagging.destroy_all
 
   a = User.create(username: 'Bob', password: 'password', avatar: "https://static-s.aa-cdn.net/img/ios/649977132/4effa0b29c7ad5f0dccb3f4d00980d36?v=1",
-        description: "One of those people who calls himself an 'educator'")
+        description: "One of those guys who says he's an 'educator'")
   b = User.create(username: 'Tim', password: 'password',
-        description: 'Professor of Some Obscure Subject')
+        description: 'Professor Emeritus of Some Obscure Subject')
   c = User.create(username: 'Jim', password: 'password', avatar: "http://www.brushwiz.com/images/nationalities/spanish/top_spanish_paintings_portrait_of_pope_innocent_x_by_diego_velazquez.jpg",
         description: "I like to answer other people's questions.")
   d = User.create(username: "Donald", password: "Donald",
@@ -29,17 +29,17 @@ QuestionTagging.destroy_all
   h = User.create(username: 'Donald', password: 'password', avatar: "http://rlv.zcache.com.au/thomas_gainsborough_the_blue_boy_square_sticker-r1a347ca5aa6b4f568ddff8f23508e554_v9wf3_8byvr_324.jpg",
         description: 'MD-PhD')
   i = User.create(username: "Ted", password: "password", avatar: "http://images5.fanpop.com/image/photos/31400000/Turtle-turtles-31450325-1525-1470.jpg",
-        description: "Donald")
+        description: "[this page is intentionally left blank]")
   j = User.create(username: "Bill", password: "password", avatar: "http://www.umoga.com/images/user/SagyDemn/AGothic.png",
         description: "a Few credentials with Arbitrary capitalization")
 
-  q0 = Question.create(user_id: c.id, title: 'Why is the Sign Out button gone?',
-  body: 'idk', username: c.username)
+  q0 = Question.create(user_id: c.id, title: 'Is this a long enough question?',
+  body: "If it's not I can make it longer by writing a bunch of gibberish in the body section. Would that possibly work?", username: c.username)
   q1 = Question.create(user_id: a.id, title: 'Does the answer feature work yet?',
   body: 'idk', username: a.username)
   q2 = Question.create(user_id: b.id, title: 'Why am I waiting two hours for pizza in Bushwick?', image: "http://farm8.static.flickr.com/7128/7666282294_3c4eb6a6de_m.jpg",
   body: 'dec', username: b.username)
-  q3 = Question.create(user_id: c.id, title: 'Anyone think Heroku will screw this all up?',
+  q3 = Question.create(user_id: c.id, title: 'Are these pictures hosted on AWS', image: "http://media02.hongkiat.com/amazon-jeff-bezos/jeff-bezos-2.jpg",
   body: 'idk', username: c.username)
   q4 = Question.create(user_id: a.id, title: 'Does the answer feature work yet?',
   body: 'idk', username: a.username)
