@@ -62,8 +62,8 @@ QuestionTagging.destroy_all
   body: 'I really want to know!', username: j.username)
   q13 = Question.create(user_id: c.id, title: 'Should I write longer questions?',
   body: 'Sometimes I think question sites should have more space for the writer to complicate matters and for their question to make using the site more difficult for casual readers. A good way to do this might be to have an input space after the question title, maybe to write a question body. Does anybody think this is a good idea?', username: c.username)
-  q14 = Question.create(user_id: f.id, title: 'How those sprout things that hipster carry around work? Do they put them in their drinks or their food?',
-  body: 'bonus if you know how they taste', username: f.username)
+  q14 = Question.create(user_id: f.id, title: 'How does all of this work?',
+  body: 'What is the meaning of this website?', username: f.username)
 
 
   a1 = Answer.create(title: "Yeah, I just didn't want to answer you the first time.",

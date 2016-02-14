@@ -12,15 +12,37 @@
 }
 
 .question-detail-each{
+  background: #ffc2ea;
+  margin-top: 15px;
+  border-radius: 10px;
+  padding: 10px;
+}
 
+.detail-asker{
+  float: left;
+  font-size: 24px;
+  padding: 10px;
+}
+
+.detail-answers{
+  width: 700px;
+  margin: 0 auto;
+}
+
+.detail-image{
+  float: right;
+  border-radius: 50px;
 }
 
 .little-detail{
-  margin-top: 30px;
+  margin-top: 5px;
   font-size: 24px;
   font-weight: bold;
-  padding-top: 5px;
+  padding: 20px;
+  color: #666;
   display: block;
+  background: #c7ffc2;
+  border-radius: 10px;
 }
 
 .detail-answers{

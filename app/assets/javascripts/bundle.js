@@ -31181,7 +31181,7 @@
 	              React.createElement(
 	                'a',
 	                { className: 'user-ask-link', href: search },
-	                'Notifications'
+	                'Search'
 	              )
 	            )
 	          )
@@ -32026,28 +32026,32 @@
 	          { className: 'question-detail-pane' },
 	          React.createElement(
 	            'div',
-	            { className: 'question-detail-each' },
+	            { className: 'question-detail-each group' },
 	            React.createElement(
 	              'div',
-	              { className: 'little-detail' },
-	              this.state.question.title,
-	              React.createElement('br', null),
-	              React.createElement(
-	                'div',
-	                { className: 'q-detail-body' },
-	                this.state.question.body
-	              ),
-	              React.createElement('br', null),
-	              this.state.question.username,
-	              React.createElement('br', null)
+	              { className: 'detail-asker' },
+	              this.state.question.username
 	            ),
-	            React.createElement('img', { className: 'post-image', src: this.state.question.image_url }),
+	            React.createElement('img', { className: 'detail-image', src: this.state.question.image_url })
+	          ),
+	          React.createElement('br', null),
+	          React.createElement(
+	            'div',
+	            { className: 'little-detail group' },
+	            React.createElement('br', null),
+	            this.state.question.title,
+	            React.createElement('br', null),
 	            React.createElement(
 	              'div',
-	              { className: 'detail-answers' },
-	              React.createElement(AnswersIndex, { question: this.state.question })
+	              { className: 'q-detail-body' },
+	              this.state.question.body
 	            )
 	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'detail-answers' },
+	          React.createElement(AnswersIndex, { question: this.state.question })
 	        )
 	      );
 	    } else {

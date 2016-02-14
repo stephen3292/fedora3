@@ -42,19 +42,23 @@ var questionDetail = React.createClass({
       return(
         <div>
           <div className="question-detail-pane">
-            <div className="question-detail-each">
-              <div className="little-detail">
-              {this.state.question.title}<br/>
-            <div className="q-detail-body">{this.state.question.body}</div><br/>
-              {this.state.question.username}<br/>
+            <div className="question-detail-each group">
+              <div className='detail-asker'>{this.state.question.username}</div>
+              <img className="detail-image" src={this.state.question.image_url} />
+            </div>
+                <br/>
+              <div className="little-detail group">
+                <br/>
+                  {this.state.question.title}<br/>
+                  <div className="q-detail-body">{this.state.question.body}</div>
               </div>
-              <img className="post-image" src={this.state.question.image_url} />
+              </div>
               <div className="detail-answers">
                   < AnswersIndex question={this.state.question}/>
               </div>
 
-            </div>
-          </div>
+
+
         </div>
       );
     } else {

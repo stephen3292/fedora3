@@ -27,7 +27,7 @@ var Header = React.createClass({
   },
 
   render: function() {
-    
+
     if (CurrentUserStore.isLoggedIn()) {
 
       var answerQuestions = '#/questions';
@@ -49,7 +49,7 @@ var Header = React.createClass({
               <ul className="nav-links group">
                 <li className="nav-link"><a className="user-questions-link" href={answer}>Answer</a></li>
                 <li className="nav-link"><a className="user-read-link" href={readQuestions}>Read</a></li>
-                <li className="nav-link"><a className="user-ask-link" href={search}>Notifications</a></li>
+                <li className="nav-link"><a className="user-ask-link" href={search}>Search</a></li>
               </ul>
 
           </div>
