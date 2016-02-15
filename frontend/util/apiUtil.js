@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatcher/dispatch');
 var QuestionActions = require('../actions/question_actions');
 var QuestionsStore = require('../stores/questions_store');
-var QuestionLongForm = require('../components/questions/QuestionLongForm');
+var QuestionLongForm = require('../components/questions/questionLongForm');
 var TagsApiUtil = require('./tags_api_util');
 
 

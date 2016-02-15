@@ -1,7 +1,7 @@
 var React = require('react');
 var TagStore = require('./../../stores/tags_store');
 var TagsApiUtil = require('./../../util/tags_api_util.js');
-var QuestionsReadIndexItem = require('./../../components/questions/QuestionsReadIndexItem');
+var QuestionsReadIndexItem = require('./../../components/questions/questionsReadIndexItem');
 
 
 var tagShow = React.createClass({
