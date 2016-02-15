@@ -5,3 +5,8 @@ tmp
 
 # Ignore application configuration
 /config/application.yml
+
+/assets/javascripts/bundle.js
+/assets/javascripts/bundle.js.map
+
+log
