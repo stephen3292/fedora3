@@ -12,7 +12,7 @@ Answer.destroy_all
 QuestionTag.destroy_all
 QuestionTagging.destroy_all
 
-  a = User.create(username: 'Bob', password: 'password', avatar: "https://static-s.aa-cdn.net/img/ios/649977132/4effa0b29c7ad5f0dccb3f4d00980d36?v=1",
+  a = User.create(username: 'Bob', password: 'password',
         description: "One of those guys who says he's an 'educator'")
   b = User.create(username: 'Tim', password: 'password',
         description: 'Professor Emeritus of Some Obscure Subject')
