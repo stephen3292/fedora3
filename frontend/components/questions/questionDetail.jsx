@@ -39,8 +39,10 @@ var questionDetail = React.createClass({
 
 
     if (this.state.question) {
+
       var image;
       if (this.state.question.image_url.indexOf("missing") === -1){
+        debugger
         image = <img className="post-image" src={this.state.question.image_url} />;
       }
 
@@ -59,7 +61,7 @@ var questionDetail = React.createClass({
                 <br/>
                   {this.state.question.title}<br/>
                   <div className="q-detail-body">{this.state.question.body}</div>
-                  <img className="q-detail-image" src={image}/>
+                  <img>{image}</img>
               </div>
               </div>
               <div className="detail-answers">

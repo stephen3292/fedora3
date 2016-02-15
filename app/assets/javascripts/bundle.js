@@ -32027,8 +32027,10 @@
 	  render: function () {
 	
 	    if (this.state.question) {
+	
 	      var image;
 	      if (this.state.question.image_url.indexOf("missing") === -1) {
+	        debugger;
 	        image = React.createElement('img', { className: 'post-image', src: this.state.question.image_url });
 	      }
 	
@@ -32070,7 +32072,11 @@
 	              { className: 'q-detail-body' },
 	              this.state.question.body
 	            ),
-	            React.createElement('img', { className: 'q-detail-image', src: image })
+	            React.createElement(
+	              'img',
+	              null,
+	              image
+	            )
 	          )
 	        ),
 	        React.createElement(
