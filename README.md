@@ -11,7 +11,7 @@ way to ask and answer questions.
 
 ## Features
 
-### Authentication
+### Authentication and SignUp
   * Users can sign up or sign in as a demo user
   * Upon sign up users are given a password digest created through BCrypt.
   * Users can also choose a profile picture. Image uploads are saved on an
@@ -38,22 +38,21 @@ way to ask and answer questions.
   * Clicking on a question's tags will bring the user to a list of questions
     sharing that tag.
 
-### Read
-* Users do this by clicking "Read" on the toolbar. This brings them to a page
-  with already answered questions.
+### Read Tab
+  * Users can read unanswered questions by clicking "Read" on the toolbar. This
+    brings them to a page with already answered questions.
 
-### Users can upload photos
-Users can upload questions when signing up, asking questions, and answering them.
+### Answer Tab
+  * Clicking on the "Answer" tab will bring the user to a page populated with
+    questions that await an answer.
 
-### Users can search questions
-Users can search questions by clicking the "Notifications" tag on the toolbar.
+### Search Tab
+  * Fedora also allows for real-time search using PgSearch. Users can search
+    questions by clicking the "Search" tab on the toolbar.
 
-### Users can tag their own questions and read questions by tag
-Users can tag their own questions when asking and view questions
-by tags by clicking. Users can also view their own tags from their
-homepage.
-
-
+### Photo Uploads
+  * Photos, either for profiles, questions or answers, can be uploaded and are
+    stored on AWS servers.
 
 
 
