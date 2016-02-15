@@ -1,7 +1,10 @@
 
 .question-detail-pane{
   margin: 0 auto;
-  width: 700px
+  width: 660px;
+  background: #eee;
+  padding: 20px;
+  border-radius: 10px;
 
 }
 

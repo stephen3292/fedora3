@@ -31395,7 +31395,7 @@
 	      React.createElement(
 	        'h1',
 	        { className: 'detail-header' },
-	        'Ask a Detailed Question!'
+	        'Ask a Question with ~Details~ !'
 	      ),
 	      React.createElement('input', { type: 'textarea', className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement('input', { className: 'long-form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
@@ -31724,7 +31724,7 @@
 	      React.createElement(
 	        'h1',
 	        { className: 'detail-header' },
-	        'Ask a Detailed Question!'
+	        'Ask a Question with ~Details~ !'
 	      ),
 	      React.createElement('input', { type: 'textarea', className: 'long-form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement('input', { className: 'long-form-tag', placeholder: 'Topic', onInput: this.updateTag, value: this.state.tag }),
@@ -32027,14 +32027,18 @@
 	  render: function () {
 	
 	    if (this.state.question) {
-	      debugger;
+	      var image;
+	      if (this.state.question.image_url.indexOf("missing") === -1) {
+	        image = React.createElement('img', { className: 'post-image', src: this.state.question.image_url });
+	      }
+	
 	      return React.createElement(
 	        'div',
 	        null,
 	        React.createElement(
 	          'h2',
 	          { className: 'detail-title' },
-	          'Question Detail'
+	          'Question Details'
 	        ),
 	        React.createElement(
 	          'div',
@@ -32066,7 +32070,7 @@
 	              { className: 'q-detail-body' },
 	              this.state.question.body
 	            ),
-	            React.createElement('img', { className: 'q-detail-image', src: this.state.question.image_url })
+	            React.createElement('img', { className: 'q-detail-image', src: image })
 	          )
 	        ),
 	        React.createElement(

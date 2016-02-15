@@ -37,13 +37,19 @@ var questionDetail = React.createClass({
 
   render: function() {
 
+
     if (this.state.question) {
-      debugger
+      var image;
+      if (this.state.question.image_url.indexOf("missing") === -1){
+        image = <img className="post-image" src={this.state.question.image_url} />;
+      }
+
       return(
         <div>
-          <h2 className='detail-title'>Question Detail</h2>
+          <h2 className='detail-title'>Question Details</h2>
           <div className="question-detail-pane">
             <div className="question-detail-each group">
+
               <div className='detail-asker'>{this.state.question.user.username}</div>
               <div className='detail-info'>{this.state.question.user.description}</div>
               <img className="detail-image" src={this.state.question.user.image_url} />
@@ -53,7 +59,7 @@ var questionDetail = React.createClass({
                 <br/>
                   {this.state.question.title}<br/>
                   <div className="q-detail-body">{this.state.question.body}</div>
-                  <img className="q-detail-image" src={this.state.question.image_url}/>
+                  <img className="q-detail-image" src={image}/>
               </div>
               </div>
               <div className="detail-answers">
