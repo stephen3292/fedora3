@@ -32551,68 +32551,76 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'search-land' },
+	      { className: 'search-box' },
 	      React.createElement(
 	        'div',
-	        { className: 'big-search' },
+	        { className: 'big-search group' },
 	        React.createElement(
-	          'h1',
-	          { className: 'ask-search' },
+	          'div',
+	          { className: 'ask-search group' },
 	          React.createElement(
-	            'div',
-	            { className: 'S' },
-	            'F'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'e' },
-	            'e'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'a' },
-	            'd'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'r' },
-	            'o'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'c' },
-	            'r'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'h' },
-	            'a'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'x' },
-	            '!'
+	            'ul',
+	            { className: 'search!' },
+	            React.createElement(
+	              'li',
+	              { className: 'S' },
+	              'F'
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'e' },
+	              'e'
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'a' },
+	              'd'
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'r' },
+	              'o'
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'c' },
+	              'r'
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'h' },
+	              'a'
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'x' },
+	              '!'
+	            )
 	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'search-input-box' },
+	          React.createElement('input', { className: 'search-input', placeholder: 'Search Questions!',
+	            onKeyUp: this.search })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'results-show' },
+	          'Displaying ',
+	          SearchResultsStore.all().length,
+	          SearchResultsStore.meta().totalCount
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'searchButton', onClick: this.nextPage },
+	          'Next >'
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'users-index' },
+	          searchResults
 	        )
-	      ),
-	      React.createElement('input', { className: 'search-input', placeholder: 'Search First!',
-	        onKeyUp: this.search }),
-	      React.createElement(
-	        'div',
-	        { className: 'results-show' },
-	        'Displaying ',
-	        SearchResultsStore.all().length,
-	        SearchResultsStore.meta().totalCount
-	      ),
-	      React.createElement(
-	        'button',
-	        { className: 'searchButton', onClick: this.nextPage },
-	        'Next >'
-	      ),
-	      React.createElement(
-	        'ul',
-	        { className: 'users-index' },
-	        searchResults
 	      )
 	    );
 	  }

@@ -47,25 +47,28 @@ var Search = React.createClass({
     });
 
     return(
-      <div className="search-land">
-        <div className="big-search">
-      <h1 className="ask-search">
-        <div className="S">F</div>
-        <div className="e">e</div>
-        <div className="a">d</div>
-        <div className="r">o</div>
-        <div className="c">r</div>
-        <div className="h">a</div>
-        <div className="x">!</div>
-      </h1>
+      <div className="search-box">
+      <div className="big-search group">
+      <div className="ask-search group">
+          <ul className="search!">
+          <li className="S">F</li>
+          <li className="e">e</li>
+          <li className="a">d</li>
+          <li className="r">o</li>
+          <li className="c">r</li>
+          <li className="h">a</li>
+          <li className="x">!</li>
+        </ul>
       </div>
-      <input className="search-input"placeholder="Search First!"
-      onKeyUp={this.search} />
+      <div className="search-input-box">
+      <input className="search-input"placeholder="Search Questions!"
+      onKeyUp={this.search} /></div>
     <div className="results-show">Displaying {SearchResultsStore.all().length}
       {SearchResultsStore.meta().totalCount}</div>
     <button className="searchButton" onClick={this.nextPage}>Next ></button>
 
       <ul className="users-index">{ searchResults }</ul>
+      </div>
       </div>
     );
   }
