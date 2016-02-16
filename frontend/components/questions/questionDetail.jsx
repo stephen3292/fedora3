@@ -42,7 +42,7 @@ var questionDetail = React.createClass({
 
       var image;
       if (this.state.question.image_url.indexOf("missing") === -1){
-        debugger
+
         image = <img className="post-image" src={this.state.question.image_url} />;
       }
 

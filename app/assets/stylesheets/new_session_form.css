@@ -43,10 +43,26 @@
   width: 240px;
   margin-top: 37px;
   border-radius: 3px;
+  margin-bottom: 3px;
 }
 
 .new-avatar-input{
+  font-size: 11px;
+  color: #666;
+  padding: 10px;
+}
 
+.new-avatar-input input{
+  margin-left: 7px;
+}
+
+.choose-file-button{
+  padding-left: 10px;
+}
+
+.hello-input{
+  background: pink;
+  margin-left: 10px
 }
 
 .signup-button {

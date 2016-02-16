@@ -72,7 +72,7 @@ var UserForm = React.createClass({
 
         <label className="new-avatar-input">
           Profile Picture
-            <input type="file" onChange={this.changeFile} />
+            <div className="hello-input"><input type="file" onChange={this.changeFile} /></div>
         </label>
 
         <button className="signup-button">Signup</button>
