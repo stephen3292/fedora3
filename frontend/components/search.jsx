@@ -37,15 +37,25 @@ var Search = React.createClass({
 
   render: function(){
 
+
+
     var searchResults = SearchResultsStore.all().map(function(searchResult) {
 
       if (searchResult._type === "Question") {
         return <QuestionIndexItem key={searchResult.id} question={searchResult} />;
+        debugger
       } else {
         return <AnswerIndexItem key={searchResult.id} answer={searchResult} />;
       }
     });
 
+    var results;
+
+
+    if (typeof searchResults === 'undefined'){
+      debugger
+      console.log('hello');
+    }
     return(
       <div className="search-box">
       <div className="big-search group">
@@ -63,8 +73,8 @@ var Search = React.createClass({
       <div className="search-input-box">
       <input className="search-input"placeholder="Search!"
       onKeyUp={this.search} /></div>
-    <div className="results-show">Displaying {SearchResultsStore.all().length}
-      {SearchResultsStore.meta().totalCount}</div>
+    <div className="results-show">Displaying {SearchResultsStore.all().length} Results
+    </div>
     <button className="searchButton" onClick={this.nextPage}>Next ></button>
 
       <ul className="users-index">{ searchResults }</ul>

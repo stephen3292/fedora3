@@ -77,7 +77,7 @@
 	  React.createElement(Route, { path: 'users/new', component: UserForm }),
 	  React.createElement(Route, { path: 'questions/:questionId', component: QuestionDetail, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'questions', component: QuestionsIndex, onEnter: _ensureLoggedIn }),
-	  React.createElement(Route, { path: 'search', component: Search }),
+	  React.createElement(Route, { path: 'search', component: Search, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'read', component: QuestionsReadIndex, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'ask', component: AskQuestion, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'answer', component: QuestionsAnswer, onEnter: _ensureLoggedIn }),
@@ -32563,11 +32563,18 @@
 	
 	      if (searchResult._type === "Question") {
 	        return React.createElement(QuestionIndexItem, { key: searchResult.id, question: searchResult });
+	        debugger;
 	      } else {
 	        return React.createElement(AnswerIndexItem, { key: searchResult.id, answer: searchResult });
 	      }
 	    });
 	
+	    var results;
+	
+	    if (typeof searchResults === 'undefined') {
+	      debugger;
+	      console.log('hello');
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'search-box' },
@@ -32628,7 +32635,7 @@
 	          { className: 'results-show' },
 	          'Displaying ',
 	          SearchResultsStore.all().length,
-	          SearchResultsStore.meta().totalCount
+	          ' Results'
 	        ),
 	        React.createElement(
 	          'button',

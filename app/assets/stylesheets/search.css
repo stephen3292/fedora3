@@ -79,15 +79,14 @@
 }
 
 .results-show{
-  visibility: hidden;
-  margin-top: 20px;
-  background: green;
+  margin-left: 100px;
+  margin-top: 40px;
   color: #666;
   font-family: "Georgia"
 }
 
 .searchButton{
-  visibility: hidden
+  visibility: hidden;
 }
 
 .users-index{

@@ -34,7 +34,7 @@ var routes = (
     <Route path="users/new" component={ UserForm } />
     <Route path="questions/:questionId" component={QuestionDetail} onEnter={_ensureLoggedIn}/>
     <Route path="questions" component={QuestionsIndex} onEnter={_ensureLoggedIn}/>
-    <Route path="search" component={ Search } />
+    <Route path="search" component={ Search } onEnter={_ensureLoggedIn}/>
     <Route path="read" component={QuestionsReadIndex} onEnter={_ensureLoggedIn} />
     <Route path="ask" component={AskQuestion} onEnter={_ensureLoggedIn} />
     <Route path="answer" component={QuestionsAnswer} onEnter={_ensureLoggedIn}/>
