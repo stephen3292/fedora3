@@ -124,6 +124,7 @@ body {
   max-width: 200px;
   height: auto;
   align-content: center;
+  padding: 5px 0px 5px 25px;
 }
 .q-username {
   display: block;

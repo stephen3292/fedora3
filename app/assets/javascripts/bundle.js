@@ -32117,16 +32117,21 @@
 
 	var React = __webpack_require__(1);
 	var AnswersApiUtil = __webpack_require__(248);
+	var CurrentUserStore = __webpack_require__(235);
 	
 	var AnswerForm = React.createClass({
 	  displayName: 'AnswerForm',
 	
 	  getInitialState: function () {
-	    return { title: "", imageFile: null, imageUrl: "" };
+	    return { title: "", imageFile: null, imageUrl: "", currentUser: this.getStateFromStore() };
+	  },
+	
+	  getStateFromStore: function () {
+	
+	    return CurrentUserStore.currentUser();
 	  },
 	
 	  updateTitle: function (e) {
-	
 	    this.setState({ title: e.currentTarget.value });
 	  },
 	
@@ -32163,15 +32168,30 @@
 	  resetForm: function () {
 	    this.setState({ title: "", imageFile: null, imageUrl: "" });
 	  },
-	
 	  render: function () {
+	    var cool;
+	    if (this.state.imageUrl) {
+	      cool = React.createElement('img', { className: 'little-preview-image', src: this.state.imageUrl });
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'answer-form' },
 	      React.createElement('h2', { className: 'answer-header' }),
-	      React.createElement('input', { className: 'a-form-title', placeholder: 'Answer', onInput: this.updateTitle, value: this.state.title }),
-	      React.createElement('input', { className: 'long-form-image-attachment', type: 'file', onChange: this.changeFile }),
-	      React.createElement('img', { className: 'long-preview-image', src: this.state.imageUrl }),
+	      React.createElement('img', { className: 'answer-pic', src: this.state.currentUser.image_url }),
+	      React.createElement(
+	        'div',
+	        { className: 'answer-writer' },
+	        this.state.currentUser.username
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'answer-description' },
+	        this.state.currentUser.description
+	      ),
+	      React.createElement('br', null),
+	      React.createElement('input', { className: 'a-form-title', typeplaceholder: 'Answer', onInput: this.updateTitle, value: this.state.title }),
+	      React.createElement('input', { className: 'little-image-attachment', type: 'file', onChange: this.changeFile }),
+	      cool,
 	      React.createElement(
 	        'button',
 	        { className: 'a-form-submit', onClick: this.handleSubmit },
@@ -32180,7 +32200,6 @@
 	    );
 	  }
 	});
-	
 	module.exports = AnswerForm;
 
 /***/ },
@@ -32601,7 +32620,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'search-input-box' },
-	          React.createElement('input', { className: 'search-input', placeholder: 'Search Questions!',
+	          React.createElement('input', { className: 'search-input', placeholder: 'Search!',
 	            onKeyUp: this.search })
 	        ),
 	        React.createElement(
@@ -33205,7 +33224,11 @@
 	        'label',
 	        { className: 'new-avatar-input' },
 	        'Profile Picture',
-	        React.createElement('input', { type: 'file', onChange: this.changeFile })
+	        React.createElement(
+	          'div',
+	          { className: 'hello-input' },
+	          React.createElement('input', { type: 'file', onChange: this.changeFile })
+	        )
 	      ),
 	      React.createElement(
 	        'button',
