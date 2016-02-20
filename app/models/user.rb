@@ -30,9 +30,10 @@ class User < ActiveRecord::Base
 
   attr_reader :password
   before_validation :ensure_session_token!
-
+  has_many :comments, inverse_of: :author
   has_many :questions
   has_many :answers
+
 
   has_many :question_taggings, through: :questions, source: :question_taggings
   has_many :question_tags, through: :question_taggings, source: :question_tag

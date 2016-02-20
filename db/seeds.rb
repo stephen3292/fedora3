@@ -7,19 +7,19 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Question.destroy_all
 User.destroy_all
+Question.destroy_all
 Answer.destroy_all
 QuestionTag.destroy_all
 QuestionTagging.destroy_all
 
-  a = User.create(username: 'Bob', password: 'password',
+  a = User.create(username: 'Bob', password: 'password', avatar: "http://www.instructables.com/files/orig/FRY/STOL/FNZA8J79/FRYSTOLFNZA8J79.png",
         description: "One of those guys who says he's an 'educator'")
   b = User.create(username: 'Tim', password: 'password',
         description: 'Professor Emeritus of Some Obscure Subject')
   c = User.create(username: 'Jim', password: 'password', avatar: "http://www.brushwiz.com/images/nationalities/spanish/top_spanish_paintings_portrait_of_pope_innocent_x_by_diego_velazquez.jpg",
         description: "I like to answer other people's questions.")
-  d = User.create(username: "Donald", password: "Donald",
+  d = User.create(username: "Donald", password: "Donald", avatar: "http://static1.squarespace.com/static/52b5dd41e4b0edd5cee29a6c/t/52b9fd52e4b0d9c93d4ecdeb/1387920722995/domo3+50x50.png",
         description: "That's The Donald to you")
   e = User.create(username: "Guest User", password: "Guest User",
         description: "A gentleman and a scholar")
@@ -76,16 +76,16 @@ QuestionTagging.destroy_all
   a4 = Answer.create(title: 'You can click them to read answered questions or answer unanswered questions.',
   body: "", user_id: c.id, question_id: q1.id, username: c.username)
   a5 = Answer.create(title: "Yep! Is this a long enough answer?",
-  body: "", user_id: d.id, question_id: q0.id, username: d.username)
+  body: "", user_id: j.id, question_id: q0.id, username: j.username)
   a6 = Answer.create(title: "Nope!",
-  body: "", user_id: a.id, question_id: q0.id, username: a.username)
+  body: "", user_id: f.id, question_id: q0.id, username: f.username)
 
   a7 = Answer.create(title: "If you want. You can even click the 'username' part of the header, and then ask a much longer question. There you have space to add a body, tags, and upload an image as well.",
-  body: "", user_id: a.id, question_id: q13.id, username: a.username)
+  body: "", user_id: e.id, question_id: q13.id, username: e.username)
   a8 = Answer.create(title: "That's a good question. But I think a space for answers is more important. Sometimes people like to write really really long answers on this site and reading through them can be quite tedious. I doubt this answer will be as long as some of the other ones but it's already getting up there in length.",
   body: "", user_id: d.id, question_id: q7.id, username: d.username)
   a9 = Answer.create(title: "Why don't you check where my question[answer] is coming from?", image: "http://vignette2.wikia.nocookie.net/villains/images/0/04/QuestionMark.png/revision/latest?cb=20080722190045",
-  body: "", user_id: c.id, question_id: q3.id, username: c.username)
+  body: "", user_id: b.id, question_id: q3.id, username: b.username)
   a10 = Answer.create(title: 'It was ok, mostly grunting.',
   body: "", user_id: g.id, question_id: q11.id, username: g.username)
 

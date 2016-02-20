@@ -13,7 +13,9 @@ root to: 'static_pages#root'
       end
       resources :questions, only: [:index, :create, :show, :destroy, :update] do
         resource :question_tags, only: [:index, :create]
-        resources :answers, only: [:index, :create]
+        resources :answers, only: [:index, :create] do
+          resources :comments, only: [:index, :create]
+        end
       end
       resources :answers, only: [:update, :destroy]
       get "search", to: "utils#search"

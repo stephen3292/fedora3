@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204022956) do
+ActiveRecord::Schema.define(version: 20160220175504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 20160204022956) do
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "body",              null: false
+    t.integer  "parent_comment_id"
+    t.integer  "answer_id",         null: false
+    t.integer  "user_id",           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["answer_id"], name: "index_comments_on_answer_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
@@ -70,19 +82,6 @@ ActiveRecord::Schema.define(version: 20160204022956) do
   end
 
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
-
-  create_table "replies", force: :cascade do |t|
-    t.string   "title",           null: false
-    t.string   "username",        null: false
-    t.integer  "user_id",         null: false
-    t.integer  "answer_id",       null: false
-    t.integer  "parent_reply_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "replies", ["parent_reply_id"], name: "index_replies_on_parent_reply_id", using: :btree
-  add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 
   create_table "user_taggables", force: :cascade do |t|
     t.integer  "user_id",     null: false

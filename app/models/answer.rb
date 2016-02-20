@@ -22,6 +22,8 @@ class Answer < ActiveRecord::Base
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   belongs_to :question
   belongs_to :user
+  has_many :comments, inverse_of: :answer
+
   include PgSearch
   multisearchable :against => [:title, :username]
 end
