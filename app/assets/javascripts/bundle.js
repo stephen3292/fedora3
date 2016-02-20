@@ -31924,9 +31924,13 @@
 	
 	  componentDidMount: function () {
 	
-	    questionsStore.addListener(this._onChange);
+	    this.listener = questionsStore.addListener(this._onChange);
 	    var id = parseInt(this.props.params.questionId);
 	    questionApiUtil.fetchOneQuestion(id);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
 	  },
 	
 	  componentWillReceiveProps: function (newProps) {
@@ -31983,11 +31987,7 @@
 	              { className: 'q-detail-body' },
 	              this.state.question.body
 	            ),
-	            React.createElement(
-	              'img',
-	              null,
-	              image
-	            )
+	            image
 	          )
 	        ),
 	        React.createElement(

@@ -12,6 +12,7 @@ Question.destroy_all
 Answer.destroy_all
 QuestionTag.destroy_all
 QuestionTagging.destroy_all
+Comment.destroy_all
 
   a = User.create(username: 'Bob', password: 'password', avatar: "http://www.instructables.com/files/orig/FRY/STOL/FNZA8J79/FRYSTOLFNZA8J79.png",
         description: "One of those guys who says he's an 'educator'")
@@ -100,3 +101,7 @@ QuestionTagging.destroy_all
 
   qt3 = QuestionTag.create(name: "pizza")
   qtg3 = QuestionTagging.create(question_id: q2.id, question_tag_id: qt3.id)
+
+
+  c1 = Comment.create(body: "hey, how are comments looking?", answer_id: a10.id, user_id: a.id)
+  cc1 = Comment.create(body: "if you can see this, pretty good!", parent_comment_id: c1.id, answer_id: a10.id, user_id: a.id)

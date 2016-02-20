@@ -24,9 +24,13 @@ var questionDetail = React.createClass({
 
   componentDidMount: function() {
 
-    questionsStore.addListener(this._onChange);
+    this.listener = questionsStore.addListener(this._onChange);
     var id = parseInt(this.props.params.questionId);
     questionApiUtil.fetchOneQuestion(id);
+  },
+
+  componentWillUnmount: function(){
+    this.listener.remove();
   },
 
   componentWillReceiveProps: function (newProps) {
@@ -61,7 +65,7 @@ var questionDetail = React.createClass({
                 <br/>
                   {this.state.question.title}<br/>
                   <div className="q-detail-body">{this.state.question.body}</div>
-                  <img>{image}</img>
+                  {image}
               </div>
               </div>
               <div className="detail-answers">
