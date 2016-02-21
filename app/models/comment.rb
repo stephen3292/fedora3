@@ -2,6 +2,7 @@ class Comment < ActiveRecord::Base
   validates :body, :author, :answer, presence: true
 
   belongs_to :answer, inverse_of: :comments
+  has_one :question, through: :answer
   belongs_to(
     :author,
     class_name: "User",
@@ -22,6 +23,8 @@ class Comment < ActiveRecord::Base
     foreign_key: :parent_comment_id,
     primary_key: :id
   )
+
+
 
   include PgSearch
   multisearchable :against => [:body, :author]

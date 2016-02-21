@@ -61,9 +61,9 @@ questionStore.__onDispatch = function (payload) {
     case TagConstants.TAG_RECEIVED:
       questionStore.addTag(payload.tag, payload.questionId);
       break;
-    case CommentConstants.COMMENT_RECEIVED:
-      questionStore.addComment(payload.comment);
-      break;
+    // case CommentConstants.COMMENT_RECEIVED:
+    //   questionStore.addComment(payload.comment);
+    //   break;
   }
   questionStore.__emitChange();
 };
