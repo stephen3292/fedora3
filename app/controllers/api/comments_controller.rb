@@ -1,7 +1,8 @@
 class Api::CommentsController < ApplicationController
 
   def index
-    render json: Answer.find(params[:answer_id]).comments
+    render json: Answer.find(params[:answer_id]).comments.where("parent_comment_id IS ?", nil)
+
   end
 
   def create

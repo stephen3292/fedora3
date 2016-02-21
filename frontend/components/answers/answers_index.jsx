@@ -3,18 +3,18 @@ var React = require('react');
 var AnswersIndexItem = require('./answers_index_item.jsx');
 var AnswerForm = require('./answer_form');
 var CurrentUserStore = require('../../stores/current_user_store');
- AnswerApiUtil = require('./../../util/answers_api_util');
+
 
 
 
 
 var AnswersIndex = React.createClass({
 
-  getInitialState: function(){
-    return (
-      {form: false}
-    );
-  },
+getInitialState: function(){
+  return (
+    {form: false}
+  );
+},
 
   toggleState: function(){
     this.setState({form: !this.state.form});
