@@ -32071,6 +32071,7 @@
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
+	var CommentForm = __webpack_require__(275);
 	var CommentsIndex = __webpack_require__(254);
 	var AnswersIndexItem = React.createClass({
 	  displayName: 'AnswersIndexItem',
@@ -32079,15 +32080,23 @@
 	  mixins: [History],
 	
 	  getInitialState: function () {
-	    return { index: false };
+	    return { index: false, form: false };
 	  },
 	
 	  toggleState: function () {
 	    this.setState({ index: !this.state.index });
 	  },
 	
+	  toggleForm: function () {
+	    this.setState({ form: !this.state.form });
+	  },
+	
 	  collapseIndex: function () {
 	    this.setState({ index: false });
+	  },
+	
+	  collapseForm: function () {
+	    this.setState({ form: false });
 	  },
 	
 	  render: function () {
@@ -32101,7 +32110,21 @@
 	    var showIndex = this.state.index ? React.createElement(CommentsIndex, { collapse: this.collapseForm, answer: this.props.answer }) : "";
 	
 	    var length = this.props.answer.comments.length;
-	    console.log(this.state.index);
+	
+	    var showButton;
+	    if (this.props.answer.comments.length >= 1) {
+	      showButton = React.createElement(
+	        'button',
+	        { className: 'a-form-button', onClick: this.toggleState },
+	        'Show Comments (',
+	        length,
+	        ')'
+	      );
+	    }
+	
+	    var showForm = this.state.form ? React.createElement(CommentForm, { collapse: this.collapseForm, answer: this.props.answer, parent: true }) : "";
+	
+	    console.log(this.state.form);
 	    return React.createElement(
 	      'div',
 	      { className: 'single-answer group' },
@@ -32123,20 +32146,14 @@
 	        { className: 'answer-body' },
 	        this.props.answer.title
 	      ),
+	      showButton,
 	      React.createElement(
 	        'button',
-	        { className: 'a-form-button', onClick: this.toggleState },
-	        'Show Comments (',
-	        length,
-	        ')'
-	      ),
-	      React.createElement('br', null),
-	      React.createElement(
-	        'button',
-	        { className: 'a-form-button', onClick: this.toggleState },
+	        { className: 'a-form-button', onClick: this.toggleForm },
 	        'Reply'
 	      ),
 	      React.createElement('br', null),
+	      showForm,
 	      showIndex
 	    );
 	  }
@@ -33375,13 +33392,13 @@
 
 	var React = __webpack_require__(1);
 	var CommentForm = React.createClass({
-	  displayName: 'CommentForm',
+	  displayName: "CommentForm",
 	
 	  render: function () {
 	    return React.createElement(
-	      'div',
-	      null,
-	      'Hi!!!!'
+	      "div",
+	      { className: "comment-box" },
+	      React.createElement("input", { className: "c-form-title", typeplaceholder: "Answer" })
 	    );
 	  }
 	});
