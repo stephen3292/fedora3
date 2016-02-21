@@ -24126,6 +24126,7 @@
 	var Store = __webpack_require__(212).Store;
 	var QuestionConstants = __webpack_require__(229);
 	var AnswerConstants = __webpack_require__(230);
+	var CommentConstants = __webpack_require__(278);
 	var TagConstants = __webpack_require__(231);
 	var _questions = {};
 	var TagsStore = __webpack_require__(232);
@@ -24160,6 +24161,10 @@
 	  question.question_tags = question.question_tags.concat(tag);
 	};
 	
+	questionStore.addComment = function (comment) {
+	  debugger;
+	};
+	
 	questionStore.find = function (id) {
 	  return _questions[id];
 	};
@@ -24178,6 +24183,9 @@
 	      break;
 	    case TagConstants.TAG_RECEIVED:
 	      questionStore.addTag(payload.tag, payload.questionId);
+	      break;
+	    case CommentConstants.COMMENT_RECEIVED:
+	      questionStore.addComment(payload.comment);
 	      break;
 	  }
 	  questionStore.__emitChange();
@@ -31852,6 +31860,7 @@
 
 	var AppDispatcher = __webpack_require__(208);
 	var Store = __webpack_require__(212).Store;
+	var CommentConstants = __webpack_require__(278);
 	var AnswerConstants = __webpack_require__(230);
 	var _answers = {};
 	
@@ -31880,7 +31889,15 @@
 	  return _answers[id];
 	};
 	
+	answerStore.addComment = function (comment) {
+	  debugger;
+	  var answer = _answers[comment.answer_id];
+	
+	  answer.comments.push(comment);
+	};
+	
 	answerStore.__onDispatch = function (payload) {
+	
 	  switch (payload.actionType) {
 	    case AnswerConstants.ANSWERS_RECIEVED:
 	      answerStore.resetAnswers(payload.answers);
@@ -31888,6 +31905,9 @@
 	    case AnswerConstants.ANSWER_RECEIVED:
 	      answerStore.resetAnswer(payload.answer);
 	      break;
+	    // case CommentConstants.COMMENT_RECEIVED:
+	    //   answerStore.addComment(payload.comment)
+	    //   break;
 	
 	  }
 	
@@ -32085,6 +32105,7 @@
 	
 	  toggleState: function () {
 	    this.setState({ index: !this.state.index });
+	    this.setState({ form: !this.state.form });
 	  },
 	
 	  toggleForm: function () {
@@ -32112,19 +32133,31 @@
 	    var length = this.props.answer.comments.length;
 	
 	    var showButton;
-	    if (this.props.answer.comments.length >= 1) {
+	    if (length > 1) {
 	      showButton = React.createElement(
 	        'button',
-	        { className: 'a-form-button', onClick: this.toggleState },
-	        'Show Comments (',
+	        { className: 'c-form-button', onClick: this.toggleState },
+	        'Comments ',
 	        length,
-	        ')'
+	        ' '
+	      );
+	    } else if (length == 1) {
+	      showButton = React.createElement(
+	        'button',
+	        { className: 'c-form-button', onClick: this.toggleState },
+	        'Comment ',
+	        length
+	      );
+	    } else {
+	      showButton = React.createElement(
+	        'button',
+	        { className: 'c-form-button', onClick: this.toggleState },
+	        'Comment'
 	      );
 	    }
 	
-	    var showForm = this.state.form ? React.createElement(CommentForm, { collapse: this.collapseForm, answer: this.props.answer, parent: true }) : "";
+	    var showForm = this.state.form ? React.createElement(CommentForm, { collapse: this.collapseForm, answer: this.props.answer }) : "";
 	
-	    console.log(this.state.form);
 	    return React.createElement(
 	      'div',
 	      { className: 'single-answer group' },
@@ -32147,12 +32180,6 @@
 	        this.props.answer.title
 	      ),
 	      showButton,
-	      React.createElement(
-	        'button',
-	        { className: 'a-form-button', onClick: this.toggleForm },
-	        'Reply'
-	      ),
-	      React.createElement('br', null),
 	      showForm,
 	      showIndex
 	    );
@@ -32174,7 +32201,7 @@
 	
 	
 	  render: function () {
-	
+	    var answerId = this.props.answer.id;
 	    var comments = this.props.answer.comments.map(function (comment) {
 	
 	      return React.createElement(CommentsIndexItem, { comment: comment, key: comment.id });
@@ -32207,7 +32234,6 @@
 	  },
 	
 	  getStateFromStore: function () {
-	
 	    return CurrentUserStore.currentUser();
 	  },
 	
@@ -33358,7 +33384,7 @@
 	  render: function () {
 	
 	    var showForm;
-	    var showForm = this.state.form ? React.createElement(CommentForm, { collapse: this.collapseForm, answer: this.props.answer, parent: true }) : "";
+	    var showForm = this.state.form ? React.createElement(CommentForm, { collapse: this.collapseForm, answerId: this.props.comment.answer_id, parent_comment: this.props.comment }) : "";
 	
 	    return React.createElement(
 	      'div',
@@ -33375,7 +33401,7 @@
 	      ),
 	      React.createElement(
 	        'button',
-	        { className: 'a-form-button', onClick: this.toggleState },
+	        { className: 'c-form-button', onClick: this.toggleState },
 	        'Reply'
 	      ),
 	      React.createElement('br', null),
@@ -33391,19 +33417,146 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var CurrentUserStore = __webpack_require__(235);
+	var CommentsApiUtil = __webpack_require__(276);
 	var CommentForm = React.createClass({
-	  displayName: "CommentForm",
+	  displayName: 'CommentForm',
+	
+	  getInitialState: function () {
+	    return { body: "", currentUser: this.getStateFromStore() };
+	  },
+	
+	  getStateFromStore: function () {
+	    return CurrentUserStore.currentUser();
+	  },
+	
+	  componentWillReceiveProps: function () {},
+	
+	  updateBody: function (e) {
+	    this.setState({ body: e.currentTarget.value });
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    var formData = new FormData();
+	    formData.append("comment[body]", this.state.body);
+	    if (this.props.parent_comment) {
+	      formData.append("comment[parent_comment_id]", this.props.parent_comment.id);
+	      formData.append("comment[answer_id]", this.props.parent_comment.answer_id);
+	    } else if (this.props.answer) {
+	      formData.append("comment[answer_id]", this.props.answer.id);
+	    }
+	
+	    var questionId = this.props.answer.question_id;
+	    var answerId = this.props.answer.id;
+	
+	    CommentsApiUtil.createOneComment(formData, questionId, answerId);
+	    this.props.collapse;
+	  },
 	
 	  render: function () {
+	
 	    return React.createElement(
-	      "div",
-	      { className: "comment-box" },
-	      React.createElement("input", { className: "c-form-title", typeplaceholder: "Answer" })
+	      'div',
+	      { className: 'comment-box' },
+	      React.createElement('img', { className: 'comment-pic', src: this.state.currentUser.image_url }),
+	      React.createElement(
+	        'div',
+	        { className: 'comment-writer' },
+	        this.state.currentUser.username
+	      ),
+	      React.createElement('input', { className: 'c-form-title', typeplaceholder: 'Answer', onInput: this.updateBody }),
+	      React.createElement(
+	        'button',
+	        { className: 'c-form-submit', onClick: this.handleSubmit },
+	        'Comment'
+	      )
 	    );
 	  }
 	});
 	
 	module.exports = CommentForm;
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(208);
+	var CommentActions = __webpack_require__(277);
+	
+	var commentsApiUtil = {
+	  fetchQuestionComments: function (questionId, answerId) {
+	    console.log("running");
+	    $.ajax({
+	      type: "get",
+	      url: "api/questions/" + questionId + "/answers" + answerId + "/comments",
+	      dataType: "json",
+	      success: function (data) {
+	        console.log(data);
+	        CommentActions.receiveAllComments(data);
+	      }
+	    });
+	  },
+	
+	  createOneComment: function (formData, questionId, answerId) {
+	    $.ajax({
+	      type: "post",
+	      url: "api/questions/" + questionId + "/answers/" + answerId + "/comments",
+	      dataType: "json",
+	      processData: false,
+	      contentType: false,
+	      data: formData,
+	      success: function (data) {
+	        CommentActions.receiveSingleComment(data);
+	      }
+	
+	    });
+	  }
+	};
+	
+	module.exports = commentsApiUtil;
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var AppDispatcher = __webpack_require__(208);
+	var CommentConstants = __webpack_require__(278);
+	// var CommentStore = require('../stores/comments_store.js');
+	
+	var commentActions = {
+	
+	  receiveAllComments: function (comments) {
+	    AppDispatcher.dispatch({
+	      actionType: CommentConstants.COMMENTS_RECEIVED,
+	      comments: comments
+	
+	    });
+	  },
+	
+	  receiveSingleComment: function (comment) {
+	    AppDispatcher.dispatch({
+	      actionType: CommentConstants.COMMENT_RECEIVED,
+	      comment: comment
+	    });
+	  }
+	
+	};
+	
+	module.exports = commentActions;
+
+/***/ },
+/* 278 */
+/***/ function(module, exports) {
+
+	var CommentConstants = {
+	  COMMENTS_RECEIVED: "COMMENTS_RECEIVED",
+	  COMMENT_RECEIVED: "COMMENT_RECEIVED"
+	};
+	
+	module.exports = CommentConstants;
 
 /***/ }
 /******/ ]);

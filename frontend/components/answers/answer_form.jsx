@@ -9,7 +9,6 @@ var AnswerForm = React.createClass({
   },
 
   getStateFromStore: function () {
-
     return ( CurrentUserStore.currentUser());
   },
 

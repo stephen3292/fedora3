@@ -14,6 +14,7 @@ var AnswersIndexItem = React.createClass({
 
   toggleState: function(){
     this.setState({index: !this.state.index});
+    this.setState({form: !this.state.form});
   },
 
   toggleForm: function(){
@@ -44,16 +45,19 @@ var AnswersIndexItem = React.createClass({
     var length = this.props.answer.comments.length
 
     var showButton;
-    if (this.props.answer.comments.length >= 1){
-      showButton = <button className='a-form-button' onClick={this.toggleState}>Show Comments ({length})</button>
+    if (length > 1){
+      showButton = <button className='c-form-button' onClick={this.toggleState}>Comments {length} </button>
+    } else if (length == 1) {
+      showButton = <button className='c-form-button' onClick={this.toggleState}>Comment {length}</button>
+    } else {
+      showButton = <button className='c-form-button' onClick={this.toggleState}>Comment</button>
     }
 
-    var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answer={this.props.answer} parent/>
+    var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answer={this.props.answer}/>
     : "";
 
 
 
-    console.log(this.state.form)
     return(
       <div className="single-answer group">
           <img className="answer-pic" src={this.props.answer.user.image_url} />
@@ -62,7 +66,7 @@ var AnswersIndexItem = React.createClass({
             {image}
           <div className="answer-body">{this.props.answer.title}</div>
           {showButton}
-          <button className='a-form-button' onClick={this.toggleForm}>Reply</button><br/>
+
           {showForm}
           {showIndex}
 

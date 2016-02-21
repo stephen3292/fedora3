@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/dispatch');
 var Store = require('flux/utils').Store;
 var QuestionConstants = require('../constants/question_constants');
 var AnswerConstants = require('../constants/answer_constants');
+var CommentConstants = require('../constants/comment_constants');
 var TagConstants = require('../constants/tag_constants');
 var _questions = {};
 var TagsStore = require('./tags_store');
@@ -36,6 +37,10 @@ questionStore.addTag = function(tag, questionId) {
   question.question_tags = question.question_tags.concat(tag);
 };
 
+questionStore.addComment = function(comment){
+  debugger
+}
+
 
 questionStore.find = function(id) {
   return _questions[id];
@@ -55,6 +60,9 @@ questionStore.__onDispatch = function (payload) {
       break;
     case TagConstants.TAG_RECEIVED:
       questionStore.addTag(payload.tag, payload.questionId);
+      break;
+    case CommentConstants.COMMENT_RECEIVED:
+      questionStore.addComment(payload.comment);
       break;
   }
   questionStore.__emitChange();

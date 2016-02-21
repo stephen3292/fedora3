@@ -23,16 +23,16 @@ var CommentsIndexItem = React.createClass({
 
   render: function() {
 
-
+    
     var showForm;
-    var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answer={this.props.answer} parent/>
+    var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answerId={this.props.comment.answer_id} parent_comment={this.props.comment}/>
     : "";
 
     return(
       <div className="single-answer group">
           <div className="answer-writer">{this.props.comment.user.username}</div>
           <div className="answer-body">{this.props.comment.body}</div>
-          <button className='a-form-button' onClick={this.toggleState}>Reply</button><br/>
+          <button className='c-form-button' onClick={this.toggleState}>Reply</button><br/>
           {showForm}
 
       </div>

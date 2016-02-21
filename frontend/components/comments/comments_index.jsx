@@ -6,7 +6,7 @@ var CommentForm = require('./comment_form');
 var CommentsIndex = React.createClass({
 
   render: function(){
-
+    var answerId = this.props.answer.id;
     var comments = this.props.answer.comments.map(function (comment) {
 
       return <CommentsIndexItem comment={comment} key={comment.id}/>;

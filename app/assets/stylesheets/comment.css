@@ -1,12 +1,55 @@
-.comment-box{
 
-  margin-left: 10px;
-
-}
 
 .c-form-title{
   padding: 5px;
   background: white;
-  margin-left: 10px;
   width: 200px;
+}
+
+.c-form-button{
+  margin-top: 10px;
+  padding: 5px;
+  background: #eee;
+  border: none
+
+}
+
+.c-form-button:hover{
+  border: none;
+  text-decoration: underline;
+}
+
+.c-form-title{
+  display: block;
+  border-radius: 5px;
+  float: left;
+  width: 290px;
+}
+
+.comment-box{
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.comment-pic {
+  border-radius: 50%;
+  width: 25px;
+  float: left;
+}
+
+.comment-writer{
+  float: left;
+  padding: 5px;
+}
+
+.c-form-submit{
+  background: #3A5894;
+  color: white;
+  display: block;
+  border-radius: 5px;
+  float: left;
+  padding: 5px;
+  margin-left: 10px;
 }
