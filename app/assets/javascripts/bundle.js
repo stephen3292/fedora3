@@ -51,18 +51,18 @@
 	var Route = __webpack_require__(159).Route;
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	var App = __webpack_require__(233);
-	var UserShow = __webpack_require__(256);
-	var UsersIndex = __webpack_require__(257);
+	var UserShow = __webpack_require__(258);
+	var UsersIndex = __webpack_require__(259);
 	var CurrentUserStore = __webpack_require__(235);
 	var SessionsApiUtil = __webpack_require__(237);
-	var Search = __webpack_require__(262);
-	var QuestionsReadIndex = __webpack_require__(267);
+	var Search = __webpack_require__(264);
+	var QuestionsReadIndex = __webpack_require__(269);
 	var AskQuestion = __webpack_require__(239);
-	var TagShow = __webpack_require__(270);
-	var QuestionsAnswer = __webpack_require__(271);
+	var TagShow = __webpack_require__(272);
+	var QuestionsAnswer = __webpack_require__(273);
 	
-	var SessionForm = __webpack_require__(272);
-	var UserForm = __webpack_require__(273);
+	var SessionForm = __webpack_require__(274);
+	var UserForm = __webpack_require__(275);
 	ApiUtil = __webpack_require__(243);
 	QuestionsIndex = __webpack_require__(242);
 	QuestionStore = __webpack_require__(207);
@@ -24162,7 +24162,13 @@
 	};
 	
 	questionStore.addComment = function (comment) {
-	  debugger;
+	  var question = _questions[comment.question_id];
+	  var answerId;
+	  for (var i = 0; i < question.answers.length; i++) {
+	    if (question.answers[i].id === comment.answer_id) {
+	      question.answers[i].comments.push(comment);
+	    }
+	  }
 	};
 	
 	questionStore.find = function (id) {
@@ -24184,9 +24190,9 @@
 	    case TagConstants.TAG_RECEIVED:
 	      questionStore.addTag(payload.tag, payload.questionId);
 	      break;
-	    // case CommentConstants.COMMENT_RECEIVED:
-	    //   questionStore.addComment(payload.comment);
-	    //   break;
+	    case CommentConstants.COMMENT_RECEIVED:
+	      questionStore.addComment(payload.comment);
+	      break;
 	  }
 	  questionStore.__emitChange();
 	};
@@ -32036,7 +32042,7 @@
 	
 	var React = __webpack_require__(1);
 	var AnswersIndexItem = __webpack_require__(253);
-	var AnswerForm = __webpack_require__(255);
+	var AnswerForm = __webpack_require__(257);
 	var CurrentUserStore = __webpack_require__(235);
 	
 	var AnswersIndex = React.createClass({
@@ -32091,8 +32097,8 @@
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
-	var CommentForm = __webpack_require__(275);
-	var CommentsIndex = __webpack_require__(254);
+	var CommentForm = __webpack_require__(254);
+	var CommentsIndex = __webpack_require__(255);
 	var AnswersIndexItem = React.createClass({
 	  displayName: 'AnswersIndexItem',
 	
@@ -32193,8 +32199,81 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var CommentsIndexItem = __webpack_require__(274);
-	var CommentForm = __webpack_require__(275);
+	var CurrentUserStore = __webpack_require__(235);
+	var CommentsApiUtil = __webpack_require__(276);
+	var CommentForm = React.createClass({
+	  displayName: 'CommentForm',
+	
+	  getInitialState: function () {
+	    return { body: "", currentUser: this.getStateFromStore() };
+	  },
+	
+	  getStateFromStore: function () {
+	    return CurrentUserStore.currentUser();
+	  },
+	
+	  componentWillReceiveProps: function () {},
+	
+	  updateBody: function (e) {
+	    this.setState({ body: e.currentTarget.value });
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    var formData = new FormData();
+	    formData.append("comment[body]", this.state.body);
+	    if (this.props.parent_comment) {
+	      formData.append("comment[parent_comment_id]", this.props.parent_comment.id);
+	      formData.append("comment[answer_id]", this.props.parent_comment.answer_id);
+	    } else if (this.props.answer) {
+	      formData.append("comment[answer_id]", this.props.answer.id);
+	    }
+	
+	    var questionId;
+	    if (this.props.answer) {
+	      questionId = this.props.answer.question_id;
+	    } else {
+	      questionId = this.props.parent_comment.questionId;
+	    }
+	    var answerId = this.props.answerId;
+	
+	    debugger;
+	
+	    CommentsApiUtil.createOneComment(formData, questionId, answerId);
+	    this.props.collapse;
+	  },
+	
+	  render: function () {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'comment-box' },
+	      React.createElement('img', { className: 'comment-pic', src: this.state.currentUser.image_url }),
+	      React.createElement(
+	        'div',
+	        { className: 'comment-writer' },
+	        this.state.currentUser.username
+	      ),
+	      React.createElement('input', { className: 'c-form-title', typeplaceholder: 'Answer', onInput: this.updateBody }),
+	      React.createElement(
+	        'button',
+	        { className: 'c-form-submit', onClick: this.handleSubmit },
+	        'Comment'
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentForm;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var CommentsIndexItem = __webpack_require__(256);
+	var CommentForm = __webpack_require__(254);
 	
 	var CommentsIndex = React.createClass({
 	  displayName: 'CommentsIndex',
@@ -32219,7 +32298,64 @@
 	module.exports = CommentsIndex;
 
 /***/ },
-/* 255 */
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var CommentForm = __webpack_require__(254);
+	
+	var CommentsIndexItem = React.createClass({
+	  displayName: 'CommentsIndexItem',
+	
+	
+	  mixins: [History],
+	
+	  getInitialState: function () {
+	    return { form: false };
+	  },
+	
+	  toggleState: function () {
+	    this.setState({ form: !this.state.form });
+	  },
+	
+	  collapseForm: function () {
+	    this.setState({ index: form });
+	  },
+	
+	  render: function () {
+	
+	    var showForm;
+	    var showForm = this.state.form ? React.createElement(CommentForm, { collapse: this.collapseForm, answerId: this.props.comment.answer_id, parent_comment: this.props.comment }) : "";
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'single-answer group' },
+	      React.createElement(
+	        'div',
+	        { className: 'answer-writer' },
+	        this.props.comment.user.username
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'answer-body' },
+	        this.props.comment.body
+	      ),
+	      React.createElement(
+	        'button',
+	        { className: 'c-form-button', onClick: this.toggleState },
+	        'Reply'
+	      ),
+	      React.createElement('br', null),
+	      showForm
+	    );
+	  }
+	});
+	
+	module.exports = CommentsIndexItem;
+
+/***/ },
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32309,7 +32445,7 @@
 	module.exports = AnswerForm;
 
 /***/ },
-/* 256 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32429,12 +32565,12 @@
 	module.exports = UserShow;
 
 /***/ },
-/* 257 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var UsersStore = __webpack_require__(258);
-	var UsersApiUtil = __webpack_require__(260);
+	var UsersStore = __webpack_require__(260);
+	var UsersApiUtil = __webpack_require__(262);
 	
 	var UsersIndex = React.createClass({
 	  displayName: 'UsersIndex',
@@ -32489,12 +32625,12 @@
 	module.exports = UsersIndex;
 
 /***/ },
-/* 258 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(212).Store;
 	var AppDispatcher = __webpack_require__(208);
-	var UserConstants = __webpack_require__(259);
+	var UserConstants = __webpack_require__(261);
 	
 	var _users = [];
 	var CHANGE_EVENT = "change";
@@ -32537,7 +32673,7 @@
 	module.exports = UsersStore;
 
 /***/ },
-/* 259 */
+/* 261 */
 /***/ function(module, exports) {
 
 	var UserConstants = {
@@ -32548,10 +32684,10 @@
 	module.exports = UserConstants;
 
 /***/ },
-/* 260 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var UserActions = __webpack_require__(261);
+	var UserActions = __webpack_require__(263);
 	
 	var UsersApiUtil = {
 	  fetchUsers: function () {
@@ -32596,11 +32732,11 @@
 	module.exports = UsersApiUtil;
 
 /***/ },
-/* 261 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(208);
-	var UserConstants = __webpack_require__(259);
+	var UserConstants = __webpack_require__(261);
 	
 	var UserActions = {
 	  receiveUsers: function (users) {
@@ -32621,13 +32757,13 @@
 	module.exports = UserActions;
 
 /***/ },
-/* 262 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var SearchResultsStore = __webpack_require__(263);
+	var SearchResultsStore = __webpack_require__(265);
 	var QuestionIndexItem = __webpack_require__(245);
-	var SearchApiUtil = __webpack_require__(265);
+	var SearchApiUtil = __webpack_require__(267);
 	var AnswerIndexItem = __webpack_require__(253);
 	
 	var Search = React.createClass({
@@ -32762,12 +32898,12 @@
 	module.exports = Search;
 
 /***/ },
-/* 263 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(212).Store;
 	var AppDispatcher = __webpack_require__(208);
-	var SearchConstants = __webpack_require__(264);
+	var SearchConstants = __webpack_require__(266);
 	
 	var _searchResults = [];
 	var _meta = {};
@@ -32797,7 +32933,7 @@
 	module.exports = SearchResultsStore;
 
 /***/ },
-/* 264 */
+/* 266 */
 /***/ function(module, exports) {
 
 	var SearchConstants = {
@@ -32807,10 +32943,10 @@
 	module.exports = SearchConstants;
 
 /***/ },
-/* 265 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SearchActions = __webpack_require__(266);
+	var SearchActions = __webpack_require__(268);
 	
 	var SearchApiUtil = {
 	
@@ -32832,10 +32968,10 @@
 	module.exports = SearchApiUtil;
 
 /***/ },
-/* 266 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SearchConstants = __webpack_require__(264);
+	var SearchConstants = __webpack_require__(266);
 	var AppDispatcher = __webpack_require__(208);
 	
 	var SearchActions = {
@@ -32852,13 +32988,13 @@
 	module.exports = SearchActions;
 
 /***/ },
-/* 267 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var questionsStore = __webpack_require__(207);
 	var questionApiUtil = __webpack_require__(243);
-	var QuestionsReadIndexItem = __webpack_require__(268);
+	var QuestionsReadIndexItem = __webpack_require__(270);
 	
 	var QuestionsIndex = React.createClass({
 	  displayName: 'QuestionsIndex',
@@ -32916,13 +33052,13 @@
 	module.exports = QuestionsIndex;
 
 /***/ },
-/* 268 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var TagsIndex = __webpack_require__(246);
 	var History = __webpack_require__(159).History;
-	var ReadAnswersIndex = __webpack_require__(269);
+	var ReadAnswersIndex = __webpack_require__(271);
 	var QuestionsReadIndexItem = React.createClass({
 	  displayName: 'QuestionsReadIndexItem',
 	
@@ -32961,7 +33097,7 @@
 	module.exports = QuestionsReadIndexItem;
 
 /***/ },
-/* 269 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -32997,13 +33133,13 @@
 	module.exports = AnswersIndex;
 
 /***/ },
-/* 270 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var TagStore = __webpack_require__(232);
 	var TagsApiUtil = __webpack_require__(240);
-	var QuestionsReadIndexItem = __webpack_require__(268);
+	var QuestionsReadIndexItem = __webpack_require__(270);
 	
 	var tagShow = React.createClass({
 	  displayName: 'tagShow',
@@ -33055,7 +33191,7 @@
 	module.exports = tagShow;
 
 /***/ },
-/* 271 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -33119,13 +33255,13 @@
 	module.exports = QuestionsAnswer;
 
 /***/ },
-/* 272 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
 	var SessionsApiUtil = __webpack_require__(237);
-	var UserForm = __webpack_require__(273);
+	var UserForm = __webpack_require__(275);
 	
 	var SessionForm = React.createClass({
 	  displayName: 'SessionForm',
@@ -33248,12 +33384,12 @@
 	module.exports = SessionForm;
 
 /***/ },
-/* 273 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
-	var UserApiUtil = __webpack_require__(260);
+	var UserApiUtil = __webpack_require__(262);
 	
 	var UserForm = React.createClass({
 	  displayName: 'UserForm',
@@ -33354,129 +33490,6 @@
 	});
 	
 	module.exports = UserForm;
-
-/***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var History = __webpack_require__(159).History;
-	var CommentForm = __webpack_require__(275);
-	
-	var CommentsIndexItem = React.createClass({
-	  displayName: 'CommentsIndexItem',
-	
-	
-	  mixins: [History],
-	
-	  getInitialState: function () {
-	    return { form: false };
-	  },
-	
-	  toggleState: function () {
-	    this.setState({ form: !this.state.form });
-	  },
-	
-	  collapseForm: function () {
-	    this.setState({ index: form });
-	  },
-	
-	  render: function () {
-	
-	    var showForm;
-	    var showForm = this.state.form ? React.createElement(CommentForm, { collapse: this.collapseForm, answerId: this.props.comment.answer_id, parent_comment: this.props.comment }) : "";
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'single-answer group' },
-	      React.createElement(
-	        'div',
-	        { className: 'answer-writer' },
-	        this.props.comment.user.username
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'answer-body' },
-	        this.props.comment.body
-	      ),
-	      React.createElement(
-	        'button',
-	        { className: 'c-form-button', onClick: this.toggleState },
-	        'Reply'
-	      ),
-	      React.createElement('br', null),
-	      showForm
-	    );
-	  }
-	});
-	
-	module.exports = CommentsIndexItem;
-
-/***/ },
-/* 275 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var CurrentUserStore = __webpack_require__(235);
-	var CommentsApiUtil = __webpack_require__(276);
-	var CommentForm = React.createClass({
-	  displayName: 'CommentForm',
-	
-	  getInitialState: function () {
-	    return { body: "", currentUser: this.getStateFromStore() };
-	  },
-	
-	  getStateFromStore: function () {
-	    return CurrentUserStore.currentUser();
-	  },
-	
-	  componentWillReceiveProps: function () {},
-	
-	  updateBody: function (e) {
-	    this.setState({ body: e.currentTarget.value });
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	
-	    var formData = new FormData();
-	    formData.append("comment[body]", this.state.body);
-	    if (this.props.parent_comment) {
-	      formData.append("comment[parent_comment_id]", this.props.parent_comment.id);
-	      formData.append("comment[answer_id]", this.props.parent_comment.answer_id);
-	    } else if (this.props.answer) {
-	      formData.append("comment[answer_id]", this.props.answer.id);
-	    }
-	
-	    var questionId = this.props.answer.question_id;
-	    var answerId = this.props.answer.id;
-	
-	    CommentsApiUtil.createOneComment(formData, questionId, answerId);
-	    this.props.collapse;
-	  },
-	
-	  render: function () {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'comment-box' },
-	      React.createElement('img', { className: 'comment-pic', src: this.state.currentUser.image_url }),
-	      React.createElement(
-	        'div',
-	        { className: 'comment-writer' },
-	        this.state.currentUser.username
-	      ),
-	      React.createElement('input', { className: 'c-form-title', typeplaceholder: 'Answer', onInput: this.updateBody }),
-	      React.createElement(
-	        'button',
-	        { className: 'c-form-submit', onClick: this.handleSubmit },
-	        'Comment'
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = CommentForm;
 
 /***/ },
 /* 276 */

@@ -38,7 +38,14 @@ questionStore.addTag = function(tag, questionId) {
 };
 
 questionStore.addComment = function(comment){
-  debugger
+  var question = _questions[comment.question_id]
+  var answerId
+  for (var i = 0; i < question.answers.length; i++) {
+    if (question.answers[i].id === comment.answer_id){
+      question.answers[i].comments.push(comment)
+    }
+  }
+
 }
 
 
@@ -61,9 +68,9 @@ questionStore.__onDispatch = function (payload) {
     case TagConstants.TAG_RECEIVED:
       questionStore.addTag(payload.tag, payload.questionId);
       break;
-    // case CommentConstants.COMMENT_RECEIVED:
-    //   questionStore.addComment(payload.comment);
-    //   break;
+    case CommentConstants.COMMENT_RECEIVED:
+      questionStore.addComment(payload.comment);
+      break;
   }
   questionStore.__emitChange();
 };
