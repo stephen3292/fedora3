@@ -26,11 +26,15 @@
   width: 290px;
 }
 
+.comments-list{
+  background: pink;
+  padding: 10px;
+  margin-top: 50px;
+}
 .comment-box{
   display: block;
   padding: 10px;
   border-radius: 5px;
-  margin-top: 30px;
 }
 
 .comment-pic {
@@ -48,8 +52,31 @@
   background: #3A5894;
   color: white;
   display: block;
-  border-radius: 5px;
+  border-radius: 3px;
   float: left;
   padding: 5px;
-  margin-left: 10px;
+  margin-left:
+}
+
+.lil-comment-writer{
+  float: left;
+  font-size: 13px;
+  font-weight: bold;
+  display: block;
+  margin-left: 5px;
+}
+
+.comment-header{
+  display: hidden;
+  width: 300px;
+  color: #333;
+}
+
+.comment-body{
+  color: #333;
+  padding-left: 31px
+}
+
+.first-form{
+  margin-bottom: 30px;
 }

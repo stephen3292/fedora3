@@ -49,13 +49,21 @@ var CommentForm = React.createClass({
 
 
   render: function(){
+    var pic;
+    var writer;
+    var title;
+    var submit;
 
+    if (!this.props.parent_comment){
+      pic = <img className="comment-pic" src={this.state.currentUser.image_url} />
+      writer = <div className="comment-writer">{this.state.currentUser.username}</div>
+      input = <input className="c-form-title" typeplaceholder="Answer" onInput={this.updateBody} ></input>
+    }
     return(
       <div className="comment-box">
-
-        <img className="comment-pic" src={this.state.currentUser.image_url} />
-        <div className="comment-writer">{this.state.currentUser.username}</div>
-        <input className="c-form-title" typeplaceholder="Answer" onInput={this.updateBody} ></input>
+        {pic}
+        {writer}
+        {input}
         <button className="c-form-submit" onClick={this.handleSubmit}>Comment</button>
       </div>
     )

@@ -67,7 +67,7 @@ var AnswersIndexItem = React.createClass({
           <div className="answer-body">{this.props.answer.title}</div>
           {showButton}
 
-          {showForm}
+          <div className="first-form">{showForm}</div>
           {showIndex}
 
       </div>

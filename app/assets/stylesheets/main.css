@@ -63,6 +63,7 @@
 
 .single-answer {
   margin-top: 10px;
+  padding: 10px;
 }
 
 .image-attachment{
@@ -79,9 +80,6 @@
   font-size: 16px;
 }
 
-.single-answer{
-  padding: 10px;
-}
 
 .a-form-title{
   border-radius: 5px;

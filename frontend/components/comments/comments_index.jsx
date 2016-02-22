@@ -14,8 +14,9 @@ var CommentsIndex = React.createClass({
 
     return(
       <div className="answer-list">
-        {comments}
-
+        <div className="comments-list">
+          {comments}
+        </div>
       </div>
     )
   }

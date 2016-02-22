@@ -8,7 +8,7 @@ var CommentsIndexItem = React.createClass({
 
   getInitialState: function(){
     return (
-      {form: false}
+      {form: true}
     );
   },
 
@@ -23,17 +23,20 @@ var CommentsIndexItem = React.createClass({
 
   render: function() {
 
-    
+
     var showForm;
-    var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answerId={this.props.comment.answer_id} parent_comment={this.props.comment}/>
+    var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answerId={this.props.comment} parent_comment={this.props.comment}/>
     : "";
 
     return(
-      <div className="single-answer group">
-          <div className="answer-writer">{this.props.comment.user.username}</div>
-          <div className="answer-body">{this.props.comment.body}</div>
-          <button className='c-form-button' onClick={this.toggleState}>Reply</button><br/>
-          {showForm}
+      <div className="single-comment group">
+          <div className="comment-header">_
+            <img className="comment-pic" src={this.props.comment.user.image_url} />
+            <div className="lil-comment-writer">{this.props.comment.user.username}</div>
+          </div>
+          <div className="comment-body">{this.props.comment.body}</div>
+          < CommentForm collapse={this.collapseForm} answerId={this.props.comment} parent_comment={this.props.comment}/>
+
 
       </div>
     );
