@@ -23,24 +23,27 @@ var CommentForm = React.createClass({
 
     var formData = new FormData();
     formData.append("comment[body]", this.state.body);
+
     if (this.props.parent_comment){
       formData.append("comment[parent_comment_id]", this.props.parent_comment.id)
-      formData.append("comment[answer_id]", this.props.parent_comment.answer_id)
-    } else if (this.props.answer) {
-      formData.append("comment[answer_id]", this.props.answer.id);
+      formData.append("comment[answer_id]", this.props.parent_comment.answer_id);
     }
 
+    var answerId
     var questionId
     if (this.props.answer){
       questionId = this.props.answer.question_id
+      answerId = this.props.answer.id
+      formData.append("comment[answer_id]", this.props.answer.id)
     } else {
-      questionId = this.props.parent_comment.questionId
+      questionId = this.props.parent_comment.question_id
+      answerId = this.props.parent_comment.answer_id
     }
-    var answerId = this.props.answerId
 
+
+    console.log()
 
     debugger
-
     CommentsApiUtil.createOneComment(formData, questionId, answerId);
     this.props.collapse
   },

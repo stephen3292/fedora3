@@ -24165,8 +24165,15 @@
 	  var question = _questions[comment.question_id];
 	  var answerId;
 	  for (var i = 0; i < question.answers.length; i++) {
-	    if (question.answers[i].id === comment.answer_id) {
+	    if (question.answers[i].id === comment.answer_id && !comment.parent_comment_id) {
 	      question.answers[i].comments.push(comment);
+	    } else {
+	      for (var j = 0; j < question.answers[i].comments.length; j++) {
+	        debugger;
+	        if (question.answers[i].comments[j].id === comment.parent_comment_id) {
+	          question.answers[i].comments[j].comments.push(comment);
+	        }
+	      }
 	    }
 	  }
 	};
@@ -32186,6 +32193,7 @@
 	        this.props.answer.title
 	      ),
 	      showButton,
+	      React.createElement('br', null),
 	      React.createElement(
 	        'div',
 	        { className: 'first-form' },
@@ -33375,6 +33383,7 @@
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
+	var CommentRepliesIndex = __webpack_require__(279);
 	var CommentForm = __webpack_require__(275);
 	
 	var CommentsIndexItem = React.createClass({
@@ -33384,7 +33393,7 @@
 	  mixins: [History],
 	
 	  getInitialState: function () {
-	    return { form: true };
+	    return { form: false };
 	  },
 	
 	  toggleState: function () {
@@ -33418,8 +33427,7 @@
 	        'div',
 	        { className: 'comment-body' },
 	        this.props.comment.body
-	      ),
-	      React.createElement(CommentForm, { collapse: this.collapseForm, answerId: this.props.comment, parent_comment: this.props.comment })
+	      )
 	    );
 	  }
 	});
@@ -33455,23 +33463,26 @@
 	
 	    var formData = new FormData();
 	    formData.append("comment[body]", this.state.body);
+	
 	    if (this.props.parent_comment) {
 	      formData.append("comment[parent_comment_id]", this.props.parent_comment.id);
 	      formData.append("comment[answer_id]", this.props.parent_comment.answer_id);
-	    } else if (this.props.answer) {
-	      formData.append("comment[answer_id]", this.props.answer.id);
 	    }
 	
+	    var answerId;
 	    var questionId;
 	    if (this.props.answer) {
 	      questionId = this.props.answer.question_id;
+	      answerId = this.props.answer.id;
+	      formData.append("comment[answer_id]", this.props.answer.id);
 	    } else {
-	      questionId = this.props.parent_comment.questionId;
+	      questionId = this.props.parent_comment.question_id;
+	      answerId = this.props.parent_comment.answer_id;
 	    }
-	    var answerId = this.props.answerId;
+	
+	    console.log();
 	
 	    debugger;
-	
 	    CommentsApiUtil.createOneComment(formData, questionId, answerId);
 	    this.props.collapse;
 	  },
@@ -33530,6 +33541,7 @@
 	  },
 	
 	  createOneComment: function (formData, questionId, answerId) {
+	    debugger;
 	    $.ajax({
 	      type: "post",
 	      url: "api/questions/" + questionId + "/answers/" + answerId + "/comments",
@@ -33587,6 +33599,64 @@
 	};
 	
 	module.exports = CommentConstants;
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var CommentRepliesIndexItem = __webpack_require__(280);
+	
+	var CommentRepliesIndex = React.createClass({
+	  displayName: 'CommentRepliesIndex',
+	
+	
+	  render: function () {
+	    var answerId = this.props.answer.id;
+	    var comments = this.props.answer.comments.map(function (comment) {
+	
+	      return React.createElement(CommentRepliesIndexItem, { comment: comment, key: comment.id });
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'answer-list' },
+	      React.createElement(
+	        'div',
+	        { className: 'comments-list' },
+	        comments
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = CommentRepliesIndex;
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	
+	var CommentReplyIndexItem = React.createClass({
+	  displayName: 'CommentReplyIndexItem',
+	
+	
+	  mixins: [History],
+	
+	  render: function () {
+	    var replyBody = this.props.comment.body;
+	    return React.createElement(
+	      'div',
+	      { className: 'single-tag' },
+	      replyBody
+	    );
+	  }
+	});
+	
+	module.exports = CommentReplyIndexItem;
 
 /***/ }
 /******/ ]);

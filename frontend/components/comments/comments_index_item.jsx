@@ -1,5 +1,6 @@
 var React = require('react');
 var History = require('react-router').History;
+var CommentRepliesIndex = require('./comment_replies_index');
 var CommentForm = require('./comment_form');
 
 var CommentsIndexItem = React.createClass({
@@ -8,7 +9,7 @@ var CommentsIndexItem = React.createClass({
 
   getInitialState: function(){
     return (
-      {form: true}
+      {form: false}
     );
   },
 
@@ -35,9 +36,6 @@ var CommentsIndexItem = React.createClass({
             <div className="lil-comment-writer">{this.props.comment.user.username}</div>
           </div>
           <div className="comment-body">{this.props.comment.body}</div>
-          < CommentForm collapse={this.collapseForm} answerId={this.props.comment} parent_comment={this.props.comment}/>
-
-
       </div>
     );
   }

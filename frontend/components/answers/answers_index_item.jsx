@@ -65,7 +65,7 @@ var AnswersIndexItem = React.createClass({
           <div className="answer-description">{this.props.answer.user.description}</div><br/>
             {image}
           <div className="answer-body">{this.props.answer.title}</div>
-          {showButton}
+          {showButton}<br/>
 
           <div className="first-form">{showForm}</div>
           {showIndex}

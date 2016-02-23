@@ -41,12 +41,20 @@ questionStore.addComment = function(comment){
   var question = _questions[comment.question_id]
   var answerId
   for (var i = 0; i < question.answers.length; i++) {
-    if (question.answers[i].id === comment.answer_id){
+    if (question.answers[i].id === comment.answer_id && (!comment.parent_comment_id)){
       question.answers[i].comments.push(comment)
+    } else {
+      for (var j = 0; j < question.answers[i].comments.length; j++) {
+        debugger
+        if (question.answers[i].comments[j].id === comment.parent_comment_id){
+          question.answers[i].comments[j].comments.push(comment)
+        }
+      }
     }
   }
 
-}
+};
+
 
 
 questionStore.find = function(id) {

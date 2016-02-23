@@ -27,14 +27,13 @@
 }
 
 .comments-list{
-  background: pink;
   padding: 10px;
-  margin-top: 50px;
+  margin-top: 60px;
 }
 .comment-box{
   display: block;
-  padding: 10px;
   border-radius: 5px;
+  margin-bottom: 25px;
 }
 
 .comment-pic {
@@ -79,4 +78,8 @@
 
 .first-form{
   margin-bottom: 30px;
+}
+
+.single-comment{
+  padding: 10px;
 }

@@ -16,6 +16,7 @@ var commentsApiUtil = {
   },
 
   createOneComment: function (formData, questionId, answerId) {
+    debugger
     $.ajax({
       type: "post",
       url: "api/questions/" + questionId + "/answers/" + answerId + "/comments",

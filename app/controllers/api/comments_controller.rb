@@ -6,10 +6,10 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
+
     answer = Answer.find(params[:comment][:answer_id].to_i)
     @comment = answer.comments.new(comment_params)
     @comment.user_id = current_user.id
-
     if @comment.save!
       render :show
     else
