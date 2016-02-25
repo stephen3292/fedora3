@@ -5,24 +5,23 @@
 
 .some-questions{
   display: block;
-  padding: 20px;
   font-weight: 500;
-  font-size: 20px;
-  color: #666
+  font-size: 15px;
+  color: #333;
+  padding: 8px
 }
 .my-questions{
   float: left;
-  width: 160px;
-  padding: 20px;
+  width: 180px;
   height: 280px;
-  border-top: 1px solid #ccc;
-
+  margin-top: 32px;
+  color: #333;
 }
 
 .more-q{
-  margin-top: 15px;
   width: 600px;
   margin: 0 auto;
+  float: left;
 }
 
 
@@ -58,7 +57,12 @@
 
 .question-title{
   width: 500px;
-  margin-top: 35px;
+  margin-top: 10px;
+}
+
+.question-title-link{
+  font-size: 19px;
+  color: #333
 }
 
 .question-title-link:hover{
@@ -122,9 +126,7 @@
   margin-top: 7px;
 }
 
-.more-q{
-  margin-top: 2px;
-}
+
 
 
 .answer-pic{
@@ -154,7 +156,11 @@
 .r-all-the-questions{
   margin-top: 100px;
   width: 600px;
-  margin: 0px auto;
+  margin: 0 auto;
+}
+
+.2r-all-the-questions{
+  margin-left: 300px;
 }
 
 .q-form-button{
@@ -165,4 +171,31 @@
 
 .q-form-button:hover{
   border: 1px solid #666
+}
+
+.sidebar{
+  float: left;
+  height: 700px;
+  width: 220px;
+  display: block;
+  margin-top: 22px;
+}
+
+.each-question{
+  padding: 10px 0px 10px 5px;
+  color: #666
+}
+
+.each-question:hover{
+  cursor: pointer;
+  color: #5fbce7;
+}
+
+.rq-index{
+  margin: 0 auto;
+}
+.push{
+  float: left;
+  width: 220px;
+  height: 200px;
 }

@@ -88,10 +88,6 @@ body {
   right: 0;
 }
 
-.single-question {
-  margin: 0 auto;
-}
-
 .form-body{
   visibility: hidden;
 }
@@ -100,14 +96,16 @@ body {
   float: left;
   padding: 20px;
   padding-top: 0px;
-  width: 572px
+  width: 572px;
+  margin-top: 22px;
 
 }
 
 .single-question {
   font-size: 24px;
+  margin: 0 auto;
   font-weight: bold;
-  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   padding: 15px;
   margin-bottom: 20px
 }
@@ -153,24 +151,29 @@ button {
 .my-name{
   display: block;
   padding: 5px;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 14px;
-  color: #666
+  color: #333;
+  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  font-size: 15px;
+
 
 }
 
 .my-tags{
   color: #666;
-  background: pink;
-  float: right;
+  display: block;
   width: 180px;
   border-radius: 5px;
   font-size: 14px;
 }
 
 .my-tags li {
-  float: left;
-  padding: 10px;
+  display: block;
+  padding: 4px 5px;
+  color: #333;
 
 }
 

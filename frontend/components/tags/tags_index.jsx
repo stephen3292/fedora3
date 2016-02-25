@@ -14,15 +14,15 @@ var TagsIndex = React.createClass({
   render: function() {
 
     var tags = this.props.question.question_tags.map(function (tag) {
-      return <TagsIndexItem tag={tag} key={tag.id}/>;
+      return <TagsIndexItem className="one-tag" tag={tag} key={tag.id}/>;
     });
 
 
     return(
-      <div>
-        <div className="tag-list">
+      <div className="tagz">
+        <ul className="tag-list group">
           <li>{tags}</li>
-        </div>
+        </ul>
       </div>
     );
 

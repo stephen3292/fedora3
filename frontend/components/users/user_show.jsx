@@ -39,18 +39,19 @@ var UserShow = React.createClass({
         var link= "#/questions/" + linkId;
 
         questions.push(
-         <li key={question.id}><a key={question.name} href={link}>{question.title}</a></li>
+         <li className="each-question" key={question.id}><a key={question.name} href={link}>{question.title}</a></li>
         );
       });
     }
 
     var tags = [];
+
     if (user) {
       user.question_tags && user.question_tags.forEach(function (tag) {
         var tagId = tag.id;
         var link= "#/question_tags/" + tagId;
         tags.push(
-           <li key={tag.name}><a key={tag.name} href={link}>{tag.name }</a></li>
+           <li className="each-tag" key={tag.name}><a key={tag.name} href={link}>{tag.name }</a></li>
         );
       });
     }
@@ -59,10 +60,10 @@ var UserShow = React.createClass({
 
     return (
       <div className="homepage group">
-        <div className="my-name">{this.state.user.username + "'s Questions" }</div>
-        <ul className="my-questions">{questions}</ul>
-        <ul className="my-tags"><div className="my-name">{this.state.user.username + "'s Tags" }</div>{tags}</ul>
-        <div className="some-questions">Top Questions</div>
+        <div className="sidebar group">
+          <div className="my-tags"><ul className="my-name">{this.state.user.username + "'s Feeds" }</ul>{tags}</div>
+          <div className="my-questions"><ul className="my-name">{this.state.user.username + "'s Questions" }</ul>{questions}</div>
+        </div>
         <div className="questions-index">< QuestionsIndex /></div>
       </div>
     );

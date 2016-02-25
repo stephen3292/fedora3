@@ -37,7 +37,9 @@ var QuestionsAnswer = React.createClass({
 
     return(
       <div className="q-index">
+        <div className="push group"></div>
       <ul className="more-q group">
+
         <h1 className="answer-the-questions">Answer Questions</h1>
         <div className="r-all-the-questions">
           {questions}

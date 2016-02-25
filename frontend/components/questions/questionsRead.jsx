@@ -36,10 +36,11 @@ var QuestionsIndex = React.createClass({
 
 
     return(
-      <div className="q-index">
+      <div className="rq-index group">
+        <div className="push group"></div>
       <ul className="more-q group">
         <h1 className="read-header">Read Answers</h1>
-        <div className="r-all-the-questions">
+        <div className="2r-all-the-questions">
           {questions}
         </div>
       </ul>

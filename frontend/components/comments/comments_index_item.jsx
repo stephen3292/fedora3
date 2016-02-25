@@ -31,7 +31,7 @@ var CommentsIndexItem = React.createClass({
 
     return(
       <div className="single-comment group">
-          <div className="comment-header">_
+          <div className="comment-header group">
             <img className="comment-pic" src={this.props.comment.user.image_url} />
             <div className="lil-comment-writer">{this.props.comment.user.username}</div>
           </div>

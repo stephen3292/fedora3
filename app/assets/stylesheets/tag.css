@@ -5,12 +5,16 @@
 }
 
 .tag-data{
-  font-size: 12px;
-  margin-bottom: 5px;
-  color: #666;
-  float: left;
+  font-size: 13px;
+  color: #999;
   font-weight: 400;
 }
 .tag-link{
-  float: left;
+
+}
+
+
+.tagz{
+  float: right;
+  padding: 1px;
 }

@@ -22,14 +22,14 @@ var QuestionIndexItem = React.createClass({
     if (this.props.question.answers.length >= 1){
       tags = <div className="tag-data">Answer written< TagsIndex question={this.props.question}/> </div>
     } else {
-      tags = <div className="tag-data">Question asked< TagsIndex question={this.props.question}/> </div>
+      tags = <div className="tag-data">Question asked< TagsIndex question={this.props.question}/></div>
     }
 
 
     return(
       <ul className="single-question group">
           {tags}
-        <li className="question-title">
+        <li className="question-title" >
             <a className="question-title-link" href={questionDetail}>{title}</a>
         </li>
 

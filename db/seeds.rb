@@ -18,7 +18,7 @@ Comment.destroy_all
         description: "One of those guys who says he's an 'educator'")
   b = User.create(username: 'Tim', password: 'password',
         description: 'Professor Emeritus of Some Obscure Subject')
-  c = User.create(username: 'Jim', password: 'password', avatar: "http://www.brushwiz.com/images/nationalities/spanish/top_spanish_paintings_portrait_of_pope_innocent_x_by_diego_velazquez.jpg",
+  c = User.create(username: 'Sandy', password: 'password', avatar: "http://www.brushwiz.com/images/nationalities/spanish/top_spanish_paintings_portrait_of_pope_innocent_x_by_diego_velazquez.jpg",
         description: "I like to answer other people's questions.")
   d = User.create(username: "Donald", password: "Donald", avatar: "http://static1.squarespace.com/static/52b5dd41e4b0edd5cee29a6c/t/52b9fd52e4b0d9c93d4ecdeb/1387920722995/domo3+50x50.png",
         description: "That's The Donald to you")
@@ -39,8 +39,6 @@ Comment.destroy_all
   body: "If it's not I can make it longer by writing a bunch of gibberish in the body section. Would that possibly work?", username: c.username)
   q1 = Question.create(user_id: a.id, title: 'How does the answer feature work?',
   body: 'I think you can just click answer. You can also click the above "answer" tab to get a list of all the unanswered questions. If you would like to read questions that have already been answered you can click the "read" tab as well.', username: a.username)
-  q2 = Question.create(user_id: b.id, title: 'Why am I waiting two hours for pizza in Bushwick?', image: "http://farm8.static.flickr.com/7128/7666282294_3c4eb6a6de_m.jpg",
-  body: 'dec', username: b.username)
   q3 = Question.create(user_id: c.id, title: 'Are these pictures hosted on AWS', image: "http://media02.hongkiat.com/amazon-jeff-bezos/jeff-bezos-2.jpg",
   body: 'The answer means a lot to the guy below', username: c.username)
   q4 = Question.create(user_id: a.id, title: 'How do I ask a question with an image?',
@@ -58,12 +56,14 @@ Comment.destroy_all
   body: "I'd like somewhere with a kind of short wait...", username: b.username)
   q10 = Question.create(user_id: h.id, title: "Does anybody like my outfit?",
   body: "It's so blue!", username: h.username)
-  q11 = Question.create(user_id: d.id, title: 'Was The Revenant any good?', image: "http://www.clipartsheep.com/images/129/winnie-the-pooh-pic-14-129527.jpeg",
-  body: 'idk', username: d.username)
+  q11 = Question.create(user_id: e.id, title: 'Was The Revenant any good?', image: "http://www.clipartsheep.com/images/129/winnie-the-pooh-pic-14-129527.jpeg",
+  body: 'idk', username: e.username)
   q12 = Question.create(user_id: j.id, title: 'How many questions should this page show?',
   body: 'I really want to know!', username: j.username)
   q13 = Question.create(user_id: c.id, title: 'Should I write longer questions?',
   body: 'Sometimes I think question sites should have more space for the writer to complicate matters. How else can somebody ask a deeply personal question to a semi anonymous group of strangers?', username: c.username)
+  q2 = Question.create(user_id: e.id, title: 'Why am I waiting two hours for pizza in Bushwick?', image: "http://farm8.static.flickr.com/7128/7666282294_3c4eb6a6de_m.jpg",
+  body: 'dec', username: e.username)
   q14 = Question.create(user_id: e.id, title: 'How does this website work?',
   body: 'What is the meaning of this website?', username: e.username)
 
@@ -95,21 +95,22 @@ Comment.destroy_all
 
 
 
-  qt1 = QuestionTag.create(name: "tech")
+  qt1 = QuestionTag.create(name: "Tech")
   qtg1 = QuestionTagging.create(question_id: q0.id, question_tag_id: qt1.id)
 
-  qt2 = QuestionTag.create(name: "movies")
+  qt2 = QuestionTag.create(name: "Movies")
   qtg2 = QuestionTagging.create(question_id: q11.id, question_tag_id: qt2.id)
 
-  qt3 = QuestionTag.create(name: "pizza")
-  qtg3 = QuestionTagging.create(question_id: q2.id, question_tag_id: qt3.id)
+  qt3 = QuestionTag.create(name: "Pizza")
+  qtg30 = QuestionTagging.create(question_id: q2.id, question_tag_id: qt3.id)
+  qtg31 = QuestionTagging.create(question_id: q9.id, question_tag_id: qt3.id)
 
-  qt14 = QuestionTag.create(name: "meta")
-  qtg14 = QuestionTagging.create(question_id: q14.id, question_tag_id: qt14.id)
-  qtg14 = QuestionTagging.create(question_id: q13.id, question_tag_id: qt14.id)
-  qtg14 = QuestionTagging.create(question_id: q12.id, question_tag_id: qt14.id)
+  qt14 = QuestionTag.create(name: "Meta")
+  qtg140 = QuestionTagging.create(question_id: q14.id, question_tag_id: qt14.id)
+  qtg141 = QuestionTagging.create(question_id: q13.id, question_tag_id: qt14.id)
+  qtg142 = QuestionTagging.create(question_id: q12.id, question_tag_id: qt14.id)
 
-
+  qtg15 = QuestionTagging.create(question_id: q3.id, question_tag_id: qt14.id)
 
   c1 = Comment.create(body: "hey, how are comments looking?", answer_id: a10.id, user_id: a.id)
   cc1 = Comment.create(body: "if you can see this, pretty good!", parent_comment_id: c1.id, answer_id: a10.id, user_id: a.id)

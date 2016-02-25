@@ -36,6 +36,7 @@ var QuestionsIndex = React.createClass({
       <div className="q-index">
       <ul className="more-q group">
         <div className="all-the-questions">
+          <h2 className="my-name">Top Stories</h2>
           {questions}
         </div>
       </ul>
