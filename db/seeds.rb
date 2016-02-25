@@ -64,8 +64,8 @@ Comment.destroy_all
   body: 'I really want to know!', username: j.username)
   q13 = Question.create(user_id: c.id, title: 'Should I write longer questions?',
   body: 'Sometimes I think question sites should have more space for the writer to complicate matters. How else can somebody ask a deeply personal question to a semi anonymous group of strangers?', username: c.username)
-  q14 = Question.create(user_id: f.id, title: 'How does all of this work?',
-  body: 'What is the meaning of this website?', username: f.username)
+  q14 = Question.create(user_id: e.id, title: 'How does this website work?',
+  body: 'What is the meaning of this website?', username: e.username)
 
 
   a1 = Answer.create(title: "Also, what do those 'answer' and 'read' tabs above mean?",
@@ -89,6 +89,8 @@ Comment.destroy_all
   body: "", user_id: b.id, question_id: q3.id, username: b.username)
   a10 = Answer.create(title: 'It was ok, mostly grunting.',
   body: "", user_id: g.id, question_id: q11.id, username: g.username)
+  a11 = Answer.create(title: "Like this.",
+  body: "", user_id: c.id, question_id: q14.id, username: c.username)
 
 
 
@@ -102,6 +104,14 @@ Comment.destroy_all
   qt3 = QuestionTag.create(name: "pizza")
   qtg3 = QuestionTagging.create(question_id: q2.id, question_tag_id: qt3.id)
 
+  qt14 = QuestionTag.create(name: "meta")
+  qtg14 = QuestionTagging.create(question_id: q14.id, question_tag_id: qt14.id)
+  qtg14 = QuestionTagging.create(question_id: q13.id, question_tag_id: qt14.id)
+  qtg14 = QuestionTagging.create(question_id: q12.id, question_tag_id: qt14.id)
+
+
 
   c1 = Comment.create(body: "hey, how are comments looking?", answer_id: a10.id, user_id: a.id)
   cc1 = Comment.create(body: "if you can see this, pretty good!", parent_comment_id: c1.id, answer_id: a10.id, user_id: a.id)
+
+  c2 = Comment.create(body: "Woah", answer_id: a11.id, user_id: f.id)

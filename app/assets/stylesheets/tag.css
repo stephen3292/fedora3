@@ -3,3 +3,14 @@
   margin: 0 auto;
   margin-top: 30px;
 }
+
+.tag-data{
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: #666;
+  float: left;
+  font-weight: 400;
+}
+.tag-link{
+  float: left;
+}

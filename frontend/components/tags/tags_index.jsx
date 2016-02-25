@@ -21,7 +21,7 @@ var TagsIndex = React.createClass({
     return(
       <div>
         <div className="tag-list">
-          {tags}
+          <li>{tags}</li>
         </div>
       </div>
     );

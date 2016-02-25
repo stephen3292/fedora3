@@ -21,9 +21,11 @@ a {
 }
 
 .answer-the-questions{
-  font-size: 24px;
-  font-weight: bold;
+  display: block;
   padding: 20px;
+  font-weight: 500;
+  font-size: 20px;
+  color: #666
 }
 
 

@@ -56,7 +56,7 @@ var QuestionForm = React.createClass({
           <h2 className='ask-header'></h2>
           <input className="form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
 
-          <button className="form-button" onClick={this.handleSubmit}>Ask Question</button>
+          <button className="q-form-button" onClick={this.handleSubmit}>Ask Question</button>
           <input className="image-attachment" type="file" onChange={this.changeFile} />
           <div className="preview-image" src={this.state.imageUrl}/>
           <input className="form-body" onInput={this.updateBody} value={this.state.body}></input>

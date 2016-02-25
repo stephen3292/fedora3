@@ -24106,7 +24106,7 @@
 	      React.createElement('input', { className: 'form-title', placeholder: 'Ask a Question', onInput: this.updateTitle, value: this.state.title }),
 	      React.createElement(
 	        'button',
-	        { className: 'form-button', onClick: this.handleSubmit },
+	        { className: 'q-form-button', onClick: this.handleSubmit },
 	        'Ask Question'
 	      ),
 	      React.createElement('input', { className: 'image-attachment', type: 'file', onChange: this.changeFile }),
@@ -31699,16 +31699,29 @@
 	    if (this.props.question.image_url.indexOf("missing") === -1) {
 	      image = React.createElement('img', { className: 'post-image', src: this.props.question.image_url });
 	    }
+	    var tags;
+	    if (this.props.question.answers.length >= 1) {
+	      tags = React.createElement(
+	        'div',
+	        { className: 'tag-data' },
+	        'Answer written',
+	        React.createElement(TagsIndex, { question: this.props.question }),
+	        ' '
+	      );
+	    } else {
+	      tags = React.createElement(
+	        'div',
+	        { className: 'tag-data' },
+	        'Question asked',
+	        React.createElement(TagsIndex, { question: this.props.question }),
+	        ' '
+	      );
+	    }
+	
 	    return React.createElement(
 	      'ul',
 	      { className: 'single-question group' },
-	      React.createElement(
-	        'div',
-	        { className: 'answer-written-in' },
-	        'Question Asked:',
-	        React.createElement(TagsIndex, { question: this.props.question }),
-	        ' '
-	      ),
+	      tags,
 	      React.createElement(
 	        'li',
 	        { className: 'question-title' },
@@ -31754,7 +31767,11 @@
 	      React.createElement(
 	        'div',
 	        { className: 'tag-list' },
-	        tags
+	        React.createElement(
+	          'li',
+	          null,
+	          tags
+	        )
 	      )
 	    );
 	  }

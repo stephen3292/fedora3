@@ -6,8 +6,9 @@
 .some-questions{
   display: block;
   padding: 20px;
-  font-weight: bold;
-  font-size: 24px;
+  font-weight: 500;
+  font-size: 20px;
+  color: #666
 }
 .my-questions{
   float: left;
@@ -15,10 +16,6 @@
   padding: 20px;
   height: 280px;
   border-top: 1px solid #ccc;
-
-}
-
-.ask-a-question{
 
 }
 
@@ -36,9 +33,11 @@
 
 
 .read-header{
+  display: block;
   padding: 20px;
-  font-size: 24px;
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 20px;
+  color: #666
 }
 .sign-out-button{
   visibility: hidden;
@@ -55,6 +54,11 @@
   float: right;
   width: 1px;
   height: 1px;
+}
+
+.question-title{
+  width: 500px;
+  margin-top: 35px;
 }
 
 .question-title-link:hover{
@@ -151,5 +155,14 @@
   margin-top: 100px;
   width: 600px;
   margin: 0px auto;
+}
 
+.q-form-button{
+  background: white;
+  color: #666;
+  font-weight: 400;
+}
+
+.q-form-button:hover{
+  border: 1px solid #666
 }

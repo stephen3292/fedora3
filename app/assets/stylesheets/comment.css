@@ -81,5 +81,6 @@
 }
 
 .single-comment{
+  border-top: 2px solid #ccc;
   padding: 10px;
 }

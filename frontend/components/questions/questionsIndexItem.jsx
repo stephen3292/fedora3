@@ -18,10 +18,17 @@ var QuestionIndexItem = React.createClass({
     if (this.props.question.image_url.indexOf("missing") === -1){
       image = <img className="post-image" src={this.props.question.image_url} />;
     }
+    var tags;
+    if (this.props.question.answers.length >= 1){
+      tags = <div className="tag-data">Answer written< TagsIndex question={this.props.question}/> </div>
+    } else {
+      tags = <div className="tag-data">Question asked< TagsIndex question={this.props.question}/> </div>
+    }
+
+
     return(
       <ul className="single-question group">
-          <div className="answer-written-in">Question Asked:< TagsIndex question={this.props.question} /> </div>
-
+          {tags}
         <li className="question-title">
             <a className="question-title-link" href={questionDetail}>{title}</a>
         </li>
