@@ -47,7 +47,6 @@ var tagApiUtil = {
       dataType: "json",
       data: title,
       success: function(data) {
-
         TagActions.receiveSingleTag(data, coolName);
       }
 

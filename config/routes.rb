@@ -14,6 +14,8 @@ root to: 'static_pages#root'
       resources :questions, only: [:index, :create, :show, :destroy, :update] do
         resource :question_tags, only: [:index, :create]
         resources :answers, only: [:index, :create] do
+          post "downvote"
+          post "upvote"
           resources :comments, only: [:index, :create]
         end
       end

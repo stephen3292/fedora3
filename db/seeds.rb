@@ -13,6 +13,7 @@ Answer.destroy_all
 QuestionTag.destroy_all
 QuestionTagging.destroy_all
 Comment.destroy_all
+Vote.destroy_all
 
   a = User.create(username: 'Bob', password: 'password', avatar: "http://www.instructables.com/files/orig/FRY/STOL/FNZA8J79/FRYSTOLFNZA8J79.png",
         description: "One of those guys who says he's an 'educator'")
@@ -56,7 +57,7 @@ Comment.destroy_all
   body: "I'd like somewhere with a kind of short wait...", username: b.username)
   q10 = Question.create(user_id: h.id, title: "Does anybody like my outfit?",
   body: "It's so blue!", username: h.username)
-  q11 = Question.create(user_id: e.id, title: 'Was The Revenant any good?', image: "http://www.clipartsheep.com/images/129/winnie-the-pooh-pic-14-129527.jpeg",
+  q11 = Question.create(user_id: e.id, title: 'Was The Revenant any good?', image: "http://i.dailymail.co.uk/i/pix/2012/04/19/article-2132156-12A39EEB000005DC-439_306x427.jpg",
   body: 'idk', username: e.username)
   q12 = Question.create(user_id: j.id, title: 'How many questions should this page show?',
   body: 'I really want to know!', username: j.username)

@@ -18,6 +18,7 @@ var Search = React.createClass({
   },
 
   search: function(e) {
+    debugger
     var query = e.target.value;
     SearchApiUtil.search(query, 1);
 
@@ -51,11 +52,6 @@ var Search = React.createClass({
 
     var results;
 
-
-    if (typeof searchResults === 'undefined'){
-      debugger
-      console.log('hello');
-    }
     return(
       <div className="search-box">
       <div className="big-search group">

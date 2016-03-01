@@ -23,6 +23,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   belongs_to :user
   has_many :comments, inverse_of: :answer
+  has_many :votes
 
   include PgSearch
   multisearchable :against => [:title, :username]

@@ -2,6 +2,7 @@ var React = require('react');
 var History = require('react-router').History;
 var CommentForm = require('../comments/comment_form');
 var CommentsIndex = require('../comments/comments_index');
+var VotesApiUtil = require('./../../util/votes_api_util.js');
 var AnswersIndexItem = React.createClass({
 
   mixins: [History],
@@ -29,6 +30,17 @@ var AnswersIndexItem = React.createClass({
     this.setState({form: false});
   },
 
+  upvote: function(){
+    var questionId = this.props.answer.question_id;
+    var answerId = this.props.answer.id;
+    VotesApiUtil.upvote(questionId, answerId);
+  },
+
+  downvote: function(){
+    var questionId = this.props.answer.question_id;
+    var answerId = this.props.answer.id;
+    VotesApiUtil.downvote(questionId, answerId);
+  },
 
   render: function() {
 
@@ -65,9 +77,13 @@ var AnswersIndexItem = React.createClass({
           <div className="answer-description">{this.props.answer.user.description}</div><br/>
             {image}
           <div className="answer-body">{this.props.answer.title}</div>
+          <button className="c-form-button" onClick={this.upvote}>Upvote</button>
+          <button className="c-form-button" onClick={this.downvote}>Downvote</button>
           {showButton}<br/>
+
           <div className="first-form">{showForm}</div>
-          {showIndex}
+          <div clasName="all-the-comments">{showIndex}</div>
+
       </div>
     );
   }
