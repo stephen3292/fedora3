@@ -9,9 +9,9 @@ Fedora is a web application for questions that is inspired by Quora and built
 with Rails, PostgreSQL, and React.js. The site is designed to be a fun and easy
 way to ask and answer questions.
 
-![screenshot]
+![./docs/wireframes/screenshot.png]
 
-[screenshot]: ./docs/wireframes/screenshot.png
+[./docs/wireframes/screenshot.png]: http://www.askfedora.com
 
 
 ## Features
