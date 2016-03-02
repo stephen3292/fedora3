@@ -38,6 +38,8 @@ way to ask and answer questions.
   * Answers are nested within questions.
   * Answers also allow for image uploads.
 
+### Comments
+
 ### Tags
   * Users can tag questions when asking.
   * Clicking on a question's tags will bring the user to a list of questions
