@@ -1,7 +1,7 @@
 var React = require('react');
 var History = require('react-router').History;
 var CommentRepliesIndex = require('./comment_replies_index');
-var CommentForm = require('./comment_form');
+
 
 var CommentsIndexItem = React.createClass({
 
@@ -23,11 +23,6 @@ var CommentsIndexItem = React.createClass({
 
 
   render: function() {
-
-
-    var showForm;
-    var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answerId={this.props.comment} parent_comment={this.props.comment}/>
-    : "";
 
     return(
       <div className="single-comment group">

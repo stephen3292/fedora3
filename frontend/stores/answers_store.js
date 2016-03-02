@@ -30,7 +30,6 @@ answerStore.find = function(id) {
 };
 
 answerStore.addComment = function(comment){
-  debugger
   var answer = _answers[comment.answer_id];
 
   answer.comments.push(comment)
@@ -45,9 +44,7 @@ answerStore.__onDispatch = function (payload) {
     case AnswerConstants.ANSWER_RECEIVED:
       answerStore.resetAnswer(payload.answer);
       break;
-    // case CommentConstants.COMMENT_RECEIVED:
-    //   answerStore.addComment(payload.comment)
-    //   break;
+
 
   }
 

@@ -25,7 +25,6 @@ var answerApiUtil = {
       contentType: false,
       data: formData,
       success: function(data) {
-        console.log('got it!');
         AnswerActions.receiveSingleAnswer(data);
       }
 

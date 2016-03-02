@@ -40,7 +40,6 @@ class Api::AnswersController < ApplicationController
   end
 
   def vote(direction)
-    debugger
     @answer = Answer.find(params[:answer_id])
     @vote = @answer.votes.create!(user_id: current_user.id, value: direction)
 

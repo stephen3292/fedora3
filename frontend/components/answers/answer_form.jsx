@@ -44,7 +44,15 @@ var AnswerForm = React.createClass({
     }
     formData.append("answer[question_id]", this.props.question.id);
     AnswersApiUtil.createOneAnswer(formData);
+    this.resetForm();
     this.props.collapse();
+  },
+
+  handleKeyPress: function(e){
+    if (e.key === 'Enter'){
+      this.handleSubmit(e);
+    }
+
   },
 
   resetForm: function() {
@@ -62,7 +70,7 @@ var AnswerForm = React.createClass({
           <img className="answer-pic" src={this.state.currentUser.image_url} />
           <div className="answer-writer">{this.state.currentUser.username}</div>
           <div className="answer-description">{this.state.currentUser.description}</div><br/>
-          <input className="a-form-title" typeplaceholder="Answer" onInput={this.updateTitle} value={this.state.title}></input>
+          <input className="a-form-title" typeplaceholder="Answer" onKeyPress={this.handleKeyPress} onInput={this.updateTitle} value={this.state.title}></input>
           <input className="little-image-attachment" type="file" onChange={this.changeFile} />
           {cool}
           <button className="a-form-submit" onClick={this.handleSubmit}>Submit</button>

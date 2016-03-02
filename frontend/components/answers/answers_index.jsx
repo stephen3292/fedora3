@@ -39,7 +39,7 @@ getInitialState: function(){
         <div className="answer-list">
           {answers}
         </div>
-        <button className='a-form-button' onClick={this.toggleState}>Write Answer</button><br/>
+        <button className='a-form-button' onClick={this.toggleState}>Answer</button><br/>
         {showForm}
 
       </div>

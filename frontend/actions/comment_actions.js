@@ -1,7 +1,7 @@
 
 var AppDispatcher = require('../dispatcher/dispatch.js');
 var CommentConstants = require('../constants/comment_constants.js');
-// var CommentStore = require('../stores/comments_store.js');
+
 
 var commentActions = {
 

@@ -29,6 +29,12 @@ var QuestionForm = React.createClass({
     }
   },
 
+  handleKeyPress: function(e){
+    if (e.key === 'Enter'){
+      this.handleSubmit(e);
+    }
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
 
@@ -44,6 +50,7 @@ var QuestionForm = React.createClass({
     formData.append("question[body]", this.state.body);
 
     ApiUtil.createQuestion(formData);
+    this.resetForm();
   },
 
   resetForm: function() {
@@ -54,7 +61,7 @@ var QuestionForm = React.createClass({
     return(
       <div className="ask-a-question group">
           <h2 className='ask-header'></h2>
-          <input className="form-title" placeholder="Ask a Question" onInput={this.updateTitle} value={this.state.title}></input>
+          <input className="form-title" placeholder="Ask a Question" onKeyPress={this.handleKeyPress} onInput={this.updateTitle} value={this.state.title}></input>
 
           <button className="q-form-button" onClick={this.handleSubmit}>Ask Question</button>
           <input className="image-attachment" type="file" onChange={this.changeFile} />

@@ -1,8 +1,7 @@
 var AppDispatcher = require('../dispatcher/dispatch');
-
+var VoteActions = require('../actions/vote_actions');
 var votesApiUtil = {
   upvote: function(questionId, answerId){
-    debugger
     $.ajax({
       type: "post",
       url: "api/questions/" + questionId + "/answers/" + answerId + "/upvote",

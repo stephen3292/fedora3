@@ -68,7 +68,10 @@ var AnswersIndexItem = React.createClass({
     var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answer={this.props.answer}/>
     : "";
 
-
+    var voteTotal = 0;
+    for (var i = 0; i < this.props.answer.votes.length; i++) {
+      voteTotal += this.props.answer.votes[i].value
+    }
 
     return(
       <div className="single-answer group">
@@ -77,10 +80,9 @@ var AnswersIndexItem = React.createClass({
           <div className="answer-description">{this.props.answer.user.description}</div><br/>
             {image}
           <div className="answer-body">{this.props.answer.title}</div>
-          <button className="c-form-button" onClick={this.upvote}>Upvote</button>
+          <button className="a-form-button" onClick={this.upvote}>Upvote {voteTotal} </button>
           <button className="c-form-button" onClick={this.downvote}>Downvote</button>
           {showButton}<br/>
-
           <div className="first-form">{showForm}</div>
           <div clasName="all-the-comments">{showIndex}</div>
 

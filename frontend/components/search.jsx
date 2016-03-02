@@ -18,7 +18,6 @@ var Search = React.createClass({
   },
 
   search: function(e) {
-    debugger
     var query = e.target.value;
     SearchApiUtil.search(query, 1);
 
@@ -44,7 +43,6 @@ var Search = React.createClass({
 
       if (searchResult._type === "Question") {
         return <QuestionIndexItem key={searchResult.id} question={searchResult} />;
-        debugger
       } else {
         return <AnswerIndexItem key={searchResult.id} answer={searchResult} />;
       }

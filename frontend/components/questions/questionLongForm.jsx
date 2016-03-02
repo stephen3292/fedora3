@@ -9,6 +9,10 @@ var QuestionForm = React.createClass({
     return { title: "", body: "", tag: "", imageFile: null, imageUrl: ""};
   },
 
+  clearForm: function(){
+    this.setState({title: "", body: "", tag: "", imageFile: null, imageUrl: ""});
+  },
+
   updateTitle: function(e){
     this.setState({title: e.currentTarget.value});
   },
@@ -50,6 +54,7 @@ var QuestionForm = React.createClass({
     ApiUtil.createQuestion(formData, function(question) {
       TagsApiUtil.createTag({name: this.state.tag, questionId: question.id});
     }.bind(this));
+    this.clearForm();
   },
 
   resetForm: function() {

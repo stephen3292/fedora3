@@ -7,8 +7,7 @@
 }
 
 .c-form-button{
-  margin-top: 10px;
-  padding: 5px;
+  margin-top: 9px;
   background: #eee;
   border: none
 
@@ -34,6 +33,7 @@
   display: block;
   border-radius: 5px;
   margin-bottom: 25px;
+  margin-top: 10px;
 }
 
 .comment-pic {

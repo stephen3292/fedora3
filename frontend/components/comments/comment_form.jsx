@@ -10,12 +10,14 @@ var CommentForm = React.createClass({
     return ( CurrentUserStore.currentUser());
   },
 
-  componentWillReceiveProps: function(){
-
-  },
-
   updateBody: function(e){
     this.setState({body: e.currentTarget.value});
+  },
+
+  handleKeyPress: function(e){
+    if (e.key === 'Enter'){
+      this.handleSubmit(e);
+    }
   },
 
   handleSubmit: function(e){
@@ -40,16 +42,14 @@ var CommentForm = React.createClass({
       answerId = this.props.parent_comment.answer_id
     }
 
-
-    console.log()
-
-    debugger
     CommentsApiUtil.createOneComment(formData, questionId, answerId);
-    this.props.collapse
+    this.resetCForm();
+
   },
 
-
-
+  resetCForm: function() {
+    this.setState({body: ""});
+  },
 
   render: function(){
     var pic;
@@ -60,7 +60,7 @@ var CommentForm = React.createClass({
     if (!this.props.parent_comment){
       pic = <img className="comment-pic" src={this.state.currentUser.image_url} />
       writer = <div className="comment-writer">{this.state.currentUser.username}</div>
-      input = <input className="c-form-title" typeplaceholder="Answer" onInput={this.updateBody} ></input>
+      input = <input className="c-form-title" onKeyPress={this.handleKeyPress} typeplaceholder="Answer" onInput={this.updateBody} value={this.state.body}></input>
     }
     return(
       <div className="comment-box">
