@@ -1,14 +1,13 @@
 class Api::QuestionsController < ApplicationController
   def index
-    @questions = Question.includes(:answers)
+    @questions = Question.includes(:answers, :question_tags, :question_taggings, :user, :votes).all
   end
 
   def show
-    @question = Question.find(params[:id])
+    @question = Question.includes(:answers, :question_tags, :user, :question_taggings).find(params[:id])
   end
 
   def create
-    
     @question = Question.new(question_params)
     @question.user_id = current_user.id
     @question.username = current_user.username

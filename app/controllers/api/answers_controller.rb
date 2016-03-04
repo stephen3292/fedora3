@@ -1,8 +1,11 @@
 class Api::AnswersController < ApplicationController
   def index
-    render json: Question.find(params[:question_id]).answers
+    # render json: Question.all
+    # render json: Question.find(params[:question_id]).answers
+    Question.includes(:answers).all.each do |q|
+      render json: q.answers.to_a
+    end
   end
-
 
   def create
     question = Question.find(params[:answer][:question_id].to_i)
@@ -11,21 +14,6 @@ class Api::AnswersController < ApplicationController
     @answer.user_id = current_user.id
     if @answer.save!
       render :show
-    else
-      render json: { errors: answer.errors.full_messages }, status: 422
-    end
-  end
-
-  def destroy
-    answer = Answer.find(params[:id])
-    answer.destroy!
-    render json: answer
-  end
-
-  def update
-    answer = Answer.find(params[:id])
-    if answer.update(answer_params)
-      render json: answer
     else
       render json: { errors: answer.errors.full_messages }, status: 422
     end

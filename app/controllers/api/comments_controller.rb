@@ -1,12 +1,12 @@
 class Api::CommentsController < ApplicationController
 
   def index
-    render json: Answer.find(params[:answer_id]).comments.where("parent_comment_id IS ?", nil)
-
+    Answer.includes(:top_level_comments).all.each do |a|
+      render json: a.top_level_comments.to_a
+    end
   end
 
   def create
-
     answer = Answer.find(params[:comment][:answer_id].to_i)
     @comment = answer.comments.new(comment_params)
     @comment.user_id = current_user.id
@@ -14,21 +14,6 @@ class Api::CommentsController < ApplicationController
       render :show
     else
       render json: {errors: comment.errors.full_messages}, status: 422
-    end
-  end
-
-  def destroy
-    comment = Comment.find(params[:id])
-    comment.destroy!
-    render json: comment
-  end
-
-  def update
-    comment = Comment.find(params[:id])
-    if comment.update(comment_params)
-      render json: comment
-    else
-      render json: {errors: comment.errors.full_messages }, status: 422
     end
   end
 

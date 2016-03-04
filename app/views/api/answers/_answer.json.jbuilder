@@ -5,5 +5,5 @@ json.user do
 end
 
 json.comments do
-  json.partial! partial: 'api/comments/comment', collection: answer.comments, as: :comment
+  json.partial! partial: 'api/comments/comment', collection: answer.top_level_comments, as: :comment
 end

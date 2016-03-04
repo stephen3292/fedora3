@@ -35,7 +35,7 @@ questionStore.addAnswer = function(answer){
 
 questionStore.resetAnswer = function(answer){
   var question = _questions[answer.question_id];
-  
+
   for (var i = 0; i < question.answers.length; i++) {
     if (answer.id === question.answers[i].id){
       question.answers[i] = answer;
@@ -56,7 +56,6 @@ questionStore.addComment = function(comment){
       question.answers[i].comments.push(comment)
     } else {
       for (var j = 0; j < question.answers[i].comments.length; j++) {
-        debugger
         if (question.answers[i].comments[j].id === comment.parent_comment_id){
           question.answers[i].comments[j].comments.push(comment)
         }

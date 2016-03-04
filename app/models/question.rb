@@ -24,8 +24,10 @@ class Question < ActiveRecord::Base
 
   has_many :answers
 
+  has_many :votes, through: :answers
   has_many :question_taggings
   has_many :question_tags, through: :question_taggings, source: :question_tag
+  has_many :top_level_comments, through: :answers
 
 
 

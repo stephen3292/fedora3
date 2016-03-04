@@ -45,33 +45,32 @@ var AnswersIndexItem = React.createClass({
   render: function() {
 
     var image;
-    if (this.props.answer.image_url.indexOf("missing") === -1){
-      image = <img className="post-image" src={this.props.answer.image_url} />;
-    }
-
+      if (this.props.answer.image_url.indexOf("missing") === -1){
+        image = <img className="post-image" src={this.props.answer.image_url} />;
+      }
 
     var showIndex;
-    var showIndex = this.state.index ? < CommentsIndex collapse={this.collapseForm} answer={this.props.answer}/>
-    : "";
+      var showIndex = this.state.index ? < CommentsIndex collapse={this.collapseForm} answer={this.props.answer}/>
+      : "";
 
     var length = this.props.answer.comments.length
 
     var showButton;
-    if (length > 1){
-      showButton = <button className='c-form-button' onClick={this.toggleState}>Comments {length} </button>
-    } else if (length == 1) {
-      showButton = <button className='c-form-button' onClick={this.toggleState}>Comment {length}</button>
-    } else {
-      showButton = <button className='c-form-button' onClick={this.toggleState}>Comment</button>
-    }
+      if (length > 1){
+        showButton = <button className='c-form-button' onClick={this.toggleState}>Comments {length} </button>
+      } else if (length == 1) {
+        showButton = <button className='c-form-button' onClick={this.toggleState}>Comment {length}</button>
+      } else {
+        showButton = <button className='c-form-button' onClick={this.toggleState}>Comment</button>
+      }
 
     var showForm = this.state.form ? < CommentForm collapse={this.collapseForm} answer={this.props.answer}/>
     : "";
 
     var voteTotal = 0;
-    for (var i = 0; i < this.props.answer.votes.length; i++) {
-      voteTotal += this.props.answer.votes[i].value
-    }
+      for (var i = 0; i < this.props.answer.votes.length; i++) {
+        voteTotal += this.props.answer.votes[i].value
+      }
 
     return(
       <div className="single-answer group">

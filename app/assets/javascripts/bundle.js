@@ -66,7 +66,6 @@
 	ApiUtil = __webpack_require__(243);
 	QuestionsIndex = __webpack_require__(242);
 	QuestionStore = __webpack_require__(207);
-	AnswersStore = __webpack_require__(250);
 	QuestionDetail = __webpack_require__(251);
 	
 	var routes = React.createElement(
@@ -24187,7 +24186,6 @@
 	      question.answers[i].comments.push(comment);
 	    } else {
 	      for (var j = 0; j < question.answers[i].comments.length; j++) {
-	        debugger;
 	        if (question.answers[i].comments[j].id === comment.parent_comment_id) {
 	          question.answers[i].comments[j].comments.push(comment);
 	        }
@@ -31888,7 +31886,6 @@
 	
 	var AppDispatcher = __webpack_require__(208);
 	var AnswerConstants = __webpack_require__(230);
-	var AnswerStore = __webpack_require__(250);
 	
 	var answerActions = {
 	
@@ -31913,64 +31910,7 @@
 	module.exports = answerActions;
 
 /***/ },
-/* 250 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(208);
-	var Store = __webpack_require__(212).Store;
-	var CommentConstants = __webpack_require__(278);
-	var AnswerConstants = __webpack_require__(230);
-	var _answers = {};
-	
-	var answerStore = new Store(AppDispatcher);
-	
-	answerStore.resetAnswers = function (answers) {
-	  _answers = {};
-	  for (var i = 0; i < answers.length; i++) {
-	    var questionId = answers[i].question_id;
-	    var answerArray = _answers[questionId];
-	    answerArray = answerArray || [];
-	    answerArray.push(answers[i]);
-	  }
-	};
-	
-	answerStore.resetAnswer = function (answer) {
-	  _answers[answer.id] = answer;
-	};
-	
-	answerStore.all = function (questionId) {
-	  var answers = _answers[questionId] || [];
-	  return answers.slice();
-	};
-	
-	answerStore.find = function (id) {
-	  return _answers[id];
-	};
-	
-	answerStore.addComment = function (comment) {
-	  var answer = _answers[comment.answer_id];
-	
-	  answer.comments.push(comment);
-	};
-	
-	answerStore.__onDispatch = function (payload) {
-	
-	  switch (payload.actionType) {
-	    case AnswerConstants.ANSWERS_RECIEVED:
-	      answerStore.resetAnswers(payload.answers);
-	      break;
-	    case AnswerConstants.ANSWER_RECEIVED:
-	      answerStore.resetAnswer(payload.answer);
-	      break;
-	
-	  }
-	
-	  answerStore.__emitChange();
-	};
-	
-	module.exports = answerStore;
-
-/***/ },
+/* 250 */,
 /* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -33066,11 +33006,8 @@
 
 	
 	var React = __webpack_require__(1);
-	var QuestionIndexItem = __webpack_require__(245);
 	var AnswersIndexItem = __webpack_require__(253);
-	var AnswersStore = __webpack_require__(250);
 	var CurrentUserStore = __webpack_require__(235);
-	AnswerApiUtil = __webpack_require__(248);
 	
 	var AnswersIndex = React.createClass({
 	  displayName: 'AnswersIndex',

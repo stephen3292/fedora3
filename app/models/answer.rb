@@ -27,4 +27,10 @@ class Answer < ActiveRecord::Base
 
   include PgSearch
   multisearchable :against => [:title, :username]
+
+    has_many :top_level_comments,
+    -> { where parent_comment_id: nil},
+    class_name: "Comment"
+
+
 end

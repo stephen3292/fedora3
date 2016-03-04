@@ -6,7 +6,6 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-
     @user = User.new(user_params)
     if @user.save
       sign_in!(@user)
@@ -17,13 +16,7 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  def index
-    @users = User.all
-    render :index
-  end
-
   def show
-    # @user = User.includes(:username, :description, :questions).find(params[:id])
     @user = User.find(params[:id])
   end
 

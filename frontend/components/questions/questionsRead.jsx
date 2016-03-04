@@ -23,7 +23,6 @@ var QuestionsIndex = React.createClass({
     this.listener.remove();
   },
 
-
   render: function() {
     if (this.state.questions) {
       var r_questions = this.state.questions;
