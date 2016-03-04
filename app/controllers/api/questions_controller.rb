@@ -1,6 +1,7 @@
 class Api::QuestionsController < ApplicationController
   def index
-    @questions = Question.includes(:answers, :question_tags, :question_taggings, :user, :votes).all
+    @user = User.all
+    @questions = Question.includes(:answers, :question_tags, :question_taggings, :top_level_comments, :user, :votes).all
   end
 
   def show
